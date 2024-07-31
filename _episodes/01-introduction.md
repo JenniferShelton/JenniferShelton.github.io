@@ -15,14 +15,13 @@ keypoints:
 - Many bioinformatic tasks require large amounts of computing power
 ---
 
-
+## The Shell
 When the shell is first opened, you are presented with a **prompt**,
 indicating that the shell is waiting for input.
 
 ```bash
 $
 ```
-
 
 The shell typically uses `$` as the prompt, but may use a different symbol.
 In the examples for this lesson, we'll show the prompt as `$`.
@@ -45,9 +44,9 @@ jshelton@localhost $
 ```
 
 There are many ways for a user to interact with a computer. For example, we often use a Graphical User 
-Interface (GUI). With a GUI we might roll a mouse to a logo of a folder and click or tap (on a touch 
+Interface (GUI). With a GUI we might roll a mouse to the logo of a folder and click or tap (on a touch 
 screen) to show the content of that folder. In a Commandline Interface the user can do all of the same 
-actions (e.g. show the content of a folder). But on the Commandline the user passes commands to the 
+actions (e.g. show the content of a folder). On the Commandline the user passes commands to the 
 computer as lines of text.
 
 - What is a Read Evaluate Print Loop (REPL)?
@@ -58,10 +57,73 @@ computer as lines of text.
 4. the computer executes it and prints its output (if any)
 5. loop from step #4 back to step #1
 
+The most basic command is to call a program to perform its default action. For example, call the program `whoami` to 
+return your username. 
+
 ```bash
-$ ls
+$ whoami
 ```
 
+You can also call a program and pass arguments to the program. For example, the `ls` command will list the contents of 
+your current directory (directory is synonymous with folder). Any line that starts with `#` will not be executed. We can 
+write comments to ourselves by starting the line with `#`. 
+
+```bash
+# call ls to list current directory
+ls 
+
+# pass one or more paths of files or directories as argument(s)
+ls /bin
+```
+
+In a GUI you may customize your finder/file browser based on how you like to search. In general if you can do it on a GUI 
+there is a way to use text to do it on the commandline. I like to see my most recently changed files first. I also like 
+to see the date they were edited.
+
+```bash
+# call ls to list bin and show the most recently changed files first (with the `-t` option/flag)
+ls -t /usr
+
+# add the `-l` to show who owns the file, file size, and what date is was last edited
+ls -t -l /usr
+```
+
+The basic syntax of a unix command is:
+
+1. call the program
+2. pass any flags/options
+3. pass any "order dependent arguments"
+
+## Getting help
+
+`ls` has lots of other options. There are common ways to find out how to use a command and what options it 
+accepts — depending on your environment. Today we will call the unix command and the use the flag `--help`.
+
+```bash
+$ ls --help
+
+Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all                  do not ignore entries starting with .
+  -A, --almost-all           do not list implied . and ..
+      --author               with -l, print the author of each file
+  -b, --escape               print C-style escapes for nongraphic characters
+```
+
+Help menus show you the basic syntax of the command. Optional elements are shown in square brackets. Ellipses indicate that you can type include more than one of the elements.
+
+Help menus show both the long and short version of the flags. Use the short option when typing commands directly into the shell to minimize keystrokes and get your task done faster. Use the long option in scripts to provide clarity. It will be read many times and typed once.
+
+> ## When --help does work
+> If `--help` does not gshow you a help menu there are other common ways to see the help menu that you can try.
+> 
+> - call the program `man` and pas the name of the command that you are curious about as the argument (`man ls`). 
+> Type `q` to exit out of this help screen.
+> - some bioinformatics programs will show a help menu if you call the tool without any flags or arguments.
+{: .callout}
 
 > ## Command not found
 > 
@@ -78,11 +140,32 @@ $ ls
 > > ```
 > > {: .output}
 > > This might happen if the command was mis-typed or if the program corresponding to that command
-is not installed.
+> > is not installed. When your get an error message stay calm and give it a couple of read throughs. Error 
+> > messages can seem akwardly worded at first but they can really help guide your debugging.
 > {: .solution}
 {: .challenge}
 
 
+## The Cloud
+
+There are a number of reasons why accessing a remote machine is invaluable to any scientists working with large datasets. In the early history of computing, working on a remote machine was standard practice - computers were bulky and expensive. Today we work on laptops or desktops that are more powerful than the sum of the world’s computing capacity 20 years ago, but many analyses (especially in genomics) are too large to run on these laptops/desktops. These analyses require larger machines, often several of them linked together, where remote access is the only practical solution.
+
+In recent years, computational power has become a commodity and entire companies have been built around a business model that allows you to “rent” one or more linked computers for as long as you require, at relatively low cost. This is the basic principle behind the cloud. You define your computational requirements and off you go.
+
+## Logging onto a cloud instance
+
+## Logging back in
+
+## Verifying your environment
+
+## Staying Connected to the Cloud
 
 
+The cloud is a part of our everyday life (e.g. using Amazon, Google, Netflix, or an ATM involves remote computing). The topic is fascinating, but this lesson says ‘5 minutes or less’ so let’s get back to working on it for the workshop.
+
+
+
+> ## HUMAN GENOMIC DATA & SECURITY
+> Note that if you are working with human genomics data there might be ethical and legal considerations that affect your choice of cloud resources to use. The terms of use, and/or the legislation under which you are handling the genomic data, might impose heightened information security measures for the computing environment in which you intend to process it. This is a too broad topic to discuss in detail here, but in general terms you should think through the technical and procedural measures needed to ensure that the confidentiality and integrity of the human data you work with is not breached. If there are laws that govern these issues in the jurisdiction in which you work, be sure that the cloud service provider you use can certify that they support the necessary measures. Also note that there might exist restrictions for use of cloud service providers that operate in other jurisdictions than your own, either by how the data was consented by the research subjects or by the jurisdiction under which you operate. Do consult the legal office of your institution for guidance when processing human genomic data.
+{: .callout}
 
