@@ -101,13 +101,13 @@ accepts (depending on your environment). Today we will call the unix command and
 
 ```bash
 $ ls --help
+```
 
+```
 Usage: ls [OPTION]... [FILE]...
 List information about the FILEs (the current directory by default).
 Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
-```
 
-```
 Mandatory arguments to long options are mandatory for short options too.
   -a, --all                  do not ignore entries starting with .
   -A, --almost-all           do not list implied . and ..
