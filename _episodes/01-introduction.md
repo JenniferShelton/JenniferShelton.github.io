@@ -97,7 +97,7 @@ The basic syntax of a unix command is:
 ## Getting help
 
 `ls` has lots of other options. There are common ways to find out how to use a command and what options it 
-accepts — depending on your environment. Today we will call the unix command and the use the flag `--help`.
+accepts (depending on your environment). Today we will call the unix command and the use the flag `--help`.
 
 ```bash
 $ ls --help
@@ -105,15 +105,19 @@ $ ls --help
 Usage: ls [OPTION]... [FILE]...
 List information about the FILEs (the current directory by default).
 Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+```
 
+```
 Mandatory arguments to long options are mandatory for short options too.
   -a, --all                  do not ignore entries starting with .
   -A, --almost-all           do not list implied . and ..
       --author               with -l, print the author of each file
   -b, --escape               print C-style escapes for nongraphic characters
 ```
+{: .output}
 
-Help menus show you the basic syntax of the command. Optional elements are shown in square brackets. Ellipses indicate that you can type include more than one of the elements.
+
+Help menus show you the basic syntax of the command. Optional elements are shown in square brackets. Ellipses indicate that you can type more than one of the elements.
 
 Help menus show both the long and short version of the flags. Use the short option when typing commands directly into the shell to minimize keystrokes and get your task done faster. Use the long option in scripts to provide clarity. It will be read many times and typed once.
 
