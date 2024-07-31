@@ -1,5 +1,5 @@
 ---
-title: "Navigating Files, Directories and Buckets"
+title: "Navigating Files and Buckets"
 teaching: 10
 exercises: 10
 questions:

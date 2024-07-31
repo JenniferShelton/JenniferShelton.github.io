@@ -117,8 +117,8 @@ Help menus show you the basic syntax of the command. Optional elements are shown
 
 Help menus show both the long and short version of the flags. Use the short option when typing commands directly into the shell to minimize keystrokes and get your task done faster. Use the long option in scripts to provide clarity. It will be read many times and typed once.
 
-> ## When --help does work
-> If `--help` does not gshow you a help menu there are other common ways to see the help menu that you can try.
+> ## When `--help` does not work
+> If `--help` does not show you a help menu there are other common ways to show help menus that you can try.
 > 
 > - call the program `man` and pas the name of the command that you are curious about as the argument (`man ls`). 
 > Type `q` to exit out of this help screen.
