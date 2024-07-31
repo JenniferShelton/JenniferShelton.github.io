@@ -45,11 +45,3 @@ keypoints:
 > - To list your past commands: Type `history` in the command line
 {: .testimonial}
 
-
-> ## When --help does work
-> If `--help` does not gshow you a help menu there are other common ways to see the help menu that you can try.
-> 
-> - call the program `man` and pas the name of the command that you are curious about as the argument (`man ls`). 
-> Type `q` to exit out of this help screen.
-> - some bioinformatics programs will show a help menu if you call the tool without any flags or arguments.
-{: .callout}
