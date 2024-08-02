@@ -31,6 +31,7 @@ keypoints:
 
 ## Buckets
 
+On your computer files are often stored "locally" on that computer in a directory. On the cloud permanent storage areas are called a “bucket.” The console that we are using is running on an ephemeral virtual machine. We will copy files to our vm or read them from the bucket to use them. Any file we create or modify in our vm will be deleted when we turn off the vm. Users can  use a bucket to save files needed for analysis after the vm is stopped.
 
 
 > ## CLI typing hints

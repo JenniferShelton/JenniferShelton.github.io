@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-teaching: 10
+teaching: 30
 exercises: 10
 questions:
 - What is a command shell and why would I use one?
@@ -152,20 +152,37 @@ Help menus show both the long and short version of the flags. Use the short opti
 
 ## The Cloud
 
-There are a number of reasons why accessing a remote machine is invaluable to any scientists working with large datasets. In the early history of computing, working on a remote machine was standard practice - computers were bulky and expensive. Today we work on laptops or desktops that are more powerful than the sum of the world’s computing capacity 20 years ago, but many analyses (especially in genomics) are too large to run on these laptops/desktops. These analyses require larger machines, often several of them linked together, where remote access is the only practical solution.
+There are a number of reasons why accessing a remote machine is invaluable to any scientists working 
+with large datasets. In the early history of computing, working on a remote machine was standard 
+practice - computers were bulky and expensive. Today we work on laptops or desktops that are more 
+powerful than the sum of the world’s computing capacity 20 years ago, but many analyses (especially in 
+genomics) are too large to run on these laptops/desktops. These analyses require larger machines, 
+often several of them linked together, where remote access is the only practical solution. 
 
-In recent years, computational power has become a commodity and entire companies have been built around a business model that allows you to “rent” one or more linked computers for as long as you require, at relatively low cost. This is the basic principle behind the cloud. You define your computational requirements and off you go.
+Schools and research organizations often link many computers into one High Performance Computing (HPC) 
+cluster on or near the campus. Another model that is becoming common is to "rent" space on a 
+cluster(s) owned by a large company (Amazon, Google, Microsoft, etc). In recent years, computational 
+power has become a commodity and entire companies have been built around a business model that allows 
+you to “rent” one or more linked computers for as long as you require, at lower cost than owning the 
+cluster (depending on how often it is used vs idle, etc). This is the basic principle behind the 
+cloud. You define your computational requirements and off you go.
 
 ## Logging onto a cloud instance
 
 ## Logging back in
 
+
+
 ## Verifying your environment
 
 ## Staying Connected to the Cloud
 
+Suspending an instance is analogous to closing the lid of your laptop, putting the instance into a SUSPENDED state. Suspending an instance differs from stopping an instance in the following ways: Suspended instances preserve the files on the vm and you continue to be charged by Google. 
 
-The cloud is a part of our everyday life (e.g. using Amazon, Google, Netflix, or an ATM involves remote computing). The topic is fascinating, but this lesson says ‘5 minutes or less’ so let’s get back to working on it for the workshop.
+To keep your program running while you are not logged (or when your internet connection drops breifly) in we will use `tmux`.
+
+
+The cloud is a part of our everyday life (e.g. using Amazon, Google, Netflix, or an ATM involves remote computing). The topic is fascinating, but this lesson says a few minutes or less so let’s get back to working on it for the workshop.
 
 
 
