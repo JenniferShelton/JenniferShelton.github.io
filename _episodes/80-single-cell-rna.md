@@ -283,7 +283,7 @@ Next, we need to run the following steps:
 And we will just use default arguments for all of these.
 
 > ## Running commands on an object
-> Syntax to run a set of commands like this on an object, and add the results to the existing object:
+> This is the syntax to run a set of commands like this on an object, and add the results to the existing object:
 > 
 > ```
 > your_object_name = command1(object=your_object_name)
@@ -293,9 +293,9 @@ And we will just use default arguments for all of these.
 > ```
 > {: .language-r}
 >
-> Replace the example syntax here with the Seurat commands, and replace the object name with the name of the object you made earlier.
->
-> {: .callout}
+> In this lesson you will read the R package Seurat's' help menus and replace the example syntax above with the Seurat commands. Then replace the object name with the name of the object you have made.
+{: .callout}
+
 
 
 ## Selecting number of principal components (PCs) to use downstream
