@@ -104,11 +104,12 @@ We now have the relative path to the directory with the files we need. We will u
 Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`. 
 
 
-```R
+```
 library(dplyr)
 library(Seurat)
 library(patchwork)
 ```
+{: .language-r}
 
 ## Read in counts and create a Seurat object.
 
@@ -126,9 +127,10 @@ filtered_gene_bc_matrices/hg19/matrix.mtx
 
 Next, let’s look at the help message for Read10X.
 
-```R
+```
 ?Read10X
 ```
+{: .language-r}
 
 If we scroll down to the examples section, we get the following:
 
@@ -141,7 +143,78 @@ expression_matrix <- Read10X(data.dir = data_dir)
 
 Let’s do something similar here, but replace 'path/to/data/directory' with the appropriate path.
 
-```R
+```
 data_dir <- 'filtered_gene_bc_matrices/hg19/'
 expression_matrix <- Read10X(data.dir = data_dir)
 ```
+{: .language-r}
+
+Next, we are going to create the Seurat object, and call it seurat_object.
+
+From the Read10X help, the next line in the example was this:
+
+```
+seurat_object = CreateSeuratObject(counts = expression_matrix)
+```
+{: .language-r}
+
+If you ran the previous step as written (creating an object called expression_matrix), you should be able to run this line as-is.
+
+
+## Quality control metrics and visualization and filtering
+
+First metric we want to look at, that needs to be calculated, is mitochondrial rates.
+
+Use the PercentageFeatureSet argument to do this.
+
+Generate a help message for this:
+
+```
+?PercentageFeatureSet
+```
+{: .language-r}
+
+In the example at the bottom, they run the command like so to add a variable called `percent.mt` to the object, containing the mitochondrial rates.
+
+```
+pbmc_small[["percent.mt"]] <- PercentageFeatureSet(object = pbmc_small, pattern = "^MT-")
+```
+{: .language-r}
+
+
+The pattern argument here means that we sum up the percent of reads going to all genes starting with `MT-`, e.g. `MT-ND1` and `MT-CO1`.
+
+Let’s run this on our object, but replace `pbmc_small` with the name of the Seurat object you just made in the previous step.
+
+```
+your_seurat_object_name[["percent.mt"]] <- PercentageFeatureSet(object = your_seurat_object_name,pattern='^MT-')
+```
+{: .language-r}
+
+Next, we can extract QC metrics from the object by using the `$` operator.
+
+Besides the metric `percent.mt` we just calculated, we also get the following metrics generated automatically when we create the object:
+
+
+- nCount_RNA - Number of total UMIs per cell
+
+- nFeature_RNA -  Number of genes expressed per cell
+
+Let’s extract all of these into a series of new objects. Syntax below for nCount_RNA, replace the Seurat object name with the name of your object, and the name for nFeature_RNA and percent.mt as appropriate.
+
+
+```
+```
+{: .language-r}
+
+
+```
+```
+{: .language-r}
+
+
+```
+```
+{: .language-r}
+
+
