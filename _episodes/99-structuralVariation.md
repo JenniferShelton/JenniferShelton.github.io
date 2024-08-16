@@ -27,31 +27,68 @@ insertions, duplications, inversions, translocations, and copy number variations
 CNVs are a subset of structural variations, specifically deletions and duplications, that
 affect large (>10kb) segments of the genome.
 
+### Deletion
 ![Deletion]({{ page.root }}/fig/SV.deletion.png)
+
+### Insertion
 ![Insertion]({{ page.root }}/fig/SV.insertion.png)
+
+### Duplication
 ![Duplication]({{ page.root }}/fig/SV.duplication.png)
+
+### Inversion
 ![Inversion]({{ page.root }}/fig/SV.inversion.png)
+
+### Translocation
 ![Translocation]({{ page.root }}/fig/SV.translocation.png)
 
 ## Detecting structural variants in short-read data
 
-We use three types of read evidence to determine structural variations: split-reads, discordant 
-read pairs, and read depth. Split reads are those where part of the read aligns to the reference
-on one side of the breakpoint and the other part of the read aligns to the other side of the 
-deletion breakpoint or to the inserted sequence. Discordant read pairs have an insert size that
-falls significantly outside the normal distribution of insert sizes. Read depth is where increases
-or decreases in read coverage occur versus the average read coverage of the genome.
+We use three types of read evidence to determine structural variations: discordant read pairs, 
+split-reads, and read depth. Discordant read pairs have insert sizes that fall significantly 
+outside the normal distribution of insert sizes.
+
+### Insert size distribution
+![Insert size distribution]({{ page.root }}/fig/SV.insertSize.png)
+
+Split reads are those where part of the read aligns to the reference on one side of the breakpoint 
+and the other part of the read aligns to the other side of the deletion breakpoint or to the 
+inserted sequence. Read depth is where increases or decreases in read coverage occur versus the 
+average read coverage of the genome.
 
 Coverage comes in two variants, sequence coverage and physical coverage. Sequence coverage is the 
 number of times a base was read while physical coverage is the number of times a base was read or 
 spanned by paired reads.
 
-![Coverage]({{ page.root }}/fig/SV.sequenceCov.png)
+### Sequence coverage
+![Sequence coverage]({{ page.root }}/fig/SV.sequenceCov.png)
 
 When there are no paired reads, sequence coverage equals the physical coverage. However, when
 paired reads are introduced the two coverage metrics can vary widely. 
 
-![Coverage2]({{ page.root }}/fig/SV.physicalCov.png)
+### Physcial coverage
+![Sequence coverage vs physical coverage]({{ page.root }}/fig/SV.physicalCov.png)
 
-For detection of structural variation physical coverage is very important.
+### Read depth
+![Read depth]({{ page.root }}/fig/SV.readDepth.png)
 
+### Reads aligned to sample genome
+![Reads aligned to sample]({{ page.root }}/fig/SV.readsVsample.png)
+
+### Reads aligned to reference genome
+![Reads aligned to reference]({{ page.root }}/fig/SV.readsVref.png)
+
+### Deletion read signature
+![Deletion read signature]({{ page.root }}/fig/SV.deletionSig.png)
+
+### Inversion read signature
+![Inversion read signature]({{ page.root }}/fig/SV.inversionSig.png)
+
+### Tandem duplication read signature
+![Tandem duplication read signature]({{ page.root }}/fig/SV.tandemDupSig.png)
+
+### Translocation read signature
+![Translocation read signature]({{ page.root }}/fig/SV.translocationSig.png)
+
+### CNV analysis
+![CNV analysis]({{ page.root }}/fig/SV.cnvAnalysis.png)
