@@ -116,7 +116,17 @@ library(Seurat)
 library(patchwork)
 ```
 
-## Read in counts and create a Seurat object.
+> ## Read in counts and create a Seurat object.
+> 
+> ### Q1: Prepare the relative path to the directory with the files needed for the count matrix.
+>
+> Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
+> > ### A1:
+> > ```
+> > filtered_gene_bc_matrices/hg19
+> > ```
+> {: .solution}
+{: .challenge}
 
 > ### Prepare the relative path to the directory with the files needed for the count matrix.
 > 
