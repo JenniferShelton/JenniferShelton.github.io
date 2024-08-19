@@ -128,12 +128,15 @@ library(patchwork)
 > {: .solution}
 {: .challenge}
 
-> ### Prepare the relative path to the directory with the files needed for the count matrix.
-> 
+> ## Duplicate but with only one header section
+>
+> Testing the same idea as above, but with only one header instead of 2.
+>
+> First step is to prepare the relative path to the directory with the files needed for the count matrix.
+>
 > Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
 > 
-> > #### Solution
-> > 
+> > ### Answer:
 > > ```
 > > filtered_gene_bc_matrices/hg19
 > > ```
