@@ -121,11 +121,12 @@ library(patchwork)
 > ### Prepare the relative path to the directory with the files needed for the count matrix.
 > 
 > Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
+> 
 > > #### Solution
 > > 
->> ```
->> filtered_gene_bc_matrices/hg19
->> ```
+> > ```
+> > filtered_gene_bc_matrices/hg19
+> > ```
 > {: .solution}
 {: .challenge}
 
