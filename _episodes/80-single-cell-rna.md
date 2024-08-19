@@ -133,19 +133,9 @@ filtered_gene_bc_matrices/hg19
 
 :::::::::::::::::::::::::
 
-Use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
+Next, we will use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
 
-```
-Based on what we saw in the data download section, what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
-```
-{: .challenge}
-
-```
-filtered_gene_bc_matrices/hg19
-```
-{: .solution}
-
-Next, let’s look at the help message for Read10X.
+Let’s look at the help message for Read10X.
 
 ```
 ?Read10X
