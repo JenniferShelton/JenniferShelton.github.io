@@ -18,6 +18,8 @@ keypoints:
 - We can use known marker genes or run differential expression between clusters to annotate cell types after clustering.
 ---
 
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 # About this tutorial
 
 This Single-cell RNA (scRNA) workflow is based on [this vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
@@ -132,6 +134,8 @@ filtered_gene_bc_matrices/hg19
 ```
 
 :::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Next, we will use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
 
