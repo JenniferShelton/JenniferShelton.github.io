@@ -20,21 +20,20 @@ keypoints:
 
 # About this tutorial
 
-This Single-cell RNA (scRNA) workflow is based on material from the following link:
-
-https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
+This Single-cell RNA (scRNA) workflow is based on [this vignette] (https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
 
 10X Genomics (which makes a popular technology for single-cell sequencing), regularly publishes datasets to showcase the quality of their kits. This is commonly done on peripheral blood mononuclear cells (PBMCs), as these are a readily available source of human samples (blood) compared to other tissues. These samples also contain a set of easily distinguishable, well-annotated cell types (immune cells).
 
-You can find more information on the dataset we will be using today here:
-
-https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0
+The 10X website provides more information and downloadable files for this dataset [here] (https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
 
 # Download and unpack the data
 
 We will be using the filtered gene-cell matrix downloaded from the following link:
 
+```
 https://cf.10xgenomics.com/samples/cell-exp/1.1.0/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz
+```
+{: .output}
 
 Download the tarball with all the files for the expression matrix using the `wget` command.
 
