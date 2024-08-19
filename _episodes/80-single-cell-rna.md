@@ -18,7 +18,7 @@ keypoints:
 - We can use known marker genes or run differential expression between clusters to annotate cell types after clustering.
 ---
 
-## About this tutorial
+# About this tutorial
 
 This Single-cell RNA (scRNA) workflow is based on material from the following link:
 
@@ -30,7 +30,7 @@ You can find more information on the dataset we will be using today here:
 
 https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0
 
-## Download and unpack the data
+# Download and unpack the data
 
 We will be using the filtered gene-cell matrix downloaded from the following link:
 
@@ -100,7 +100,13 @@ barcodes.tsv  genes.tsv  matrix.mtx
 
 We now have the relative path to the directory with the files we need. We will use this path to load the data into R.
 
-## Start an R session
+# Start an R session
+
+Start an R or RStudio session as you did in this previous lesson on R.
+
+Then, we will run all of the following commands within that session.
+
+# Single-cell workflow in R with Seurat
 
 ## Load libraries
 
