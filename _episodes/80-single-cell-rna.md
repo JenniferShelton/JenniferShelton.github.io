@@ -4,6 +4,7 @@ teaching: 3h
 exercises: 10
 questions:
 - What is a command shell and why would I use one?
+- Test adding a question via GUI version of Git?
 objectives:
 - Explain how the shell relates to the keyboard, the screen, the operating system, and users’ programs.
 - Explain when and why command-line interfaces should be used instead of graphical interfaces.
