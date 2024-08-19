@@ -18,8 +18,6 @@ keypoints:
 - We can use known marker genes or run differential expression between clusters to annotate cell types after clustering.
 ---
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
 # About this tutorial
 
 This Single-cell RNA (scRNA) workflow is based on [this vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
@@ -128,15 +126,15 @@ library(patchwork)
 
 Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
 
-:::::::::::::::  solution
+<details><summary>Solution</summary>
+<p>
 
 ```
 filtered_gene_bc_matrices/hg19
 ```
 
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
+</p>
+</details>
 
 ### Read in based on the relative path.
 
@@ -160,11 +158,16 @@ expression_matrix <- Read10X(data.dir = data_dir)
 
 Let’s do something similar here, but replace 'path/to/data/directory' with the appropriate path.
 
+<details><summary>Solution</summary>
+<p>
+
 ```
 data_dir <- 'filtered_gene_bc_matrices/hg19/'
 expression_matrix <- Read10X(data.dir = data_dir)
 ```
-{: .language-r}
+
+</p>
+</details>
 
 Next, we are going to create the Seurat object, and call it seurat_object.
 
