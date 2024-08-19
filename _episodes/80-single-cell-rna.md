@@ -107,7 +107,6 @@ Start an R or RStudio session as you did in this previous lesson on R.
 Then, we will run all of the following commands within that session.
 
 # Single-cell workflow in R with Seurat
-
 ## Load libraries
 
 Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`. 
@@ -119,7 +118,6 @@ library(Seurat)
 library(patchwork)
 ```
 {: .language-r}
-
 ## Read in counts and create a Seurat object.
 
 Use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
