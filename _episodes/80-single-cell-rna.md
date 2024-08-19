@@ -20,11 +20,11 @@ keypoints:
 
 # About this tutorial
 
-This Single-cell RNA (scRNA) workflow is based on [this vignette] (https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
+This Single-cell RNA (scRNA) workflow is based on [this vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
 
 10X Genomics (which makes a popular technology for single-cell sequencing), regularly publishes datasets to showcase the quality of their kits. This is commonly done on peripheral blood mononuclear cells (PBMCs), as these are a readily available source of human samples (blood) compared to other tissues. These samples also contain a set of easily distinguishable, well-annotated cell types (immune cells).
 
-The 10X website provides more information and downloadable files for this dataset [here] (https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
+The 10X website provides more information and downloadable files for this dataset [here](https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
 
 # Download and unpack the data
 
@@ -121,15 +121,15 @@ library(patchwork)
 
 Use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
 
-First, we need the path to the directory with the matrix.mtx, genes.tsv, and features.tsv files. What path is this?
+```
+Based on what we saw in the data download section, what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
+```
+{: .challenge}
 
 ```
-filtered_gene_bc_matrices/hg19/barcodes.tsv
-filtered_gene_bc_matrices/hg19/genes.tsv
-filtered_gene_bc_matrices/hg19/matrix.mtx
+filtered_gene_bc_matrices/hg19
 ```
-{: .output}
-
+{: .solution}
 
 Next, let’s look at the help message for Read10X.
 
