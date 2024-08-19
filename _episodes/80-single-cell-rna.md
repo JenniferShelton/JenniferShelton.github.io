@@ -150,31 +150,21 @@ library(patchwork)
 > > ```
 > > {: .language-r}
 > {: .solution}
+>
+> ### Creating the Seurat object
+>
+> From the Read10X help, the next line in the example was this:
+>
+> ```
+> seurat_object = CreateSeuratObject(counts = expression_matrix)
+> ```
+> {: .output}
+>
+> If you ran the previous step as written (creating an object called expression_matrix), you should be able to run this line as-is.
+>
+> Then, we can proceed with the next steps in this workflow based on our Seurat object being called seurat_object.
+> 
 {: .challenge}
-
-Let’s do something similar here, but replace 'path/to/data/directory' with the appropriate path.
-
-<details><summary>Solution</summary>
-<p>
-
-```
-data_dir <- 'filtered_gene_bc_matrices/hg19/'
-expression_matrix <- Read10X(data.dir = data_dir)
-```
-
-</p>
-</details>
-
-Next, we are going to create the Seurat object, and call it seurat_object.
-
-From the Read10X help, the next line in the example was this:
-
-```
-seurat_object = CreateSeuratObject(counts = expression_matrix)
-```
-{: .language-r}
-
-If you ran the previous step as written (creating an object called expression_matrix), you should be able to run this line as-is.
 
 
 ## Quality control metrics and visualization and filtering
