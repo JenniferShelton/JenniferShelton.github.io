@@ -110,29 +110,24 @@ Then, we will run all of the following commands within that session.
 
 Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`. 
 
-
 ```
 library(dplyr)
 library(Seurat)
 library(patchwork)
 ```
-{: .language-r}
 
 ## Read in counts and create a Seurat object.
 
-### Prepare the relative path to the directory with the files needed for the count matrix.
-
-Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
-
-<details><summary>Solution</summary>
-<p>
-
-```
-filtered_gene_bc_matrices/hg19
-```
-
-</p>
-</details>
+> ### Prepare the relative path to the directory with the files needed for the count matrix.
+> 
+> Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
+> > #### Solution
+> > 
+>> ```
+>> filtered_gene_bc_matrices/hg19
+>> ```
+> {: .solution}
+{: .challenge}
 
 ### Read in based on the relative path.
 
