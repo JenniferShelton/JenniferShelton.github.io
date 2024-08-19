@@ -119,6 +119,18 @@ library(patchwork)
 {: .language-r}
 ## Read in counts and create a Seurat object.
 
+:::::::::::::::::::: challenge
+
+### Prepare the relative path to the directory with the files needed for the count matrix.
+
+Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
+
+::::::::::::::: solution
+
+```
+filtered_gene_bc_matrices/hg19
+```
+
 Use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
 
 ```
