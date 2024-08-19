@@ -136,7 +136,7 @@ library(patchwork)
 >
 > Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
 > 
-> > ### Answer:
+> > ## Solution
 > > ```
 > > filtered_gene_bc_matrices/hg19
 > > ```
