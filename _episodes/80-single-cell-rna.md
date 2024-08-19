@@ -3,17 +3,19 @@ title: "Single-cell RNA"
 teaching: 3h
 exercises: 10
 questions:
-- What is a command shell and why would I use one?
-- Test adding a question via GUI version of Git?
+- How can I prepare a single-cell dataset for input into analysis?
+- How can I evaluate the quality of a single-cell RNA-Seq dataset?
+- How can I visualize a single-cell dataset?
+- How can I annotate cell types in a single-cell dataset?
 objectives:
-- Explain how the shell relates to the keyboard, the screen, the operating system, and users’ programs.
-- Explain when and why command-line interfaces should be used instead of graphical interfaces.
+- Move from a downloaded gene-cell count matrix to a filtered, normalized version of this dataset.
+- Create visualizations of quality metrics and dimensional reduction to summarize the data.
+- Annotate each cell with a cluster and a cell type label.
 keypoints:
-- Many bioinformatics tools can only process large data in the command line version not the GUI.
-- The shell makes your work less boring (same set of tasks with a large number of files)"
-- The shell makes your work less error-prone
-- The shell makes your work more reproducible.
-- Many bioinformatic tasks require large amounts of computing power
+- Single-cell RNA analysis often starts with a gene-cell count matrix.
+- Each dot in the scatter plots from a single-cell RNA analysis, or column in a heatmap, often represents a cell.
+- Clustering is a key step in understanding biology.
+- We can use known marker genes or run differential expression between clusters to annotate cell types after clustering.
 ---
 
 ## About this tutorial
