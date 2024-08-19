@@ -121,32 +121,36 @@ library(patchwork)
 > ### Prepare the relative path to the directory with the files needed for the count matrix.
 >
 > Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
-> > ### Solution
+> > ## Solution
 > > ```
 > > filtered_gene_bc_matrices/hg19
 > > ```
 > {: .solution}
+> 
+> ### Read in based on the relative path.
+> 
+> Next, we will use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
+>
+> Let’s look at the help message for Read10X.
+> ```
+> ?Read10X
+> ```
+> {: .language-r}
+> If we scroll down to the examples section, we get the following:
+> ```
+> data_dir <- 'path/to/data/directory'
+> expression_matrix <- Read10X(data.dir = data_dir)
+> ```
+> {: .output}
+> Let's do something similar here, but replace 'path/to/data/directory' with the appropriate path.
+> > ## Solution
+> > ```
+> > data_dir = 'filtered_gene_bc_matrices/hg19'
+> > expression_matrix <- Read10X(data.dir = data_dir)
+> > ```
+> > {: .language-r}
+> {: .solution}
 {: .challenge}
-
-### Read in based on the relative path.
-
-Next, we will use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
-
-Let’s look at the help message for Read10X.
-
-```
-?Read10X
-```
-{: .language-r}
-
-If we scroll down to the examples section, we get the following:
-
-```
-data_dir <- 'path/to/data/directory'
-expression_matrix <- Read10X(data.dir = data_dir)
-
-```
-{: .output}
 
 Let’s do something similar here, but replace 'path/to/data/directory' with the appropriate path.
 
