@@ -119,7 +119,7 @@ Then, we will run all of the following commands within that session.
 > > ```
 > > {: .language-r}
 > {: .solution}
-> {: .challenge}
+{: .challenge}
 
 > ## Read in counts and create a Seurat object.
 > 
@@ -233,7 +233,7 @@ Then, we will run all of the following commands within that session.
 > > ```
 > > {: .language-r}
 > {: .solution}
-> {: .challenge}
+{: .challenge}
 
 ## QC visualization
 
