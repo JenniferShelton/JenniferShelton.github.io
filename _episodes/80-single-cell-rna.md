@@ -109,13 +109,16 @@ Then, we will run all of the following commands within that session.
 
 > ## Load libraries.
 >
-> Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`. 
-> ```
-> library(dplyr)
-> library(Seurat)
-> library(patchwork)
-> ```
-> {: .language-r}
+> Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`.
+>
+> > ## Solution
+> > ```
+> > library(dplyr)
+> > library(Seurat)
+> > library(patchwork)
+> > ```
+> > {: .language-r}
+> {: .solution}
 > {: .challenge}
 
 > ## Read in counts and create a Seurat object.
