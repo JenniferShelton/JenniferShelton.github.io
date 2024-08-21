@@ -406,6 +406,21 @@ And we will just use default arguments for all of these.
 > {: .solution}
 {: .challenge}
 
+Let's test putting just a solution without doing a code challenge block title as well.
+
+>
+>> ## Solution
+>>
+>> ```
+>> seurat_object = NormalizeData(object = seurat_object)
+>> seurat_object = FindVariableFeatures(object = seurat_object)
+>> seurat_object = ScaleData(object = seurat_object)
+>> seurat_object = RunPCA(object = seurat_object)
+>> ```
+>> {: .language-r}
+> {: .solution}
+{: .challenge}
+
 > ## Run and plot non-linear dimensional reduction (UMAP/tSNE)
 >
 > PCA can help reduce the number of dimensions that explain the data from thousands (of genes) to a handful or tens.
