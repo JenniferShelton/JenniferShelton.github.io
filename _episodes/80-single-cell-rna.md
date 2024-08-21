@@ -3,35 +3,37 @@ title: "Single-cell RNA"
 teaching: 3h
 exercises: 10
 questions:
-- What is a command shell and why would I use one?
+- How can I prepare a single-cell dataset for input into analysis?
+- How can I evaluate the quality of a single-cell RNA-Seq dataset?
+- How can I visualize a single-cell dataset?
+- How can I annotate cell types in a single-cell dataset?
 objectives:
-- Explain how the shell relates to the keyboard, the screen, the operating system, and users’ programs.
-- Explain when and why command-line interfaces should be used instead of graphical interfaces.
+- Move from a downloaded gene-cell count matrix to a filtered, normalized version of this dataset.
+- Create visualizations of quality metrics and dimensional reduction to summarize the data.
+- Annotate each cell with a cluster and a cell type label.
 keypoints:
-- Many bioinformatics tools can only process large data in the command line version not the GUI.
-- The shell makes your work less boring (same set of tasks with a large number of files)"
-- The shell makes your work less error-prone
-- The shell makes your work more reproducible.
-- Many bioinformatic tasks require large amounts of computing power
+- Single-cell RNA analysis often starts with a gene-cell count matrix.
+- Each dot in the scatter plots from a single-cell RNA analysis, or column in a heatmap, often represents a cell.
+- Clustering is a key step in understanding biology.
+- We can use known marker genes or run differential expression between clusters to annotate cell types after clustering.
 ---
 
-## About this tutorial
+# About this tutorial
 
-This Single-cell RNA (scRNA) workflow is based on material from the following link:
-
-https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
+This Single-cell RNA (scRNA) workflow is based on [this vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
 
 10X Genomics (which makes a popular technology for single-cell sequencing), regularly publishes datasets to showcase the quality of their kits. This is commonly done on peripheral blood mononuclear cells (PBMCs), as these are a readily available source of human samples (blood) compared to other tissues. These samples also contain a set of easily distinguishable, well-annotated cell types (immune cells).
 
-You can find more information on the dataset we will be using today here:
+The 10X website provides more information and downloadable files for this dataset [here](https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
 
-https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0
-
-## Download and unpack the data
+# Download and unpack the data
 
 We will be using the filtered gene-cell matrix downloaded from the following link:
 
+```
 https://cf.10xgenomics.com/samples/cell-exp/1.1.0/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz
+```
+{: .output}
 
 Download the tarball with all the files for the expression matrix using the `wget` command.
 
@@ -97,120 +99,145 @@ barcodes.tsv  genes.tsv  matrix.mtx
 
 We now have the relative path to the directory with the files we need. We will use this path to load the data into R.
 
-## Start an R session
+# Start an R session
 
-## Load libraries
+Start an R or RStudio session as you did in this previous lesson on R.
 
-Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`. 
+Then, we will run all of the following commands within that session.
 
+# Single-cell workflow in R with Seurat
 
-```
-library(dplyr)
-library(Seurat)
-library(patchwork)
-```
-{: .language-r}
+> ## Load libraries.
+>
+> Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`.
+>
+> > ## Solution
+> > ```
+> > library(dplyr)
+> > library(Seurat)
+> > library(patchwork)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
 
-## Read in counts and create a Seurat object.
+> ## Read in counts and create a Seurat object.
+> 
+> ### Prepare the relative path to the directory with the files needed for the count matrix.
+>
+> Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
+> > ## Solution
+> > ```
+> > filtered_gene_bc_matrices/hg19
+> > ```
+> {: .solution}
+> 
+> ### Read in based on the relative path.
+> 
+> Next, we will use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
+>
+> Let’s look at the help message for Read10X.
+> ```
+> ?Read10X
+> ```
+> {: .language-r}
+> If we scroll down to the examples section, we get the following:
+> ```
+> data_dir <- 'path/to/data/directory'
+> expression_matrix <- Read10X(data.dir = data_dir)
+> ```
+> {: .output}
+> Let's do something similar here, but replace 'path/to/data/directory' with the appropriate path.
+> > ## Solution
+> > ```
+> > data_dir = 'filtered_gene_bc_matrices/hg19'
+> > expression_matrix <- Read10X(data.dir = data_dir)
+> > ```
+> > {: .language-r}
+> {: .solution}
+>
+> ### Creating the Seurat object
+>
+> From the Read10X help, the next line in the example was this:
+>
+> ```
+> seurat_object = CreateSeuratObject(counts = expression_matrix)
+> ```
+> {: .language-r}
+>
+> If you ran the previous step as written (creating an object called expression_matrix), you should be able to run this line as-is.
+>
+> Then, we can proceed with the next steps in this workflow based on our Seurat object being called seurat_object.
+> 
+{: .challenge}
 
-Use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
+> ## Quality control metrics calculation
+> 
+> ### Calculating mitochondrial rates
+> 
+> One important metric correlated with cell viability (dead cells have higher rates) is mitochondrial rates, or the percent of reads going to mitochondrial genes.
+>
+> Here, we will use the PercentageFeatureSet argument to calculate these, and add to the Seurat object.
+>
+> Generate a help message for this command.
+>
+> ```
+> ?PercentageFeatureSet
+> ```
+> {: .language-r}
+>
+> In the example at the bottom, they run the command like so to add a variable called `percent.mt` to the object, containing the mitochondrial rates.
+>
+> ```
+> pbmc_small[["percent.mt"]] <- PercentageFeatureSet(object = pbmc_small, pattern = "^MT-")
+> ```
+> {: .output}
+>
+> The pattern argument here means that we sum up the percent of reads going to all genes starting with `MT-`, e.g. `MT-ND1` and `MT-CO1`.
+>
+> Let’s run this on our object, but replace `pbmc_small` with the name of the Seurat object you just made in the previous step.
+>
+> > ## Solution
+> >
+> > ```
+> > seurat_object[["percent.mt"]] = PercentageFeatureSet(object = seurat_object, pattern="MT-")
+> > ```
+> > {: .language-r}
+> {: .solution}
+>
+> ### QC metrics extraction
+>
+> Besides the mitochondrial rates we just calculated, the following metrics are also calculated automatically when we create the Seurat object:
+>
+> - [nCount_RNA](#nCount_RNA) - Number of total UMIs per cell
+> - [nFeature_RNA](#nFeature_RNA)  -  Number of genes expressed per cell
+>
+> And then based on the code we already ran, we have:
+>
+> - [percent.mt] (#percent.mt) - Mitochondrial rate, aka % of reads in a cell that go to mitochondrial genes
+>
+> We can extract these metrics from the object by using the `$` operator.
+>
+> Let's extract each of these metrics into a series of new objects. The example below is for `nCount_RNA`. Replace the Seurat object name with the name of your object, and the name for `nFeature_RNA` and `percent.mt` as appropriate.
+>
+> ```
+> nCount_RNA = your_seurat_object_name$nCount_RNA
+> ```
+> {: .language-r}
+>
+> > ## Solution
+> > ```
+> > nCount_RNA = seurat_object$nCount_RNA
+> > nFeature_RNA = seurat_object$nFeature_RNA
+> > percent.mt = seurat_object$percent.mt
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
 
-First, we need the path to the directory with the matrix.mtx, genes.tsv, and features.tsv files. What path is this?
-
-```
-filtered_gene_bc_matrices/hg19/barcodes.tsv
-filtered_gene_bc_matrices/hg19/genes.tsv
-filtered_gene_bc_matrices/hg19/matrix.mtx
-```
-{: .output}
-
-
-Next, let’s look at the help message for Read10X.
-
-```
-?Read10X
-```
-{: .language-r}
-
-If we scroll down to the examples section, we get the following:
-
-```
-data_dir <- 'path/to/data/directory'
-expression_matrix <- Read10X(data.dir = data_dir)
-
-```
-{: .output}
-
-Let’s do something similar here, but replace 'path/to/data/directory' with the appropriate path.
-
-```
-data_dir <- 'filtered_gene_bc_matrices/hg19/'
-expression_matrix <- Read10X(data.dir = data_dir)
-```
-{: .language-r}
-
-Next, we are going to create the Seurat object, and call it seurat_object.
-
-From the Read10X help, the next line in the example was this:
-
-```
-seurat_object = CreateSeuratObject(counts = expression_matrix)
-```
-{: .language-r}
-
-If you ran the previous step as written (creating an object called expression_matrix), you should be able to run this line as-is.
-
-
-## Quality control metrics and visualization and filtering
-
-First metric we want to look at, that needs to be calculated, is mitochondrial rates.
-
-Use the PercentageFeatureSet argument to do this.
-
-Generate a help message for this:
-
-```
-?PercentageFeatureSet
-```
-{: .language-r}
-
-In the example at the bottom, they run the command like so to add a variable called `percent.mt` to the object, containing the mitochondrial rates.
-
-```
-pbmc_small[["percent.mt"]] <- PercentageFeatureSet(object = pbmc_small, pattern = "^MT-")
-```
-{: .language-r}
-
-
-The pattern argument here means that we sum up the percent of reads going to all genes starting with `MT-`, e.g. `MT-ND1` and `MT-CO1`.
-
-Let’s run this on our object, but replace `pbmc_small` with the name of the Seurat object you just made in the previous step.
-
-```
-your_seurat_object_name[["percent.mt"]] <- PercentageFeatureSet(object = your_seurat_object_name,pattern='^MT-')
-```
-{: .language-r}
-
-Next, we can extract QC metrics from the object by using the `$` operator.
-
-Besides the metric `percent.mt` we just calculated, we also get the following metrics generated automatically when we create the object:
-
-
-- [nCount_RNA](#nCount_RNA) - Number of total UMIs per cell
-
-- [nFeature_RNA](#nFeature_RNA)  -  Number of genes expressed per cell
-
-Let’s extract all of these into a series of new objects. Syntax below for `nCount_RNA`, replace the Seurat object name with the name of your object, and the name for `nFeature_RNA` and `percent.mt` as appropriate.
-
-
-```
-nCount_RNA = your_seurat_object_name$nCount_RNA
-```
-{: .language-r}
-
+## QC visualization
 
 Plot `nCount_RNA` vs. `percent.mt`
-
 
 ```
 plot(nCount_RNA, percent.mt, cex=0.1)
