@@ -1,5 +1,5 @@
 ---
-title: "Structural Variation Discovery and Genotyping"
+title: "Structural Variation in short reads"
 teaching: 1.5 hr
 exercises: 3 hr
 questions:
@@ -20,12 +20,12 @@ keypoints:
 
 ## What are structural variants
 
-Structural variation is most typically defined as variation 50 base pairs or greater. This 
-is an admittedly arbitrary definition, but it provides us a useful cutoff between INDELs
-and SVs. Structural variation encompases several classes of variants including deletions,
-insertions, duplications, inversions, translocations, and copy number variations (CNVs).
-CNVs are a subset of structural variations, specifically deletions and duplications, that
-affect large (>10kb) segments of the genome.
+Structural variation is most typically defined as variation affecting larger fragments of the genome
+than SNVs and InDels; for our purposes those 50 base pairs or greater. This is an admittedly 
+arbitrary definition, but it provides us a useful cutoff between INDELs and SVs. Structural 
+variation encompases several classes of variants including deletions, insertions, duplications, 
+inversions, translocations, and copy number variations (CNVs). CNVs are a subset of structural 
+variations, specifically deletions and duplications, that affect large (>10kb) segments of the genome.
 
 ##### Deletion
 ![Deletion]({{ page.root }}/fig/SV.deletion.png)
