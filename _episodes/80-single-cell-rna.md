@@ -1,16 +1,16 @@
 ---
 title: "Single-cell RNA"
-teaching: 3h
-exercises: 10
+teaching: 60
+exercises: 120
 questions:
 - How can I prepare a single-cell dataset for input into analysis?
 - How can I evaluate the quality of a single-cell RNA-Seq dataset?
 - How can I visualize a single-cell dataset?
 - How can I annotate cell types in a single-cell dataset?
 objectives:
-- Move from a downloaded gene-cell count matrix to a filtered, normalized version of this dataset.
-- Create visualizations of quality metrics and dimensional reduction to summarize the data.
-- Annotate each cell with a cluster and a cell type label.
+- Apply standard single-cell workflow methods such as QC filtering and normalization given a gene-cell count matrix.
+- Understand the visualizations that come with a typical single-cell RNA workflow.
+- Implement clustering and differential expression methods to classify each cell with the proper cell type label.
 keypoints:
 - Single-cell RNA analysis often starts with a gene-cell count matrix.
 - Each dot in the scatter plots from a single-cell RNA analysis, or column in a heatmap, often represents a cell.
@@ -109,13 +109,12 @@ Then, we will run all of the following commands within that session.
 
 > ## Load libraries.
 >
-> Load all the libraries you will need for this tutorial using the `library` command. Today we will load `dplyr`, `Seurat`, `patchwork`.
+> Load all the libraries you will need for this tutorial using the `library` command. Today we will load `Seurat` and `dplyr`.
 >
 > > ## Solution
 > > ```
 > > library(dplyr)
 > > library(Seurat)
-> > library(patchwork)
 > > ```
 > > {: .language-r}
 > {: .solution}
@@ -171,7 +170,7 @@ Then, we will run all of the following commands within that session.
 > 
 {: .challenge}
 
-> ## Quality control metrics calculation
+> ## Quality control metrics calculation and extraction
 > 
 > ### Calculating mitochondrial rates
 > 
@@ -214,7 +213,7 @@ Then, we will run all of the following commands within that session.
 >
 > And then based on the code we already ran, we have:
 >
-> - [percent.mt] (#percent.mt) - Mitochondrial rate, aka % of reads in a cell that go to mitochondrial genes
+> - [percent.mt](#percent.mt) - Mitochondrial rate, aka % of reads in a cell that go to mitochondrial genes
 >
 > We can extract these metrics from the object by using the `$` operator.
 >
@@ -235,61 +234,129 @@ Then, we will run all of the following commands within that session.
 > {: .solution}
 {: .challenge}
 
-## QC visualization
+> ## QC visualization
+>
+> First, let's plot a simple histogram of percent.mt, with labels.
+>
+> Here is how we would make a histogram for a variable called "x".
+>
+> ```
+> hist(x,label=TRUE)
+> ```
+> {: .language-r}
+>
+> Let's do similar here, but replace percent.mt instead of x.
+>
+> > ## Solution
+> > ```
+> > hist(percent.mt,label=TRUE)
+> > ```
+> > {: .language-r}
+> >
+> > ![percent_mt hist1]({{ page.root }}/fig/percent_mt_hist1.png)
+> {: .solution}
+>
+> It looks like there are very few cells with mitochondrial rates over 6%, and especially over 10%.
+>
+> It is kind of hard to see what it is going on at the lower end of the distribution here, because the breaks in the histogram are driven by the outliers.
+>
+> Let's make another object called "percent.mt_low" that contains only the values less than 10, and then plot a histogram of that.
+>
+> Example of how to subset an object by value.
+>
+> ```
+> x_low = x[x < 5]
+> ```
+> {: .language-r}
+>
+> We will do similar here, but with "percent.mt" instead of x and 10 instead of 5.
+>
+> > ## Solution
+> >
+> > percent.mt_low = percent.mt[percent.mt < 10]
+> >
+> > hist(percent.mt_low,label=TRUE)
+> >
+> > ![percent_mt hist2]({{ page.root }}/fig/percent_mt_hist2.png)
+> {: .solution}
+>
+> Based on this plot, it seems like 5% would potentially be a sensible cutoff on mitochondrial rate.
+>
+> But let's make one more plot to see.
+>
+> Plot `nFeature_RNA` vs. `percent.mt`. Make the point size small (cex=0.1) since we have so many points.
+>
+> ```
+> plot(nFeature_RNA, percent.mt, cex=0.1)
+> ```
+> {: .language-r}
+>
+> ![nFeature_RNA_vs_percent.mt_plot]({{ page.root }}/fig/nFeature_RNA_vs_percent.mt.png)
+>
+> It looks like cells with mitochondrial rates over 5% tend to have very low gene counts, which is another indication of poor quality.
+>
+> Let's make a histogram of number of genes (nFeature_RNA) as well. Again, do label=TRUE.
+>
+> > ## Solution
+> >
+> > hist(nFeature_RNA,label=TRUE)
+> >
+> > ![nFeature_RNA_hist_plot]({{ page.root }}/fig/nFeature_RNA_hist.png)
+> {: .solution}
+>
+> The minimum number of genes is at least 200, which is often where people set a minimum cutoff.
+>
+> On the other end of the distribution, we find that very few cells have more than 2000 genes, and the max is <= 3600.
+>
+> One last plot - let's look at the relationship between number of UMIs and number of genes per cell.
+>
+> ```
+> plot(nCount_RNA,nFeature_RNA,cex=0.1)
+> ```
+> {: .language-r}
+>
+> ![nCount_vs_nFeature_RNA_plot]({{ page.root }}/fig/nCount_vs_nFeature_RNA.png)
+>
+> This shows a high level of linear correlation between number of UMIs and number of genes per cell, which is good! Indicates the data is high quality.
+{: .challenge}
 
-Plot `nCount_RNA` vs. `percent.mt`
-
-```
-plot(nCount_RNA, percent.mt, cex=0.1)
-```
-{: .language-r}
-
-![percent_mt plot]({{ page.root }}/fig/sc-rna-1.png)
-
-Plot `nCount_RNA` vs. `nFeature_RNA`
-
-```
-plot(nCount_RNA, nFeature_RNA, cex=0.1)
-```
-{: .language-r}
-
-
-![nFeature_RNA plot]({{ page.root }}/fig/sc-rna-2.png)
-
-
-We find that very few cells have mitochondrial rate more than 5%, and when they do they often have very low `nCount_RNA`.
-
-We also find that `nCount_RNA` and `nFeature_RNA` are very correlated, even at very low and very high counts. 
-
-Based on this, don’t think we need to apply any filters on `nCount_RNA` or `nFeature_RNA`. Let’s just remove cells with mitochondrial rate more than 5% (require `percent.mt < 5`).
-
-How do we do this? Let’s look up the `subset` function, which is actually a method for a Seurat object (so look up `SeuratObject::subset` instead of `Seurat::subset`).
-
-```
-?SeuratObject::subset
-```
-{: .language-r}
-
-Syntax from the help message:
-
-```
-subset(x = seurat_object_name, subset = insert_argument_here)
-```
-{: .output}
-
-Example from the help message:
-
-```
-subset(pbmc_small, subset = MS4A1 > 4)
-```
-{: .output}
-
-Replace `pbmc_small` here with the name of your Seurat object, and `MS4A1 > 4` with an expression to require `percent.mt` to be less than 5.
-
-```
-your_seurat_object_name = subset(x = your_seurat_object_name, subset = your_logical_expression)
-```
-{: .language-r}
+> ## QC filtering
+>
+> Based on the plots in the previous module, we are going to remove cells with mitochondrial rate less than 5% (require `percent.mt < 5`).
+>
+> How do we do this? Let’s look up the `subset` function, which is a method for a Seurat object.
+>
+> ```
+> ?SeuratObject::subset
+> ```
+> {: .language-r}
+>
+> Syntax from the help message:
+> ```
+> subset(x = seurat_object_name, subset = insert_argument_here)
+> ```
+> {: .output}
+>
+> Example from the help message:
+> 
+> ```
+> subset(pbmc_small, subset = MS4A1 > 4)
+> ```
+> {: .output}
+>
+> Replace `pbmc_small` here with the name of your Seurat object, and `MS4A1 > 4` with an expression to require `percent.mt` to be less than 5.
+>
+> ```
+> your_seurat_object_name = subset(x = your_seurat_object_name, subset = your_logical_expression)
+> ```
+> {: .language-r}
+>
+> > ## Solution
+> >
+> > ```
+> > seurat_object = subset(x = seurat_object, subset = percent.mt < 5)
+> > ```
+> > {: language-r}
 
 ## Data normalization, variable feature selection, scaling, and dimensional reduction (PCA)
 
