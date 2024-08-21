@@ -22,10 +22,18 @@ keypoints:
 
 Structural variation is most typically defined as variation affecting larger fragments of the genome
 than SNVs and InDels; for our purposes those 50 base pairs or greater. This is an admittedly 
-arbitrary definition, but it provides us a useful cutoff between INDELs and SVs. Structural 
-variation encompases several classes of variants including deletions, insertions, duplications, 
-inversions, translocations, and copy number variations (CNVs). CNVs are a subset of structural 
-variations, specifically deletions and duplications, that affect large (>10kb) segments of the genome.
+arbitrary definition, but it provides us a useful cutoff between InDels and SVs. 
+
+> ## Importance of SVs
+>
+> SVs affect an order of magnitude more bases in the human genome in comparison to SNVs (Pang et al, 2010).
+> And are more likely to associate with disease.
+{: .keypoints}
+
+Structural variation encompases several classes of variants including deletions, insertions, 
+duplications, inversions, translocations, and copy number variations (CNVs). CNVs are a subset of 
+structural variations, specifically deletions and duplications, that affect large (>10kb) segments 
+of the genome.
 
 ##### Deletion
 ![Deletion]({{ page.root }}/fig/SV.deletion.png)
