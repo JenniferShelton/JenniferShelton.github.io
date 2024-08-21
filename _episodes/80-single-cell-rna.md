@@ -357,6 +357,7 @@ Then, we will run all of the following commands within that session.
 > > seurat_object = subset(x = seurat_object, subset = percent.mt < 5)
 > > ```
 > > {: language-r}
+{: .challenge}
 
 ## Data normalization, variable feature selection, scaling, and dimensional reduction (PCA)
 
