@@ -484,7 +484,6 @@ Just like the `UMAP` command, the `FindNeighbors` command also works on the prin
 
 Scroll down to the example, where we see the following:
 
-
 ```
 pbmc_small <- FindNeighbors(pbmc_small, reduction = "pca", dims = 1:10)
 ```
@@ -494,6 +493,212 @@ We want to use the first 10 PCs as input like we did for RunUMAP, so this comman
 
 Just replace `pbmc_small` with the name of your Seurat object.
 
-Insert your command here
+>
+>> ## Solution
+>>
+>> ```
+>> seurat_object = FindNeighbors(seurat_object,reduction = "pca", dims = 1:10)
+>> ```
+>> {: .language-r}
+> {: .solution}
+{: .challenge}
 
+Next, we will run the `FindClusters` command.
 
+```
+?FindClusters
+```
+{: .language-r}
+
+From this help message, what is the default resolution for this command if you do not specify?
+
+>
+>> ## Solution
+>>
+>> ```
+>> resolution=0.8
+>> ```
+>> {: .output}
+> {: .solution}
+{: .challenge}
+
+This seems like a good number to start with, as the Seurat documentation says that a resolution < 1 is good for a dataset with ~3000 cells.
+
+Basic syntax of this command is similar to previous, which if we recall is:
+
+```
+your_object_name = yourcommand(object=your_object_name)
+```
+{: .language-r}
+
+Run FindClusters using this syntax.
+
+>
+>> ## Solution
+>>
+>> ```
+>> seurat_object = FindClusters(object = seurat_object)
+>> ```
+>> {: .output}
+> {: .solution}
+{: .challenge}
+
+## Cluster visualization and annotation
+
+### Cluster visualization
+
+Now, let's run the DimPlot command again, which will now by default plot the cluster IDs on the UMAP coordinates.
+
+```
+DimPlot(object = seurat_object,reduction = 'umap')
+```
+{: .language-r}
+
+![UMAP plot2]({{ page.root }}/fig/seurat_UMAP2.png)
+
+It's a bit hard to match up the colors to the legend - let's add argument label=TRUE so we can better see what is going on.
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
+```
+{: .language-r}
+
+![UMAP plot3]({{ page.root }}/fig/seurat_UMAP3.png)
+
+Looks like we have 11 clusters, some of which appear more distinct than others (from what we can tell from the UMAP).
+
+### Cluster annotation using canonical markers
+
+We start with the following sets of markers.
+
+> ## Canonical markers of different broad PBMC cell types
+> - `CD3D` : Expressed in T cells, including CD4+ and CD8+ T cells
+> - `CST3` : Expressed in monocytes, dendritic cells (DCs), and platelets
+> - `GNLY` : Expressed mainly in NK (natural killer) cells; can also sometimes be expressed in a subset of T cells
+> - `MS4A1` : Expressed in B cells
+> - `PPBP` : Expressed only in platelets
+{: .testimonial}
+
+We will use these markers to annotate the clusters as one of each of the following.
+
+> ## Cluster labels, part 1
+> - `T`
+> - `Mono/DC`
+> - `NK`
+> - `B`
+> - `Platelet`
+{: .testimonial}
+
+Let's make a violin plot of the expression levels of each of the marker genes.
+
+First, pull up the help message for the violin plot command (`VlnPlot`).
+
+```
+?VlnPlot
+```
+{: .language-r}
+
+In the example section, we find the following:
+
+```
+VlnPlot(object = pbmc_small, features = 'PC_1')
+VlnPlot(object = pbmc_small, features = 'LYZ', split.by = 'groups')
+```
+{: .output}
+
+We find that we can make a plot of either other variables like a principal component (PC_1), or expression of a gene (like LYZ).
+
+Let's run this command to plot the expression of the first marker, CD3D. Replace 'pbmc_small' with the name of our Seurat object, and 'PC_1' with the name of the gene of interest.
+
+>
+>> ## Solution
+>> ```
+>> VlnPlot(object = seurat_object, features = 'CD3D')
+>> ```
+>> {: .language-r}
+>>
+>> ![CD3D_violin_with_legend]({{ page.root }}/fig/CD3D_violin_with_legend.png)
+>> 
+> {: .solution}
+{: .challenge}
+
+How many clusters seem to be some kind of T cell based on this plot, and which ones?
+
+>
+>> ## Solution
+>>
+>> 4 clusters - `0`, `1`, `3`, and 5
+>>
+> {: .solution}
+{: .challenge}
+
+We can add "+ NoLegend() at the end of the command, like so, to remove the legend which isn't really necessary here.
+
+>
+>> ## Solution
+>> ```
+>> VlnPlot(object = seurat_object, features = 'CD3D') + NoLegend()
+>> ```
+>> {: .language-r}
+>>
+>>  ![CD3D_violin_without_legend]({{ page.root }}/fig/CD3D_violin_no_legend.png)
+>> 
+> {: .solution}
+{: .challenge}
+
+Let's repeat the same plotting command now, but for each of the remaining marker genes.
+
+Then, as you generate each plot, note which clusters have high expression of the gene, and therefore which cell type they might be.
+
+> ### Mono/DC and platelet cluster annotation
+>
+> Click the first solution below for command to plot the mono/DC marker, and a rendering of the plot.
+> 
+> > ## Solution
+> >
+> > ```
+> > VlnPlot(object = seurat_object, features = 'CST3') + NoLegend()
+> > ```
+> > > > {: .language-r}
+> > 
+> >  ![CST3_violin]({{ page.root }}/fig/CST3_violin.png)
+> >
+> {: .solution}
+>
+> Click the second solution below for interpretation of this plot.
+>
+> > ## Solution
+> > 
+> > Clusters 4, 6, 7, 9, and 10 seem to be either mono/DC or platelets.
+> >
+> {: .solution}
+>
+> Click the third solution below for command to plot the platelet marker, and a rendering of the plot.
+>
+> > ## Solution
+> >
+> > ```
+> > VlnPlot(object = seurat_object, features = 'PPBP') + NoLegend()
+> > ```
+> > {: .language-r}
+> >
+> > ![PPBP_violin]({{ page.root }}/fig/PPBP_violin.png)
+> > 
+> {: .solution}
+>
+> Click the fourth solution below for interpretation of this plot.
+>
+> > ## Solution
+> >
+> > Cluster 10 seems to be platelets. Which means that clusters 4,6,7, and 9 are mono/DC.
+> > 
+> {: .solution}
+{: .challenge}
+
+After this, plot GNLY and MS4A1.
+
+And then final section - distinguish CD4+ from CD8+ T cells.
+
+Distinguish CD14+ from FCGR3A+ monocytes, and mono from DC.
+
+Possibly re-cluster at lower resolution (based on the fact that have two CD14+ mono clusters, three CD4+ T cell clusters when should have two).
