@@ -35,23 +35,24 @@ of the genome.
 > ## Breakpoints
 >
 > The term breakpoint is used to denote a boundry between a structural variation and the reference.
->
-> > ##### Deletion
-> > ![Deletion]({{ page.root }}/fig/SV.deletion.png)
-> > 
-> > ##### Insertion
-> > ![Insertion]({{ page.root }}/fig/SV.insertion.png)
-> > 
-> > ##### Duplication
-> > ![Duplication]({{ page.root }}/fig/SV.duplication.png)
-> > 
-> > ##### Inversion
-> > ![Inversion]({{ page.root }}/fig/SV.inversion.png)
-> > 
-> > ##### Translocation
-> > ![Translocation]({{ page.root }}/fig/SV.translocation.png)
-> {: .solution}
 {: .keypoints}
+
+> ## Examples
+> ##### Deletion
+> ![Deletion]({{ page.root }}/fig/SV.deletion.png)
+> 
+> ##### Insertion
+> ![Insertion]({{ page.root }}/fig/SV.insertion.png)
+> 
+> ##### Duplication
+> ![Duplication]({{ page.root }}/fig/SV.duplication.png)
+> 
+> ##### Inversion
+> ![Inversion]({{ page.root }}/fig/SV.inversion.png)
+> 
+> ##### Translocation
+> ![Translocation]({{ page.root }}/fig/SV.translocation.png)
+{: .solution}
 
 ## Detecting structural variants in short-read data
 
