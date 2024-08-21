@@ -107,68 +107,75 @@ Then, we will run all of the following commands within that session.
 
 # Single-cell workflow in R with Seurat
 
-> ## Load libraries.
+## Load libraries.
+
+Load all the libraries you will need for this tutorial using the `library` command. Today we will load `Seurat` and `dplyr`.
+
+```
+library(dplyr)
+library(Seurat)
+```
+{: .language-r}
+
+## Read in counts and create a Seurat object.
+
+### Prepare the relative path to the directory with the files needed for the count matrix.
+
+Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
+
 >
-> Load all the libraries you will need for this tutorial using the `library` command. Today we will load `Seurat` and `dplyr`.
->
-> > ## Solution
-> > ```
-> > library(dplyr)
-> > library(Seurat)
-> > ```
-> > {: .language-r}
+>> ## Solution
+>>
+>> ```
+>> filtered_gene_bc_matrices/hg19
+>> ```
 > {: .solution}
 {: .challenge}
 
-> ## Read in counts and create a Seurat object.
-> 
-> ### Prepare the relative path to the directory with the files needed for the count matrix.
+### Read in based on the relative path.
+
+Next, we will use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
+
+Let’s look at the help message for Read10X.
+
+```
+?Read10X
+```
+{: .language-r}
+
+If we scroll down to the examples section, we get the following:
+
+```
+data_dir <- 'path/to/data/directory'
+expression_matrix <- Read10X(data.dir = data_dir)
+```
+{: .output}
+
+Let's do something similar here, but replace 'path/to/data/directory' with the appropriate path.
+
 >
-> Based on what we saw in the data download section,  what is the relative path to the directory with the files matrix.mtx, genes.tsv, and features.tsv files?
-> > ## Solution
-> > ```
-> > filtered_gene_bc_matrices/hg19
-> > ```
+>> ## Solution
+>>
+>> ```
+>> data_dir = 'filtered_gene_bc_matrices/hg19'
+>> expression_matrix <- Read10X(data.dir = data_dir)
+>> ```
+>> {: .language-r
 > {: .solution}
-> 
-> ### Read in based on the relative path.
-> 
-> Next, we will use the `Read10X` command to read in the downloaded counts, and `CreateSeuratObject` to create a Seurat object from this count matrix.
->
-> Let’s look at the help message for Read10X.
-> ```
-> ?Read10X
-> ```
-> {: .language-r}
-> If we scroll down to the examples section, we get the following:
-> ```
-> data_dir <- 'path/to/data/directory'
-> expression_matrix <- Read10X(data.dir = data_dir)
-> ```
-> {: .output}
-> Let's do something similar here, but replace 'path/to/data/directory' with the appropriate path.
-> > ## Solution
-> > ```
-> > data_dir = 'filtered_gene_bc_matrices/hg19'
-> > expression_matrix <- Read10X(data.dir = data_dir)
-> > ```
-> > {: .language-r}
-> {: .solution}
->
-> ### Creating the Seurat object
->
-> From the Read10X help, the next line in the example was this:
->
-> ```
-> seurat_object = CreateSeuratObject(counts = expression_matrix)
-> ```
-> {: .language-r}
->
-> If you ran the previous step as written (creating an object called expression_matrix), you should be able to run this line as-is.
->
-> Then, we can proceed with the next steps in this workflow based on our Seurat object being called seurat_object.
-> 
 {: .challenge}
+
+### Creating the Seurat object
+
+From the Read10X help, the next line in the example was this:
+
+```
+seurat_object = CreateSeuratObject(counts = expression_matrix)
+```
+{: .language-r}
+
+If you ran the previous step as written (creating an object called expression_matrix), you should be able to run this line as-is.
+
+Then, we can proceed with the next steps in this workflow based on our Seurat object being called seurat_object.
 
 > ## Quality control metrics calculation and extraction
 > 
@@ -391,22 +398,6 @@ And we will just use default arguments for all of these.
 >
 > In this lesson you will read the R package Seurat's' help menus and replace the example syntax above with the Seurat commands. Then replace the object name with the name of the object you have made.
 {: .callout}
-
-> ## Solution to data normalization through dimensional reduction challenge
->
->> ## Solution
->>
->> ```
->> seurat_object = NormalizeData(object = seurat_object)
->> seurat_object = FindVariableFeatures(object = seurat_object)
->> seurat_object = ScaleData(object = seurat_object)
->> seurat_object = RunPCA(object = seurat_object)
->> ```
->> {: .language-r}
-> {: .solution}
-{: .challenge}
-
-Let's test putting just a solution without doing a code challenge block title as well.
 
 >
 >> ## Solution
