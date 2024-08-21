@@ -392,81 +392,78 @@ And we will just use default arguments for all of these.
 > In this lesson you will read the R package Seurat's' help menus and replace the example syntax above with the Seurat commands. Then replace the object name with the name of the object you have made.
 {: .callout}
 
+> ## Solution to data normalization through dimensional reduction challenge
+>
+>> ## Solution
+>>
+>> ```
+>> seurat_object = NormalizeData(object = seurat_object)
+>> seurat_object = FindVariableFeatures(object = seurat_object)
+>> seurat_object = ScaleData(object = seurat_object)
+>> seurat_object = RunPCA(object = seurat_object)
+>> ```
+>> {: .language-r}
+> {: .solution}
+{: .challenge}
 
-
-## Selecting number of principal components (PCs) to use downstream
-
-Next, we need to do some exploration of the results of the PCA analysis (from `RunPCA`) to decide how many principal components to use for downstream analysis.
-
-```
-ElbowPlot(object = seurat_object)
-DimHeatmap(object=seurat_object, dims=1:9, cells=500, balanced=TRUE)
-DimHeatmap(object=seurat_object, dims=10:13, cells=500, balanced=TRUE, ncol=2)
-```
-{: .language-r}
-
-Based on the elbow plot, it looks like it would make sense to take either the first 7 or the first 10 PCs.
-
-Based on the heatmaps, if you know immune biology, you could also make an argument for including PCs 12 and 13 (these heatmaps contain markers of rare immune cell types).
-
-We are going to proceed with using the first 10 PCs here, following what they did in the Seurat vignette.
-
-
-## Run non-linear dimensional reduction (UMAP/tSNE)
-
-For visualization purposes, we need to be able to have a two-dimensional representation of the data. Versus PCA, where here we have 10 dimensions that we are saying all capture an important percent of the variance.
-
-This is where non-linear techniques like tSNE and UMAP come in. Here, we will use `UMAP`, with the principal component coordinates as input.
-
-Let’s look at the help message for the command `RunUMAP`.
-
-
-```
-?RunUMAP
-```
-{: .language-r}
-
-Scroll down to the example.
-
-```
-# Run UMAP map on first 5 PCs
-pbmc_small <- RunUMAP(object = pbmc_small, dims = 1:5)
-
-```
-{: .output}
-
-Here, replace `pbmc_small` with the name of your Seurat object name, and run on the first 10 PCs instead of the first 5.
-
-```
-# Write your command
-```
-{: .language-r}
-
-There is also a command to plot the UMAP in the example.
-
-From the example:
-
-```
-DimPlot(object = pbmc_small, reduction = 'umap')
-```
-{: .output}
-
-> ## Write your own DimPlot command
-> Replace the object name with our Seurat object name.
+> ## Run and plot non-linear dimensional reduction (UMAP/tSNE)
+>
+> PCA can help reduce the number of dimensions that explain the data from thousands (of genes) to a handful or tens.
+>
+> For visualization purposes, though, we need to be able to have a two-dimensional representation of the data.
+> 
+> This is where non-linear techniques like tSNE and UMAP come in. Here, we will use `UMAP`, with the principal component coordinates as input.
+>
+> Let’s look at the help message for the command `RunUMAP`.
+>
+> ```
+> ?RunUMAP
+> ```
+> {: .language-r}
+>
+> Scroll down to the example.
+>
+> ```
+> # Run UMAP map on first 5 PCs
+> pbmc_small <- RunUMAP(object = pbmc_small, dims = 1:5)
+> ```
+> {: .output}
+>
+> Main decision to make here is how many principal components to use.
+>
+> In the example, they used 5. However this is very low - using the first 10 PCs is more typical for a dataset of this size.
+> 
+> Here, replace `pbmc_small` with the name of your Seurat object name, and run on the first 10 PCs instead of the first 5.
+> 
+>> ## Solution
+>> ```
+>> seurat_object = RunUMAP(object = seurat_object, dims = 1:10)
+>> ```
+>> {: .language-r}
+> {: .solution}
+>
+> There is also a command to plot the UMAP in the example.
+>
+> From the example:
+>
+> ```
+> DimPlot(object = pbmc_small,reduction = 'umap')
+> ```
+> {: .output}
+>
+> Replace the object name in this example with our Seurat object name, which will output a plot.
 >
 > > ## Solution
 > > ```
 > > DimPlot(object = seurat_object, reduction = 'umap')
 > > ```
 > > {: .language-r}
+> >
+> > ![UMAP plot1]({{ page.root }}/fig/seurat_UMAP1.png)
 > {: .solution}
+>
+> It looks like there are probably at least 3 major clusters in this data. But right now, we have not calculated those clusters yet. We will do so in the next step.
 {: .challenge}
-
-This gives the following plot:
-
-![UMAP plot]({{ page.root }}/fig/sc-rna-3.png)
-
-It looks like there are probably at least 3 major clusters in this data. But right now, we have not calculated those clusters yet. We will do so in the next step.
 
 ## Cluster the cells
 
