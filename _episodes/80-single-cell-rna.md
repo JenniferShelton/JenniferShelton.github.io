@@ -9,7 +9,7 @@ questions:
 - How can I annotate cell types in a single-cell dataset?
 objectives:
 - Apply standard single-cell workflow methods such as QC filtering and normalization given a gene-cell count matrix.
-- Understand the visualizations that come with a typical single-cell RNA workflow.
+- Interpret the visualizations that come with a typical single-cell RNA workflow.
 - Implement clustering and differential expression methods to classify each cell with the proper cell type label.
 keypoints:
 - Single-cell RNA analysis often starts with a gene-cell count matrix.
