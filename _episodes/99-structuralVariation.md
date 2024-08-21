@@ -78,6 +78,8 @@ paired reads are introduced the two coverage metrics can vary widely.
 ##### Reads aligned to reference genome
 ![Reads aligned to reference]({{ page.root }}/fig/SV.readsVref.png)
 
+## Read signatures
+
 ##### Deletion read signature
 ![Deletion read signature]({{ page.root }}/fig/SV.deletionSig.png)
 
@@ -90,5 +92,5 @@ paired reads are introduced the two coverage metrics can vary widely.
 ##### Translocation read signature
 ![Translocation read signature]({{ page.root }}/fig/SV.translocationSig.png)
 
-##### CNV analysis
+## Copy number analysis
 ![CNV analysis]({{ page.root }}/fig/SV.cnvAnalysis.png)
