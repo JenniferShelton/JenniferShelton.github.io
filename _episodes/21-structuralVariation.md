@@ -1,7 +1,7 @@
 ---
 title: "Structural Variation in short reads"
 teaching: 1.5 hr
-exercises: 3 hr
+exercises: 2 hr
 questions:
 - What is a structural variant?
 - Why is structural variantion important?
@@ -9,13 +9,10 @@ objectives:
 - Explain the difference between SNVs, INDELs, and SVs.
 - Explain the different types of SVs.
 - Explain the evidence we use to discover SVs.
-- Investigate how long-read data can improve SV calling.
 keypoints:
 - Structural variants are more difficult to identify.
 - Discovery of SVs usually requires multiple types of read evidence.
 - There is often significant disagreement between SV callers.
-- Long-reads offer significant advantages over short-reads for SV calling.
-- Genotyping of long-read discovered SVs in short-read data improves completeness but has limitations.
 ---
 
 ## What are structural variants
@@ -26,8 +23,8 @@ arbitrary definition, but it provides us a useful cutoff between InDels and SVs.
 
 > ## Importance of SVs
 >
-> SVs affect an order of magnitude more bases in the human genome in comparison to SNVs (Pang et al, 2010).
-> And are more likely to associate with disease.
+> SVs affect an order of magnitude more bases in the human genome in comparison to SNVs (Pang et al, 2010) 
+> and are more likely to associate with disease.
 {: .keypoints}
 
 Structural variation encompases several classes of variants including deletions, insertions, 
@@ -35,26 +32,36 @@ duplications, inversions, translocations, and copy number variations (CNVs). CNV
 structural variations, specifically deletions and duplications, that affect large (>10kb) segments 
 of the genome.
 
-##### Deletion
-![Deletion]({{ page.root }}/fig/SV.deletion.png)
-
-##### Insertion
-![Insertion]({{ page.root }}/fig/SV.insertion.png)
-
-##### Duplication
-![Duplication]({{ page.root }}/fig/SV.duplication.png)
-
-##### Inversion
-![Inversion]({{ page.root }}/fig/SV.inversion.png)
-
-##### Translocation
-![Translocation]({{ page.root }}/fig/SV.translocation.png)
+> ## Breakpoints
+>
+> The term breakpoint is used to denote a boundry between a structural variation and the reference.
+>
+> ##### Deletion
+> ![Deletion]({{ page.root }}/fig/SV.deletion.png)
+> 
+> ##### Insertion
+> ![Insertion]({{ page.root }}/fig/SV.insertion.png)
+> 
+> ##### Duplication
+> ![Duplication]({{ page.root }}/fig/SV.duplication.png)
+> 
+> ##### Inversion
+> ![Inversion]({{ page.root }}/fig/SV.inversion.png)
+> 
+> ##### Translocation
+> ![Translocation]({{ page.root }}/fig/SV.translocation.png)
+{: .solution}
+{: .keypoints}
 
 ## Detecting structural variants in short-read data
 
-We use three types of read evidence to determine structural variations: discordant read pairs, 
-split-reads, and read depth. Discordant read pairs have insert sizes that fall significantly 
-outside the normal distribution of insert sizes.
+Because structural variants are most often larger than the individual reads we must use different 
+types of read evidence than those used for SNVs and InDels which can be called by simple read alignment.
+We use three types of read evidence to discover structural variations: discordant read pairs, 
+split-reads, and read depth. 
+
+Discordant read pairs have insert sizes that fall significantly outside the normal distribution of 
+insert sizes.
 
 ##### Insert size distribution
 ![Insert size distribution]({{ page.root }}/fig/SV.insertSize.png)
@@ -100,5 +107,18 @@ paired reads are introduced the two coverage metrics can vary widely.
 ##### Translocation read signature
 ![Translocation read signature]({{ page.root }}/fig/SV.translocationSig.png)
 
+## Caller concordance
+
+Because SV callers 
+
 ## Copy number analysis
+
+Calling of copy number variation from WGS data is done using read depth, where reads are counted
+in bins or windows across the entire genome. The counts need to have some normalization applied to
+them in order to account for sequencing irregularities such as mappability and GC content. These
+normalized counts can then be converted into their copy number equivalents using a process called
+segmentation. Read coverage is, however, inheirently noisy. It changes based on genomic regions, 
+DNA quality, and other factors. This makes calling CNVs difficult and is why many CNV callers focus 
+on large variants where it is easier to normalize away smaller confounding changes in read depth.
+
 ![CNV analysis]({{ page.root }}/fig/SV.cnvAnalysis.png)
