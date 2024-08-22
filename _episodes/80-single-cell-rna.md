@@ -631,7 +631,7 @@ How many clusters seem to be some kind of T cell based on this plot, and which o
 >
 >> ## Solution
 >>
->> 4 clusters - `0`, `1`, `3`, and 5
+>> 4 clusters - `0`, `1`, `3`, and `5`
 >>
 > {: .solution}
 {: .challenge}
@@ -863,7 +863,9 @@ VlnPlot(seurat_object,features = mygenes) + NoLegend()
 
 Let's do this for CD4 and CD8 to start.
 
-> ### Distinguishing CD4+ vs. CD8+ T cell subsets
+### Distinguishing CD4+ vs. CD8+ T cell subsets
+
+> 
 > > ## Solution
 > >
 > > ```
@@ -880,10 +882,12 @@ Let's do this for CD4 and CD8 to start.
 > > 
 > > ![CD4_and_CD8_not_CD8A_violin]({{ page.root }}/fig/CD4_and_CD8_not_CD8A_violin.png)
 > {: .solution}
-> 
-> Whoops! Forgot that the gene name for CD8 is actually CD8A. Just plain `CD8` is the name for the protein.
->
-> Let's try that again. Plot a violin plot of CD4 and CD8A genes.
+{: .challenge}
+
+Whoops! Forgot that the gene name for CD8 is actually CD8A. Just plain `CD8` is the name for the protein.
+
+Let's try that again. Plot a violin plot of CD4 and CD8A genes.
+
 >
 >> ## Solution
 >>
@@ -894,31 +898,34 @@ Let's do this for CD4 and CD8 to start.
 >> {: .language-r}
 >>
 >> ![CD4_and_CD8A_violin]({{ page.root }}/fig/CD4_and_CD8A_violin.png)
->
-> We find that cluster T_3 seems to have high expression of CD8A.
->
-> Weirdly, none of the T cell clusters seem to have high expression of CD4.
->
-> If anything, we see a bit of expression in the Mono/DC clusters, but almost none in any of the T cell clusters.
->
-> What is going on with that?
->
-> Well, CD4 *protein* is expected to be high in CD4+ T cells, but not necessarily the RNA.
->
-> However, we can reasonably assume here that the T cell clusters without CD8A gene expression, are likely that way because they are CD4+ instead.
->
-> Let's rename cluster 'T_3' to 'CD8T', and clusters 'T_1', 'T_2', and 'T_4' to 'CD4T_1', 'CD4T_2', and 'CD4T_3', the same way we renamed clusters previously.
+> {: .solution}
+{: .challenge}
+
+How do we interpret this plot?
+
+We find that cluster T_3 seems to have high expression of CD8A.
+
+Weirdly, none of the T cell clusters seem to have high expression of CD4.
+
+If anything, we see a bit of expression in the Mono/DC clusters, but almost none in any of the T cell clusters.
+
+What is going on with that?
+
+Well, CD4 *protein* is expected to be high in CD4+ T cells, but not necessarily the RNA.
+
+However, we can reasonably assume here that the T cell clusters without CD8A gene expression, are likely that way because they are CD4+ instead.
+
+Let's rename cluster 'T_3' to 'CD8T', and clusters 'T_1', 'T_2', and 'T_4' to 'CD4T_1', 'CD4T_2', and 'CD4T_3', the same way we renamed clusters previously.
+
 >
 > > ## Solution
 > >
 > > ```
-> >
-> > clusters = Idents(seurat_object)
 > > 
 > > old_cluster_ids = c('T_3','T_1','T_2','T_4')
-> >
 > > new_cluster_ids = c('CD8T','CD4T_1','CD4T_2','CD4T_3')
 > >
+> > clusters = Idents(seurat_object)
 > > clusters = mapvalues(clusters,from=old_cluster_ids,to=new_cluster_ids)
 > >
 > > Idents(seurat_object) = clusters
@@ -1059,9 +1066,7 @@ We now only have one cluster for CD14+ Monocytes instead of two, and two cluster
 >
 >> ## Solution
 >>
->> ```
->> clusters = Idents(seurat_object)
->> 
+>> ``` 
 >> old_cluster_ids = c('0','1','4','6',
 >>   '2','5','7',
 >>   '3','8')
@@ -1070,6 +1075,7 @@ We now only have one cluster for CD14+ Monocytes instead of two, and two cluster
 >>   'CD14_Mono','FCGR3A_Mono','DC',
 >>   'B','Platelet')
 >>
+>> clusters = Idents(seurat_object)
 >> clusters = mapvalues(x=clusters,from=old_cluster_ids,to=new_cluster_ids)
 >>
 >> Idents(seurat_object) = clusters
