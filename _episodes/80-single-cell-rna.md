@@ -981,12 +981,12 @@ And cluster 'Mono/DC_4' as 'DC'.
 > > ## Solution
 > >
 > > ```
-> > clusters = Idents(seurat_object)
 > > 
 > > old_cluster_ids = c('Mono/DC_1','Mono/DC_2','Mono/DC_3','Mono/DC_4')
 > >
 > > new_cluster_ids = c('CD14_Mono_1','CD14_Mono_2','FCGR3A_Mono','DC')
-> >
+> > 
+> > clusters = Idents(seurat_object)
 > > clusters = mapvalues(x=clusters,from=old_cluster_ids,to=new_cluster_ids)
 > >
 > > Idents(seurat_object) = clusters
@@ -1020,7 +1020,7 @@ We were not expecting three different clusters of CD4+ T cells - at most we were
 
 Let's try to redo the FindClusters command with a lower resolution value.
 
-Remember, here is the command we ran previously:
+Remember, here is the command we ran previously (argument resolution=0.8 not explicitly stated previously, but it was included by default):
 
 ```
 seurat_object = FindClusters(seurat_object,resolution=0.8)
@@ -1070,7 +1070,7 @@ We now only have one cluster for CD14+ Monocytes instead of two, and two cluster
 >> Idents(seurat_object) = clusters
 >> ```
 >> {: .language-r}
-> {: .solution
+> {: .solution}
 {: .challenge}
 
 Let's plot.
@@ -1111,9 +1111,9 @@ Here is another example from the Seurat website, where they run differential exp
 cluster5.markers <- FindMarkers(pbmc, ident.1 = 5, ident.2 = c(0, 3))
 ```
 
-Here, let's run differential expression between 'CD4T_1' and 'CD4T_2', and save results to an object called "CD4T_markers".
+Here, let's run differential expression between `CD4T_1` and `CD4T_2`, and save results to an object called `CD4T_markers`.
 
-Remember here that our object is called "seurat_object".
+Remember here that our object is called `seurat_object`.
 
 >
 >> ## Solution
@@ -1155,8 +1155,6 @@ One with only genes that have avg_log2FC > 0, and we'll call it CD4T1_markers.
 
 And the other with only genes with avg_log2FC < 0, and we'll call it CD4T2_markers.
 
-Then, let's take the head of each.
-
 >
 >> ## Solution
 >>
@@ -1167,6 +1165,8 @@ Then, let's take the head of each.
 >> {: .language-r}
 >{: .solution}
 {: .challenge}
+
+Next, let's take the each of each.
 
 ```
 head(CD4T1_markers)
@@ -1188,8 +1188,6 @@ RPS6   2.552847e-24  0.2700326 1.000     1 8.357510e-20
 head(CD4T2_markers)
 ```
 {: .language-r}
-
-```
 
 ```
               p_val avg_log2FC pct.1 pct.2    p_val_adj
@@ -1284,11 +1282,10 @@ Let's annotate these clusters based on this (CD4T_1 = Naive_or_central_memory_CD
 In a real-world analysis, this would often be the time to do a deeper literature review, or consult a collaborator with more knowledge of the biology to confirm this preliminary annotation.
 
 ```
-clusters = Idents(seurat_object)
-
 old_cluster_ids = c('CD4T_1','CD4T_2')
 new_cluster_ids = c('Naive_or_central_memory_CD4T?','Effector_memory_CD4T?')
 
+clusters = Idents(seurat_object)
 clusters = mapvalues(x=clusters,from=old_cluster_ids,to=new_cluster_ids)
 
 Idents(seurat_object) = clusters
@@ -1302,3 +1299,11 @@ DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
 ```
 
 ![UMAP_label_CD4_memory_vs_naive]({{ page.root }}/fig/seurat_UMAP_label_CD4_memory_vs_naive.png)
+
+Also think we can remove the legend here.
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE) + NoLegend()
+```
+
+![UMAP_label_CD4_memory_vs_naive_no_legend]({{ page.root }}/fig/seurat_UMAP_label_CD4_memory_vs_naive_no_legend.png)
