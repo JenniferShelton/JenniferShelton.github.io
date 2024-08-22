@@ -109,11 +109,12 @@ Then, we will run all of the following commands within that session.
 
 ## Load libraries.
 
-Load all the libraries you will need for this tutorial using the `library` command. Today we will load `Seurat` and `dplyr`.
+Load all the libraries you will need for this tutorial using the `library` command. Today we will load `Seurat`, `dplyr`, and `plyr`.
 
 ```
 library(dplyr)
 library(Seurat)
+library(plyr)
 ```
 {: .language-r}
 
@@ -543,9 +544,7 @@ Run FindClusters using this syntax.
 > {: .solution}
 {: .challenge}
 
-## Cluster visualization and annotation
-
-### Cluster visualization
+## Cluster visualization
 
 Now, let's run the DimPlot command again, which will now by default plot the cluster IDs on the UMAP coordinates.
 
@@ -567,7 +566,7 @@ DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
 
 Looks like we have 11 clusters, some of which appear more distinct than others (from what we can tell from the UMAP).
 
-### Cluster annotation using canonical markers
+## Cluster annotation using canonical markers
 
 We start with the following sets of markers.
 
@@ -583,7 +582,7 @@ We will use these markers to annotate the clusters as one of each of the followi
 
 > ## Cluster labels, part 1
 > - `T`
-> - `Mono/DC`
+> - `Mono/DC` : Monocytes and dendritic cells
 > - `NK`
 > - `B`
 > - `Platelet`
@@ -608,7 +607,7 @@ VlnPlot(object = pbmc_small, features = 'LYZ', split.by = 'groups')
 
 We find that we can make a plot of either other variables like a principal component (PC_1), or expression of a gene (like LYZ).
 
-Let's run this command to plot the expression of the first marker, CD3D. Replace 'pbmc_small' with the name of our Seurat object, and 'PC_1' with the name of the gene of interest.
+Let's run this command to plot the expression of the first marker, `CD3D`. Replace 'pbmc_small' with the name of our Seurat object, and 'PC_1' with the name of the gene of interest.
 
 >
 >> ## Solution
@@ -695,10 +694,401 @@ Then, as you generate each plot, note which clusters have high expression of the
 > {: .solution}
 {: .challenge}
 
-After this, plot GNLY and MS4A1.
+> ### NK and B cell cluster annotation
+>
+> Plot the NK cell marker in a violin plot.
+>
+> What does this tell us about which cluster(s) might be NK cells?
+>
+> > ## Solution
+> >
+> > ```
+> > VlnPlot(object = seurat_object, features = 'GNLY') + NoLegend()
+> > ```
+> > {: .language-r}
+> >
+> > ![GNLY_violin]({{ page.root }}/fig/GNLY_violin.png)
+> >
+> > Clusters 3 and 8 have high expression of GNLY.
+> >
+> > However going back to the T cell marker (CD3D) plot, cluster 3 is T cells. So, that leaves cluster 8 as NK cells.
+> {: .solution}
+>
+> Finally, plot the B cell marker in a violin plot, and use this to say which cluster(s) might be B cells?
+>
+> > ## Solution
+> >
+> > ```
+> > VlnPlot(object = seurat_object, features = 'MS4A1') + NoLegend()
+> > ```
+> > {: .language-r}
+> >
+> > ![MS4A1_violin]({{ page.root }}/fig/MS4A1_violin.png)
+> >
+> > This one's nice and straightforward! Cluster 2 is B cells, as it is the only cluster with any substantial proportion of cells expressing MS4A1.
+> {: .solution}
+{: .challenge}
 
-And then final section - distinguish CD4+ from CD8+ T cells.
+So, to summarize, which clusters are each of the 5 broad cell types we are looking for?
 
-Distinguish CD14+ from FCGR3A+ monocytes, and mono from DC.
+>
+>> ## Solution
+>>
+>> - `T` : Clusters 0,1,3,5
+>> - `Mono/DC` : Clusters 4,6,7,9
+>> - `NK` : Cluster 8
+>> - `B` : Cluster 2
+>> - `Platelet` : Cluster 10
+> {: .solution}
+{: .challenge}
 
-Possibly re-cluster at lower resolution (based on the fact that have two CD14+ mono clusters, three CD4+ T cell clusters when should have two).
+Let's relabel each cluster according to its broad cell types.
+
+For broad cell types with multiple clusters, call them e.g. T_1, T_2, etc.
+
+> ### Relabel each cluster based on its broad cell types.
+>
+> Example labels for a brain dataset:
+>
+> - `Neuron` : Clusters 0,1,5,7
+> - `Astrocyte` : Clusters 2,4
+> - `Oligodendrocyte/OPC` : Clusters 3,6
+> - `Microglia` : Cluster 8
+>
+> Code below to remap the clusters, and output a new plot with the updated cluster labels.
+>
+> Note, it is important to put the cluster IDs in single quotes! Otherwise "1" might pull out the first level (which is cluster 0).
+> 
+> ```
+> clusters = Idents(seurat_object)
+>
+> old_cluster_ids = c('0','1','5','7','2','4','3','6','8')
+> new_cluster_ids = c('Neuron_1','Neuron_2','Neuron_3','Neuron_4',
+>   'Astrocyte_1','Astrocyte_2',
+>   'Oligo/OPC_1','Oligo/OPC_2',
+>   'Microglia')
+> 
+> clusters = mapvalues(x = clusters,
+>   from = old_cluster_ids,
+>   to = new_cluster_ids)
+>
+> #The following is not strictly necessary, but let's also save the new cluster names as a variable called "cluster_name" in the object.
+>
+> seurat_object$cluster_name = clusters
+>
+> #Reassign the ID per cell to the cluster name instead of number.
+> 
+> Idents(seurat_object) = clusters
+> ```
+> {: .language-r}
+>
+> Replace this code with the cluster IDs and new names we just determined for this dataset (change the lines where you set `old_cluster_ids` and `new_cluster_ids`).
+>
+> > ## Solution
+> >
+> > ```
+> > clusters = Idents(seurat_object)
+> >
+> > old_cluster_ids = c('0','1','3','5',
+> >   '4','6','7','9',
+> >   '8','2','10')
+> >
+> > new_cluster_ids = c('T_1','T_2','T_3','T_4',
+> >   'Mono/DC_1','Mono/DC_2','Mono/DC_3','Mono/DC_4',
+> >   'NK','B','Platelet')
+> >
+> > clusters = mapvalues(x = clusters,
+> >   from = old_cluster_ids,
+> >   to = new_cluster_ids)
+> >
+> > seurat_object$cluster_name = clusters
+> >
+> > Idents(seurat_object) = clusters
+> > ```
+> > {: .language-r}
+> {: .solution}
+>
+> If you make a mistake and you want to reset to the old cluster IDs, here is code for how to fix it.
+>
+> Then, you can re-run the code in the solution above.
+>
+> ```
+> Idents(seurat_object) = seurat_object$RNA_snn_res.0.8
+> ```
+> {: .language-r}
+{: .challenge}
+
+Let's redo the DimPlot command and see how it looks with the new, more descriptive labels.
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
+```
+{: .language-r}
+
+![seurat_UMAP_after_cluster_names_vs_numbers]({{ page.root }}/fig/seurat_UMAP_after_cluster_names_vs_numbers.png)
+
+This is much improved!
+
+Next, we are going to see if we can look at additional markers to distinguish subsets of the T cell and the Mono/DC broad cell types.
+
+We are interested in distinguishing the following subtypes.
+
+> ## Cluster labels, part 2 (subtypes)
+> - `CD4+ T` and `CD8+ T` : Two different T cell subtypes
+> - `CD14+ Monocyte` and `FCGR3A+ Monocyte` : Two different subtypes within the "Mono" subset of the "Mono/DC" clusters
+> - `Dendritic cell` : The "DC" subset of the "Mono/DC" clusters
+{: .testimonial}
+
+To distinguish these, let's check the following markers.
+
+> ## Canonical markers, part 2 (subtype markers)
+> - `CD4` and `CD8` : As the name suggests, "CD4+" T cells have high levels of CD4 protein, while "CD8+" cells have high levels of CD8 protein.
+> - `FCER1A` : Marker of dendritic cells
+> - `CD14` and `FCGR3A` : Again, the proteins we expect high levels of are in the name.
+{: .testimonial}
+
+We can plot two or more different genes at once in violin plot like so.
+
+```
+mygenes = c('Gene1','Gene2')
+VlnPlot(seurat_object,features = mygenes) + NoLegend()
+```
+
+Let's do this for CD4 and CD8 to start.
+
+> ### Distinguishing CD4+ vs. CD8+ T cell subsets
+> > ## Solution
+> >
+> > ```
+> > mygenes = c('CD4','CD8')
+> > VlnPlot(seurat_object,features = mygenes) + NoLegend()
+> > ```
+> > {: .language-r}
+> >
+> > ```
+> > Warning message:
+> > The following requested variables were not found: CD8 
+> > ```
+> > {: .output}
+> > 
+> > ![CD4_and_CD8_not_CD8A_violin]({{ page.root }}/fig/CD4_and_CD8_not_CD8A_violin.png)
+> {: .solution}
+> 
+> Whoops! Forgot that the gene name for CD8 is actually CD8A. Just plain `CD8` is the name for the protein.
+>
+> Let's try that again. Plot a violin plot of CD4 and CD8A genes.
+>
+>> ## Solution
+>>
+>> ```
+>> mygenes = c('CD4','CD8A')
+>> VlnPlot(seurat_object,features = mygenes) + NoLegend()
+>> ```
+>> {: .language-r}
+>>
+>> ![CD4_and_CD8A_violin]({{ page.root }}/fig/CD4_and_CD8A_violin.png)
+>
+> We find that cluster T_3 seems to have high expression of CD8A.
+>
+> Weirdly, none of the T cell clusters seem to have high expression of CD4.
+>
+> If anything, we see a bit of expression in the Mono/DC clusters, but almost none in any of the T cell clusters.
+>
+> What is going on with that?
+>
+> Well, CD4 *protein* is expected to be high in CD4+ T cells, but not necessarily the RNA.
+>
+> However, we can reasonably assume here that the T cell clusters without CD8A gene expression, are likely that way because they are CD4+ instead.
+>
+> Let's rename cluster 'T_3' to 'CD8T', and clusters 'T_1', 'T_2', and 'T_4' to 'CD4T_1', 'CD4T_2', and 'CD4T_3', the same way we renamed clusters previously.
+>
+> > ## Solution
+> >
+> > ```
+> >
+> > clusters = Idents(seurat_object)
+> > 
+> > old_cluster_ids = c('T_3','T_1','T_2','T_4')
+> >
+> > new_cluster_ids = c('CD8T','CD4T_1','CD4T_2','CD4T_3')
+> >
+> > clusters = mapvalues(clusters,from=old_cluster_ids,to=new_cluster_ids)
+> >
+> > Idents(seurat_object) = clusters
+> > ```
+> > {: .language-r}
+> {: .solution}
+
+Let's plot yet again.
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
+```
+{: .language-r}
+
+![seurat_UMAP_after_T_cell_annotate]({{ page.root }}/fig/seurat_UMAP_after_T_cell_annotate.png)
+
+Looks great! Nice that we got the CD4 vs. CD8 T-cell annotation figured out.
+
+### Distinguishing monocyte and DC subsets
+
+On to the remaining markers. Let's plot FCER1A.
+
+```
+VlnPlot(seurat_object,features='FCER1A') + NoLegend()
+```
+{: .language-r}
+
+![FCER1A_violin]({{ page.root }}/fig/FCER1A_violin.png)
+
+And CD14 vs. FCGR3A.
+
+```
+mygenes = c('CD14','FCGR3A')
+VlnPlot(seurat_object,features=mygenes) + NoLegend()
+```
+{: .language-r}
+
+![CD14_and_FCGR3A_violin]({{ page.root }}/fig/CD14_and_FCGR3A_violin.png)
+
+It looks like annotation should mostly be pretty straightforward here.
+
+Except, it seems that FCGR3A is not totally just a FCGR3A+ monocyte marker, as it is also highly expressed in NK cells.
+
+Let's also plot another marker of FCGR3A+ monocytes, MS4A7, to make sure we are annotating correctly.
+
+```
+VlnPlot(seurat_object,features='MS4A7') + NoLegend()
+```
+{: .language-r}
+
+![MS4A7_violin]({{ page.root }}/fig/MS4A7_violin.png)
+
+Cluster Mono/DC_3 also has high expression of this gene, in addition to the high expression of FCGR3A.
+
+I think we are safe to label this cluster as FCGR3A+ Monocytes.
+
+Let's label clusters 'Mono/DC_1' and 'Mono/DC_2' as 'CD14_Mono_1' and 'CD14_Mono_2'.
+
+Cluster 'Mono/DC_3' as 'FCGR3A_Mono'.
+
+And cluster 'Mono/DC_4' as 'DC'.
+
+>
+> > ## Solution
+> >
+> > ```
+> > clusters = Idents(seurat_object)
+> > 
+> > old_cluster_ids = c('Mono/DC_1','Mono/DC_2','Mono/DC_3','Mono/DC_4')
+> >
+> > new_cluster_ids = c('CD14_Mono_1','CD14_Mono_2','FCGR3A_Mono','DC')
+> >
+> > clusters = mapvalues(x=clusters,from=old_cluster_ids,to=new_cluster_ids)
+> >
+> > Idents(seurat_object) = clusters
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Make UMAP plot again.
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
+```
+{: .language-r}
+
+![UMAP_after_mono_DC_annotate]({{ page.root }}/fig/seurat_UMAP_after_mono_DC_annotate.png)
+
+Let's also save all these cluster names as a variable "cluster_name" within the Seurat object again.
+
+This way, we will still have them in case we redo clustering.
+
+```
+seurat_object$cluster_name = Idents(seurat_object)
+```
+
+### Re-clustering
+
+So, the only thing about the UMAP plot above is, it seems we may have set the resolution a bit too high.
+
+We were not expecting three different clusters of CD4+ T cells - at most we were expecting two.
+
+Let's try to redo the FindClusters command with a lower resolution value.
+
+Remember, here is the command we ran previously:
+
+```
+seurat_object = FindClusters(seurat_object,resolution=0.8)
+```
+
+Let's do this again, but let's set resolution=0.5 instead.
+
+>
+>> ## Solution
+>>
+>> ```
+>> seurat_object = FindClusters(seurat_object,resolution=0.5)
+>> ```
+>> {: .language-r}
+>{: .solution}
+{: .challenge}
+
+Plot the new cluster IDs in a UMAP plot again (same command as before).
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
+```
+{: .language-r}
+
+![UMAP_after_lower_resolution]({{ page.root }}/fig/seurat_UMAP_after_lower_resolution.png)
+
+Referring back between this plot and the one before, we can re-label each of the new clusters using the same strategy we have been doing.
+
+We now only have one cluster for CD14+ Monocytes instead of two, and two clusters for CD4+ T cells instead of three.
+
+>
+>> ## Solution
+>>
+>> ```
+>> clusters = Idents(seurat_object)
+>> 
+>> old_cluster_ids = c('0','1','4','6',
+>>   '2','5','7',
+>>   '3','8')
+>>
+>> new_cluster_ids = c('CD4T_1','CD4T_2','CD8T','NK',
+>>   'CD14_Mono','FCGR3A_Mono','DC',
+>>   'B','Platelet')
+>>
+>> clusters = mapvalues(x=clusters,from=old_cluster_ids,to=new_cluster_ids)
+>>
+>> Idents(seurat_object) = clusters
+>> ```
+>> {: .language-r}
+> {: .solution
+{: .challenge}
+
+Let's plot.
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
+```
+
+![UMAP_after_lower_resolution_with_names]({{ page.root }}/fig/seurat_UMAP_after_lower_resolution_with_names.png)
+
+Mostly looks great! Except, I am wondering what the difference is between `CD4T_1` and `CD4T_2` clusters.
+
+Let's figure this out in the next module.
+
+### Differential expression between clusters for detailed annotation
+
+We can use the FindMarkers command to run differential expression between groups of cells.
+
+Let's look at the help message for this command.
+
+```
+?FindMarkers
+```
+{: language-r}
