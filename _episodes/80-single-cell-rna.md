@@ -13,9 +13,11 @@ objectives:
 - Implement clustering and differential expression methods to classify each cell with the proper cell type label.
 keypoints:
 - Single-cell RNA analysis often starts with a gene-cell count matrix.
-- Each dot in the scatter plots from a single-cell RNA analysis, or column in a heatmap, often represents a cell.
+- QC metrics used for understanding and filtering data quality include mitochondrial rate and number of genes.
+- Processing stages in a scRNA workflow includes normalization, feature selection, scaling, and dimensional reduction.
 - Clustering is a key step in understanding biology.
 - We can use known marker genes or run differential expression between clusters to annotate cell types after clustering.
+- Annotation often requires starting with broad cell types, then moving to more specific.
 ---
 
 # About this tutorial
