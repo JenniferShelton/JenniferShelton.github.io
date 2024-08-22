@@ -242,18 +242,19 @@ Then, we can proceed with the next steps in this workflow based on our Seurat ob
 > {: .solution}
 {: .challenge}
 
-> ## QC visualization
->
-> First, let's plot a simple histogram of percent.mt, with labels.
->
-> Here is how we would make a histogram for a variable called "x".
->
-> ```
-> hist(x,label=TRUE)
-> ```
-> {: .language-r}
->
-> Let's do similar here, but replace percent.mt instead of x.
+## QC visualization
+
+First, let's plot a simple histogram of percent.mt, with labels.
+
+Here is how we would make a histogram for a variable called "x".
+
+```
+hist(x,label=TRUE)
+```
+{: .language-r}
+
+Let's do similar here, but replace percent.mt instead of x.
+
 >
 > > ## Solution
 > > ```
@@ -263,21 +264,23 @@ Then, we can proceed with the next steps in this workflow based on our Seurat ob
 > >
 > > ![percent_mt hist1]({{ page.root }}/fig/percent_mt_hist1.png)
 > {: .solution}
->
-> It looks like there are very few cells with mitochondrial rates over 6%, and especially over 10%.
->
-> It is kind of hard to see what it is going on at the lower end of the distribution here, because the breaks in the histogram are driven by the outliers.
->
-> Let's make another object called "percent.mt_low" that contains only the values less than 10, and then plot a histogram of that.
->
-> Example of how to subset an object by value.
->
-> ```
-> x_low = x[x < 5]
-> ```
-> {: .language-r}
->
-> We will do similar here, but with "percent.mt" instead of x and 10 instead of 5.
+{: .challenge}
+
+It looks like there are very few cells with mitochondrial rates over 6%, and especially over 10%.
+
+It is kind of hard to see what it is going on at the lower end of the distribution here, because the breaks in the histogram are driven by the outliers.
+
+Let's make another object called "percent.mt_low" that contains only the values less than 10, and then plot a histogram of that.
+
+Example of how to subset an object by value.
+
+```
+x_low = x[x < 5]
+```
+{: .language-r}
+
+We will do similar here, but with "percent.mt" instead of x and 10 instead of 5.
+
 >
 > > ## Solution
 > >
@@ -287,23 +290,25 @@ Then, we can proceed with the next steps in this workflow based on our Seurat ob
 > >
 > > ![percent_mt hist2]({{ page.root }}/fig/percent_mt_hist2.png)
 > {: .solution}
->
-> Based on this plot, it seems like 5% would potentially be a sensible cutoff on mitochondrial rate.
->
-> But let's make one more plot to see.
->
-> Plot `nFeature_RNA` vs. `percent.mt`. Make the point size small (cex=0.1) since we have so many points.
->
-> ```
-> plot(nFeature_RNA, percent.mt, cex=0.1)
-> ```
-> {: .language-r}
->
-> ![nFeature_RNA_vs_percent.mt_plot]({{ page.root }}/fig/nFeature_RNA_vs_percent.mt.png)
->
-> It looks like cells with mitochondrial rates over 5% tend to have very low gene counts, which is another indication of poor quality.
->
-> Let's make a histogram of number of genes (nFeature_RNA) as well. Again, do label=TRUE.
+{: challenge}
+
+Based on this plot, it seems like 5% would potentially be a sensible cutoff on mitochondrial rate.
+
+But let's make one more plot to see.
+
+Plot `nFeature_RNA` vs. `percent.mt`. Make the point size small (cex=0.1) since we have so many points.
+
+```
+plot(nFeature_RNA, percent.mt, cex=0.1)
+```
+{: .language-r}
+
+![nFeature_RNA_vs_percent.mt_plot]({{ page.root }}/fig/nFeature_RNA_vs_percent.mt.png)
+
+It looks like cells with mitochondrial rates over 5% tend to have very low gene counts, which is another indication of poor quality.
+
+Let's make a histogram of number of genes (`nFeature_RNA`) as well. Again, do label=TRUE.
+
 >
 > > ## Solution
 > >
@@ -311,22 +316,22 @@ Then, we can proceed with the next steps in this workflow based on our Seurat ob
 > >
 > > ![nFeature_RNA_hist_plot]({{ page.root }}/fig/nFeature_RNA_hist.png)
 > {: .solution}
->
-> The minimum number of genes is at least 200, which is often where people set a minimum cutoff.
->
-> On the other end of the distribution, we find that very few cells have more than 2000 genes, and the max is <= 3600.
->
-> One last plot - let's look at the relationship between number of UMIs and number of genes per cell.
->
-> ```
-> plot(nCount_RNA,nFeature_RNA,cex=0.1)
-> ```
-> {: .language-r}
->
-> ![nCount_vs_nFeature_RNA_plot]({{ page.root }}/fig/nCount_vs_nFeature_RNA.png)
->
-> This shows a high level of linear correlation between number of UMIs and number of genes per cell, which is good! Indicates the data is high quality.
 {: .challenge}
+
+The minimum number of genes is at least 200, which is often where people set a minimum cutoff.
+
+On the other end of the distribution, we find that very few cells have more than 2000 genes, and the max is <= 3600.
+
+One last plot - let's look at the relationship between number of UMIs (`nCount_RNA`) and number of genes (`nFeature_RNA`) per cell.
+
+```
+plot(nCount_RNA,nFeature_RNA,cex=0.1)
+```
+{: .language-r}
+
+![nCount_vs_nFeature_RNA_plot]({{ page.root }}/fig/nCount_vs_nFeature_RNA.png)
+
+This shows a high level of linear correlation between number of UMIs and number of genes per cell, which is good! Indicates the data is high quality.
 
 > ## QC filtering
 >
