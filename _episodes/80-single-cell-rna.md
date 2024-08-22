@@ -161,7 +161,7 @@ Let's do something similar here, but replace 'path/to/data/directory' with the a
 >> data_dir = 'filtered_gene_bc_matrices/hg19'
 >> expression_matrix <- Read10X(data.dir = data_dir)
 >> ```
->> {: .language-r
+>> {: .language-r}
 > {: .solution}
 {: .challenge}
 
@@ -757,7 +757,7 @@ For broad cell types with multiple clusters, call them e.g. T_1, T_2, etc.
 >
 > Code below to remap the clusters, and output a new plot with the updated cluster labels.
 >
-> Note, it is important to put the cluster IDs in single quotes! Otherwise "1" might pull out the first level (which is cluster 0).
+> Note, it is important to put the cluster IDs in single quotes! Otherwise for example, `1` might pull out the first level (which is cluster 0).
 > 
 > ```
 > clusters = Idents(seurat_object)
