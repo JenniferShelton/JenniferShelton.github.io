@@ -1092,3 +1092,210 @@ Let's look at the help message for this command.
 ?FindMarkers
 ```
 {: language-r}
+
+We find the following example:
+
+```
+markers <- FindMarkers(object = pbmc_small, ident.1 = 2)
+```
+{: .output}
+
+Here, we want to run comparison between two clusters, though, so we also need to fill in the "ident.2" argument.
+
+Here is another example from the Seurat website, where they run differential expression between cluster 5 and clusters 0 and 3 for the Seurat object "pbmc".
+
+```
+cluster5.markers <- FindMarkers(pbmc, ident.1 = 5, ident.2 = c(0, 3))
+```
+
+Here, let's run differential expression between 'CD4T_1' and 'CD4T_2', and save results to an object called "CD4T_markers".
+
+Remember here that our object is called "seurat_object".
+
+>
+>> ## Solution
+>>
+>> ```
+>> CD4T_markers = FindMarkers(object = seurat_object,ident.1 = 'CD4T_1',ident.2 = 'CD4T_2')
+>> ```
+>> {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Let's look at the first few rows.
+
+```
+head(CD4T_markers)
+```
+{: .language-r}
+
+Should look something like this.
+
+```
+              p_val avg_log2FC pct.1 pct.2    p_val_adj
+S100A4 1.119839e-77 -1.5732946 0.663 0.950 3.666129e-73
+B2M    1.548560e-47 -0.3917224 1.000 1.000 5.069676e-43
+IL32   2.708330e-34 -0.8913577 0.755 0.950 8.866532e-30
+RPL32  1.597186e-33  0.3245829 0.998 1.000 5.228868e-29
+ANXA1  2.271029e-33 -1.1805915 0.481 0.784 7.434896e-29
+MALAT1 3.227506e-33  0.4359386 1.000 1.000 1.056621e-28
+```
+{: .output}
+
+Here, a positive value for `avg_log2FC` means the gene is higher in CD4T_1 than CD4T_2.
+
+While a negative value means the gene is higher in CD4T_2.
+
+Let's create two versions of this table.
+
+One with only genes that have avg_log2FC > 0, and we'll call it CD4T1_markers.
+
+And the other with only genes with avg_log2FC < 0, and we'll call it CD4T2_markers.
+
+Then, let's take the head of each.
+
+>
+>> ## Solution
+>>
+>> ```
+>> CD4T1_markers = CD4T_markers[CD4T_markers$avg_log2FC > 0,]
+>> CD4T2_markers = CD4T_markers[CD4T_markers$avg_log2FC < 0,]
+>> ```
+>> {: .language-r}
+>{: .solution}
+{: .challenge}
+
+```
+head(CD4T1_markers)
+```
+{: .language-r}
+
+```
+              p_val avg_log2FC pct.1 pct.2    p_val_adj
+RPL32  1.597186e-33  0.3245829 0.998     1 5.228868e-29
+MALAT1 3.227506e-33  0.4359386 1.000     1 1.056621e-28
+RPS27  3.128530e-29  0.2888005 0.998     1 1.024218e-24
+RPS23  7.596983e-25  0.3204768 1.000     1 2.487100e-20
+RPL21  1.258047e-24  0.3233405 0.997     1 4.118594e-20
+RPS6   2.552847e-24  0.2700326 1.000     1 8.357510e-20
+```
+{: .output}
+
+```
+head(CD4T2_markers)
+```
+{: .language-r}
+
+```
+
+```
+              p_val avg_log2FC pct.1 pct.2    p_val_adj
+S100A4 1.119839e-77 -1.5732946 0.663 0.950 3.666129e-73
+B2M    1.548560e-47 -0.3917224 1.000 1.000 5.069676e-43
+IL32   2.708330e-34 -0.8913577 0.755 0.950 8.866532e-30
+ANXA1  2.271029e-33 -1.1805915 0.481 0.784 7.434896e-29
+VIM    4.209886e-32 -0.7634691 0.815 0.941 1.378232e-27
+ANXA2  3.870629e-29 -1.6894050 0.158 0.468 1.267167e-24
+```
+{: .output}
+
+The genes we see in the first few rows of CD4T1_markers are mostly ribosomal proteins - not the most interesting in terms of biology.
+
+Let's look at more rows to see if we see anything more interpretable.
+
+```
+head(CD4T1_markers,20)
+```
+{: .language-r}
+
+```
+              p_val avg_log2FC pct.1 pct.2    p_val_adj
+RPL32  1.597186e-33  0.3245829 0.998 1.000 5.228868e-29
+MALAT1 3.227506e-33  0.4359386 1.000 1.000 1.056621e-28
+RPS27  3.128530e-29  0.2888005 0.998 1.000 1.024218e-24
+RPS23  7.596983e-25  0.3204768 1.000 1.000 2.487100e-20
+RPL21  1.258047e-24  0.3233405 0.997 1.000 4.118594e-20
+RPS6   2.552847e-24  0.2700326 1.000 1.000 8.357510e-20
+RPL9   4.138263e-23  0.3523786 0.998 0.998 1.354785e-18
+RPS3A  1.893362e-20  0.3668490 0.998 1.000 6.198487e-16
+RPL31  3.589483e-20  0.2982064 0.997 1.000 1.175125e-15
+RPS14  7.514163e-20  0.2502883 1.000 1.000 2.459987e-15
+CCR7   7.396108e-19  1.2961428 0.467 0.246 2.421338e-14
+RPS13  8.350707e-19  0.2985510 0.989 0.987 2.733855e-14
+RPL13  1.203840e-18  0.2420806 1.000 1.000 3.941133e-14
+RPL11  5.276883e-15  0.2304492 1.000 1.000 1.727546e-10
+RPL30  7.408685e-15  0.2386593 1.000 1.000 2.425455e-10
+RPS28  1.996393e-14  0.2641382 0.992 0.992 6.535791e-10
+RPS16  2.500937e-14  0.2595951 0.997 0.998 8.187568e-10
+RPLP2  3.838422e-14  0.2096304 1.000 1.000 1.256623e-09
+RPL19  1.000814e-13  0.1726900 0.998 1.000 3.276464e-09
+RPS25  1.027298e-13  0.2320915 0.998 0.998 3.363167e-09
+```
+{: .output}
+
+We find a gene called `CCR7` is upregulated in CD4T_1.
+
+Let's say we didn't know a lot about the biology here. Maybe we can Google it and see what comes up?
+
+One solution below - but you may word your search differently!
+
+>
+>> ## Solution
+>>
+>> ![ccr7_google]({{ page.root }}/fig/ccr7_google.png)
+> {: .solution}
+{: .challenge}
+
+We also find that a gene called `S100A4` is the top most significantly upregulated gene in CD4T_2.
+
+Let's try a search again. One possibly search query below.
+
+>
+>> ## Solution
+>>
+>> ![s100a4_google]({{ page.root }}/fig/s100a4_google.png)
+> {: .solution}
+{: .challenge}
+
+Well, that is not the most helpful. Seems like both of these genes can be expressed in memory CD4+ T cells?
+
+What if we edit the search to specifically focus on CD4+ T cells, not just all T cells? Maybe that will help?
+
+>
+>> ## Solution
+>>
+>> ![ccr7_google2]({{ page.root }}/fig/ccr7_google2.png)
+> {: .solution}
+{: .challenge}
+
+OK, so it looks like Ccr7 can be expressed in either naive CD4+ T cells, or specifically *central* memory T cells.
+
+While *effector* memory T cells do not express this gene.
+
+This also makes sense with what we saw when we searched for `S100A4`, which is expressed specifically in *effector* memory T cells.
+
+If we search for more info on naive vs. memory T cells, we also find [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1782715), which seems to confirm the initial Google AI overview, so we aren't just relying on that.
+
+Let's annotate these clusters based on this (CD4T_1 = Naive_or_central_memory_CD4T, CD4T_2 = Effector_memory_CD4T), but put a "?" since it's a bit iffy compared to the other cluster annotation.
+
+In a real-world analysis, this would often be the time to do a deeper literature review, or consult a collaborator with more knowledge of the biology to confirm this preliminary annotation.
+
+```
+clusters = Idents(seurat_object)
+
+old_cluster_ids = c('CD4T_1','CD4T_2')
+new_cluster_ids = c('Naive_or_central_memory_CD4T?','Effector_memory_CD4T?')
+
+clusters = mapvalues(x=clusters,from=old_cluster_ids,to=new_cluster_ids)
+
+Idents(seurat_object) = clusters
+```
+{: .language-r}
+
+Final plot:
+
+```
+DimPlot(object = seurat_object,reduction = 'umap',label=TRUE)
+```
+
+![UMAP_label_CD4_memory_vs_naive]({{ page.root }}/fig/seurat_UMAP_label_CD4_memory_vs_naive.png)
