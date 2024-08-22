@@ -72,6 +72,12 @@ and the other part of the read aligns to the other side of the deletion breakpoi
 inserted sequence. Read depth is where increases or decreases in read coverage occur versus the 
 average read coverage of the genome.
 
+##### Reads aligned to sample genome
+![Reads aligned to sample]({{ page.root }}/fig/SV.readsVsample.png)
+
+##### Reads aligned to reference genome
+![Reads aligned to reference]({{ page.root }}/fig/SV.readsVref.png)
+
 Coverage comes in two variants, sequence coverage and physical coverage. Sequence coverage is the 
 number of times a base was read while physical coverage is the number of times a base was read or 
 spanned by paired reads.
@@ -87,12 +93,6 @@ paired reads are introduced the two coverage metrics can vary widely.
 
 ##### Read depth
 ![Read depth]({{ page.root }}/fig/SV.readDepth.png)
-
-##### Reads aligned to sample genome
-![Reads aligned to sample]({{ page.root }}/fig/SV.readsVsample.png)
-
-##### Reads aligned to reference genome
-![Reads aligned to reference]({{ page.root }}/fig/SV.readsVref.png)
 
 ## Read signatures
 
