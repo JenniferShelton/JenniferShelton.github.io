@@ -760,13 +760,14 @@ For broad cell types with multiple clusters, call them e.g. T_1, T_2, etc.
 > Note, it is important to put the cluster IDs in single quotes! Otherwise for example, `1` might pull out the first level (which is cluster 0).
 > 
 > ```
-> clusters = Idents(seurat_object)
->
+> 
 > old_cluster_ids = c('0','1','5','7','2','4','3','6','8')
 > new_cluster_ids = c('Neuron_1','Neuron_2','Neuron_3','Neuron_4',
 >   'Astrocyte_1','Astrocyte_2',
 >   'Oligo/OPC_1','Oligo/OPC_2',
 >   'Microglia')
+>
+> clusters = Idents(seurat_object)
 > 
 > clusters = mapvalues(x = clusters,
 >   from = old_cluster_ids,
@@ -787,7 +788,6 @@ For broad cell types with multiple clusters, call them e.g. T_1, T_2, etc.
 > > ## Solution
 > >
 > > ```
-> > clusters = Idents(seurat_object)
 > >
 > > old_cluster_ids = c('0','1','3','5',
 > >   '4','6','7','9',
@@ -797,6 +797,8 @@ For broad cell types with multiple clusters, call them e.g. T_1, T_2, etc.
 > >   'Mono/DC_1','Mono/DC_2','Mono/DC_3','Mono/DC_4',
 > >   'NK','B','Platelet')
 > >
+> > clusters = Idents(seurat_object)
+> > 
 > > clusters = mapvalues(x = clusters,
 > >   from = old_cluster_ids,
 > >   to = new_cluster_ids)
@@ -918,6 +920,7 @@ Let's do this for CD4 and CD8 to start.
 > > ```
 > > {: .language-r}
 > {: .solution}
+{: .challenge}
 
 Let's plot yet again.
 
