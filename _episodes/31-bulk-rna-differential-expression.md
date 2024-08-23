@@ -1064,6 +1064,8 @@ Finally, we see a mix of genes upregulated vs. downregulated in the treated cond
 
 ## Visualizing differential expression statistics (scatterplots)
 
+### MA plot
+
 In the above section, we only looked at the differentially expressed genes.
 
 However, we may also want to look at patterns in the differential expression results overall, including genes that did not reach significance.
@@ -1092,6 +1094,8 @@ The blue dots are for significantly differentially expressed genes (padj < .01).
 We find that at low baseMean (closer to 1e+01 or ~10), the magnitude of the log2-fold-change must be very large (often +/-2 or +/- 3, so something like 4-fold or 8-fold difference) for the gene to be significant.
 
 Meanwhile at higher baseMean (say, as we go to 1e+03 or ~1000 reads and above), we find that the magnitude of the log2-fold-change can be much smaller (going down to +/- 0.5, so something like a 1.4-fold difference, or even less).
+
+### Volcano plot
 
 Another interesting plot is a volcano plot. This is a plot showing the relationship between the log2-fold-change and the adjusted p-value.
 
