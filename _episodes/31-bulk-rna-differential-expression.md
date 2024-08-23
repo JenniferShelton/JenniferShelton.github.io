@@ -622,3 +622,227 @@ Next, repeat but this time color by `dex`.
 > > PC1 explains 39% of the variance. PC2 explains 27% of the variance.
 > {: .solution}
 {: .challenge}
+
+## Differential expression testing
+
+Now that we have created the DESeq object, and done some initial data exploration, it is time to run differential expression testing to see which genes are significantly different between conditions (here, drug-treated vs. not drug-treated).
+
+One step we need to run to get these results is the command `DESeq`. Let's pull up the help message for this.
+
+```
+?DESeq
+```
+{: .language-r}
+
+Start of this help message:
+
+```
+Usage:
+
+     DESeq(
+       object,
+       test = c("Wald", "LRT"),
+       fitType = c("parametric", "local", "mean", "glmGamPoi"),
+       sfType = c("ratio", "poscounts", "iterate"),
+       betaPrior,
+       full = design(object),
+       reduced,
+       quiet = FALSE,
+       minReplicatesForReplace = 7,
+       modelMatrixType,
+       useT = FALSE,
+       minmu = if (fitType == "glmGamPoi") 1e-06 else 0.5,
+       parallel = FALSE,
+       BPPARAM = bpparam()
+     )
+     
+Arguments:
+
+  object: a DESeqDataSet object, see the constructor functions
+          ‘DESeqDataSet’, ‘DESeqDataSetFromMatrix’,
+          ‘DESeqDataSetFromHTSeqCount’.
+```
+{: .output}
+
+Seems like we can just input our DESeqDataSet object to the `object` argument?
+
+Let's do that, and save as a new object called `dds`.
+
+```
+dds = DESeq(object = myDESeqObject)
+```
+
+If all goes well, you should get the following output as the command runs.
+
+```
+using pre-existing size factors
+estimating dispersions
+gene-wise dispersion estimates
+mean-dispersion relationship
+final dispersion estimates
+fitting model and testing
+```
+{: .output}
+
+Next, we will need to run the `results` function on `dds`.
+
+Now, pull up the help message for that function.
+
+```
+?results
+```
+{: .language-r}
+
+```
+Usage:
+
+     results(
+       object,
+       contrast,
+       name,
+       lfcThreshold = 0,
+...)
+
+Arguments:
+
+  object: a DESeqDataSet, on which one of the following functions has
+          already been called: ‘DESeq’, ‘nbinomWaldTest’, or
+          ‘nbinomLRT’
+
+contrast: this argument specifies what comparison to extract from the
+          ‘object’ to build a results table. one of either:
+
+            • a character vector with exactly three elements: the name
+              of a factor in the design formula, the name of the
+              numerator level for the fold change, and the name of the
+              denominator level for the fold change (simplest case)
+
+...
+
+Examples:
+
+     ## Example 1: two-group comparison
+     
+     dds <- makeExampleDESeqDataSet(m=4)
+     
+     dds <- DESeq(dds)
+     res <- results(dds, contrast=c("condition","B","A"))
+```
+{: .output}
+
+To highlight the example:
+
+```
+dds <- DESeq(dds)
+res <- results(dds, contrast=c("condition","B","A"))
+```
+{: .output}
+
+Replace `condition`, `B`, and `A` with the appropriate values for this data set.
+
+We are looking to compare the effect of treatment with the drug.
+
+Let's look at our experimental design matrix again.
+
+```
+expdesign
+```
+
+```
+              cell   dex avgLength
+SRR1039508  N61311 untrt       126
+SRR1039509  N61311   trt       126
+SRR1039512 N052611 untrt       126
+SRR1039513 N052611   trt        87
+SRR1039516 N080611 untrt       120
+SRR1039517 N080611   trt       126
+SRR1039520 N061011 untrt       101
+SRR1039521 N061011   trt        98
+```
+{: .output}
+
+> ## Filling in the contrast argument to `results` from expdesign
+>
+> Some questions we need to answer here are:
+>
+> - What is the variable name for drug treatment here?
+> - What are the two levels of this variable?
+> - What order should we put these two levels in, if we want untreated to be the baseline?
+{: .callout}
+
+>
+> > ## Solution
+> >
+> > - The variable name for drug treatment is `dex`.
+> > - The two levels are `trt` and `untrt`.
+> > - We should put `trt` first and `untrt` second so that the fold-change will be expressed as treated/untreated.
+> {: .solution}
+{: .challenge}
+
+Now that we figured that out, we just need to plug everything into the function.
+
+Output to an object called `res`.
+
+>
+> > ## Solution
+> >
+> > ```
+> > res = results(object = dds, contrast = c("dex","trt","untrt"))
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Let's look at the first few rows of the results using `head`.
+
+```
+head(res)
+```
+{: .language-r}
+
+```
+log2 fold change (MLE): dex trt vs untrt 
+Wald test p-value: dex trt vs untrt 
+DataFrame with 6 rows and 6 columns
+                  baseMean log2FoldChange     lfcSE      stat      pvalue
+                 <numeric>      <numeric> <numeric> <numeric>   <numeric>
+ENSG00000000003 708.602170     -0.3812540  0.100654 -3.787752 0.000152016
+ENSG00000000005   0.000000             NA        NA        NA          NA
+ENSG00000000419 520.297901      0.2068126  0.112219  1.842943 0.065337292
+ENSG00000000457 237.163037      0.0379204  0.143445  0.264356 0.791505742
+ENSG00000000460  57.932633     -0.0881682  0.287142 -0.307054 0.758801924
+ENSG00000000938   0.318098     -1.3782270  3.499873 -0.393793 0.693733530
+                      padj
+                 <numeric>
+ENSG00000000003 0.00128292
+ENSG00000000005         NA
+ENSG00000000419 0.19646985
+ENSG00000000457 0.91141962
+ENSG00000000460 0.89500478
+ENSG00000000938         NA
+```
+{: .output}
+
+Run the following to get an explanation of what each column in this output means.
+
+```
+mcols(res)$description
+```
+{: .language-r}
+
+```
+[1] "mean of normalized counts for all samples"
+[2] "log2 fold change (MLE): dex trt vs untrt" 
+[3] "standard error: dex trt vs untrt"         
+[4] "Wald statistic: dex trt vs untrt"         
+[5] "Wald test p-value: dex trt vs untrt"      
+[6] "BH adjusted p-values"
+```
+{: .output}
+
+Ready to start to explore and interpret these results.
+
+## Visualizing differential expression
+
+### Heatmap of expression per sample, per DE gene
+
