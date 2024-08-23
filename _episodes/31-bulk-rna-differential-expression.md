@@ -1359,11 +1359,27 @@ Output to a tab-delimited text file `gsea_input.txt` using the `write.table` fun
 > {: .solution}
 {: .challenge}
 
-## Running functional enrichment (GO/GSEA)
+### Download files
+
+Download geneids_sig.txt and gsea_input.txt to your laptop.
+
+In a browser, go to the appropriate path at https://console.cloud.google.com/storage/browser.
+
+Here is an example for bucket gs://hgeiger.
+
+![google_cloud_console_hgeiger]({{ page.root }}/fig/google_cloud_console_hgeiger.png)
+
+Click the down button next to the file names to open the file.
+
+Then, right click and do "save as" to download.
+
+## Running functional enrichment (ORA/GSEA)
 
 Let's head to the website [WebGestalt](https://www.webgestalt.org/).
 
 Leave the R session open in case we need to go back and output more files from there.
+
+### Run ORA
 
 Click "Click to upload" next to "Upload ID List".
 
@@ -1373,7 +1389,25 @@ Upload `geneids_sig.txt`.
 
 For the reference set, select "genome protein-coding".
 
-After that is done, let's move on to running gene set enrichment analysis (GSEA).
+![webgestalt_reference]({{ page.root }}/fig/webgestalt_reference.png)
+
+In advanced parameters, switch from top 10 to FDR 0.05.
+
+![webgestalt_advanced_parameters]({{ page.root }}/fig/webgestalt_advanced_parameters.png)
+
+Let's look at the results!
+
+![airway_webgestalt_ORA_barplot]({{ page.root }}/fig/airway_webgestalt_ORA_barplot.png)
+
+Let's scroll down and click on "response to oxygen levels", as this seems pretty relevant for an airway dataset.
+
+We can scroll through and look at the genes that are in this gene set, that are differentially expressed.
+
+![airway_webgestalt_response_to_oxygen_levels]({{ page.root }}/fig/airway_webgestalt_response_to_oxygen_levels.png)
+
+### Run GSEA.
+
+Let's move on to running gene set enrichment analysis (GSEA).
 
 For the tab at the top, switch to "Gene Set Enrichment Analysis".
 
@@ -1528,3 +1562,19 @@ Back to command line, let's change the file suffix to ".rnk" instead of ".txt" (
 {: .challenge}
 
 This time it worked!
+
+![airway_webgestalt_GSEA_barplot]({{ page.root }}/fig/airway_webgestalt_GSEA_barplot.png)
+
+Hm - fewer categories than we might have expected?
+
+Let's redo, but change functional database to `pathway` = `Kegg`.
+
+![webgestalt_Kegg]({{ page.root }}/fig/webgestalt_Kegg.png)
+
+![airway_webgestalt_GSEA_barplot_Kegg]({{ page.root }}/fig/airway_webgestalt_GSEA_barplot_Kegg.png)
+
+Click on autophagy.
+
+![airway_webgestalt_autophagy]({{ page.root }}/fig/airway_webgestalt_autophagy.png)
+
+Nice! For this test we also get a value that gives the relative magnitude of change (here, all the categories seem to be ones associated with genes upregulated upon treatment).
