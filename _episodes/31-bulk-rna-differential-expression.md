@@ -12,7 +12,7 @@ questions:
 objectives:
 - Apply standard bulk workflow pre-processing methods such as DESeq2 normalization given a gene-sample count matrix.
 - Execute dimensional reduction (PCA) and corresponding visualization.
-- Compute differential expression between two groups, controlling for a secondary variable.
+- Understand design formulas and how to apply them to run differential expression.
 - Summarize differential expression (DE) results using a heatmap visualization.
 - Interpret data visualizations from the above steps.
 - Use base R commands to output text files from DE results for input into functional enrichment (GO/GSEA).
