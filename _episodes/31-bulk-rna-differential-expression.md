@@ -77,7 +77,7 @@ Load all the libraries you will need for this tutorial using the `library` comma
 ```
 library(DESeq2)
 library(ggplot2)
-library(pheatmap
+library(pheatmap)
 ```
 {: .language-r}
 
@@ -94,7 +94,7 @@ First, before we read anything into R, what is the full path to the raw counts f
 > {: .solution}
 {: .challenge}
 
-Use this to read into R using the "read.csv" command.
+Use this to read into R using the `read.csv` command.
 
 Let's read the help message for this command.
 
@@ -276,7 +276,7 @@ Read into an object called `expdesign`.
 > > ```
 > > expdesign = read.csv("airway_sample_metadata.csv",row.names=1)
 > > ```
-> > {. language-r}
+> > {: .language-r}
 > {: .solution}
 {: .challenge}
 
@@ -423,7 +423,7 @@ Should we be putting `cell` and `dex` in quotes maybe? That worked the last time
 > > 'design' should be a formula or a matrix
 > > ```
 > > {: .output}
-> {: solution}
+> {: .solution}
 {: .challenge}
 
 Hm, still not right.
@@ -499,7 +499,7 @@ Replace `transformedObject` here with the name we want for the new object, and `
 > {: .solution}
 {: .challenge}
 
-Let's also save just the normalized values from `rlogObject` in a separate object called `rlogMatrix` (versus the full `rlogObject` is a different kind of object that contains other stuff in it).
+Let's also save just the normalized values from `rlogObject` in a separate object called `rlogMatrix`.
 
 ```
 rlogMatrix = assay(rlogObject)
