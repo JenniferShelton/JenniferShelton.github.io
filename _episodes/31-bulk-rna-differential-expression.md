@@ -1349,7 +1349,7 @@ Output to a tab-delimited text file `gsea_input.txt` using the `write.table` fun
 > >
 > > ```
 > > output_file = "gsea_input.txt"
-> > write.table(gsea.input,file=output_file,sep="\t")
+> > write.table(x = gsea.input,file=output_file,sep="\t")
 > > ```
 > > {: .language-r}
 > {: .solution}
@@ -1359,11 +1359,168 @@ Output to a tab-delimited text file `gsea_input.txt` using the `write.table` fun
 
 Let's head to the website [WebGestalt](https://www.webgestalt.org/).
 
+Leave the R session open in case we need to go back and output more files from there.
+
 Click "Click to upload" next to "Upload ID List".
 
 ![webgestalt1]({{ page.root }}/fig/webgestalt1.png)
 
-Upload geneids_sig.txt.
+Upload `geneids_sig.txt`.
 
 For the reference set, select "genome protein-coding".
 
+After that is done, let's move on to running gene set enrichment analysis (GSEA).
+
+For the tab at the top, switch to "Gene Set Enrichment Analysis".
+
+Switch back the functional database to the same as before (geneontology, Biological Process noRedundant).
+
+This time, upload `gsea_input.txt`.
+
+We get the following error message.
+
+![webgestalt_error]({{ page.root }}/fig/webgestalt_error.png)
+
+Let's go to the command line (not in R) and see if everything looks OK in our file.
+
+```bash
+head gsea_input.txt
+```
+
+```
+"gene"	"stat"
+"10923"	"ENSG00000162692"	-19.4160587914648
+"14737"	"ENSG00000178695"	-18.8066074036207
+"3453"	"ENSG00000107562"	-18.0775817519565
+"9240"	"ENSG00000148848"	-18.0580936880167
+"8911"	"ENSG00000146250"	-17.7950173361052
+"3402"	"ENSG00000106976"	-17.6137734750388
+"11121"	"ENSG00000163394"	-17.4484303669187
+"5627"	"ENSG00000124766"	-17.1299063626842
+"3259"	"ENSG00000105989"	-15.8949963870475
+```
+{: .output}
+
+A few things to fix, it seems:
+
+- We need to remove the quotation marks.
+- Remove the header.
+- Remove the first column.
+
+Let's go back into R and see if we can redo how we output this file.
+
+```
+?read.table
+```
+{: .language-r}
+
+```
+Arguments:
+
+quote: a logical value (‘TRUE’ or ‘FALSE’) or a numeric vector.  If
+          ‘TRUE’, any character or factor columns will be surrounded by
+          double quotes.  If a numeric vector, its elements are taken
+          as the indices of columns to quote.  In both cases, row and
+          column names are quoted if they are written.  If ‘FALSE’,
+          nothing is quoted.
+row.names: either a logical value indicating whether the row names of
+          ‘x’ are to be written along with ‘x’, or a character vector
+          of row names to be written.
+
+col.names: either a logical value indicating whether the column names
+          of ‘x’ are to be written along with ‘x’, or a character
+          vector of column names to be written.  See the section on
+          ‘CSV files’ for the meaning of ‘col.names = NA’.
+```
+{: .output}
+
+Looks like we need to add a few arguments to get our output formatted correctly.
+
+Let's output to a new file `gsea_input_corrected.txt`.
+
+>
+> > ## Solution
+> >
+> > ```
+> > output_file = "gsea_input_corrected.txt"
+> > write.table(x = gsea.input,file=output_file,sep="\t",row.names=FALSE,col.names=FALSE,quote=FALSE)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Let's go back to the website and try again.
+
+![webgestalt_error2]({{ page.root }}/fig/webgestalt_error2.png)
+
+Still getting an error message.
+
+Let's go back to the command line and look at the corrected file.
+
+```bash
+head gsea_input_corrected.txt
+```
+
+```
+ENSG00000162692	-19.4160587914648
+ENSG00000178695	-18.8066074036207
+ENSG00000107562	-18.0775817519565
+ENSG00000148848	-18.0580936880167
+ENSG00000146250	-17.7950173361052
+ENSG00000106976	-17.6137734750388
+ENSG00000163394	-17.4484303669187
+ENSG00000124766	-17.1299063626842
+ENSG00000105989	-15.8949963870475
+ENSG00000108821	-15.2668170602372
+```
+{: .output}
+
+Hm, looks OK? What about tail?
+
+```bash
+tail gsea_input_corrected.txt
+```
+
+```
+ENSG00000273470	NA
+ENSG00000273471	NA
+ENSG00000273475	NA
+ENSG00000273479	NA
+ENSG00000273480	NA
+ENSG00000273481	NA
+ENSG00000273482	NA
+ENSG00000273484	NA
+ENSG00000273490	NA
+ENSG00000273491	NA
+```
+{: .output}
+
+That explains it - we need to remove the genes with NA values.
+
+Let's use `grep` to remove lines with "NA", and output to a new file `gsea_input_corrected_minus_NA.txt`.
+
+>
+> > ## Solution
+> >
+> > ```bash
+> > grep -v NA gsea_input_corrected.txt > gsea_input_corrected_minus_NA.txt
+> > ```
+> {: .solution}
+{: .challenge}
+
+Try WebGestalt yet again.
+
+![webgestalt_error3]({{ page.root }}/fig/webgestalt_error3.png)
+
+Back to command line, let's change the file suffix to ".rnk" instead of ".txt" (rename the file) using the `mv` command.
+
+>
+> > ## Solution
+> >
+> > ```bash
+> > mv gsea_input_corrected_minus_NA.txt gsea_input_corrected_minus_NA.rnk
+> > ```
+> {: .solution}
+{: .challenge}
+
+This time it worked!
