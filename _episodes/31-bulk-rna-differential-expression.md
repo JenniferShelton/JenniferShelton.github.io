@@ -842,7 +842,7 @@ mcols(res)$description
 
 Ready to start to explore and interpret these results.
 
-## Visualizing differential expression as a heatmap
+## Visualizing expression of differentially expressed genes (heatmap)
 
 Use the `which` function to get the indices (row numbers) of the genes with adjusted p-value < .01 (false discovery rate of 1%).
 
@@ -1039,7 +1039,7 @@ We already have a data frame with the annotation we are looking for, so just nee
 > {: .solution}
 {: .challenge}
 
-Oops - looks like we input as an argument to annotation_row, when should have been an argument to annotation_col.
+Oops - looks like we used the wrong argument. We want to annotate the samples, not the genes.
 
 >
 > > ## Solution
@@ -1061,3 +1061,309 @@ Looks like the samples separate primarily by treatment, as we would expect here 
 We also see some variability by cell line, as we would have expected from the PCA plot.
 
 Finally, we see a mix of genes upregulated vs. downregulated in the treated condition.
+
+## Visualizing differential expression statistics (scatterplots)
+
+In the above section, we only looked at the differentially expressed genes.
+
+However, we may also want to look at patterns in the differential expression results overall, including genes that did not reach significance.
+
+One common summary plot from differential expression is the `MA plot`.
+
+In this plot, mean expression across samples (baseMean) is compared to log-fold-change, with genes colored by whether or not they meet the significance level we set for adjusted p-value (padj).
+
+Generally for lowly expressed genes, the difference between conditions has to be stronger to create statistically significant results compared to highly expressed genes. The MA plot shows this effect.
+
+DESeq2 has a nice function plotMA that will do this for you (using the output of the `results` function), and format everything nicely. 
+
+Add argument alpha=0.01 to set the adjusted p-value cutoff to 0.01 instead of the default 0.1.
+
+```
+plotMA(object = res,alpha=0.01)
+```
+{: .language-r}
+
+![MA_plot]({{ page.root }}/fig/MA_plot.png)
+
+The x-axis here is log10-scaled. The y-axis here is log2(treated/untreated).
+
+The blue dots are for significantly differentially expressed genes (padj < .01).
+
+We find that at low baseMean (closer to 1e+01 or ~10), the magnitude of the log2-fold-change must be very large (often +/-2 or +/- 3, so something like 4-fold or 8-fold difference) for the gene to be significant.
+
+Meanwhile at higher baseMean (say, as we go to 1e+03 or ~1000 reads and above), we find that the magnitude of the log2-fold-change can be much smaller (going down to +/- 0.5, so something like a 1.4-fold difference, or even less).
+
+Another interesting plot is a volcano plot. This is a plot showing the relationship between the log2-fold-change and the adjusted p-value.
+
+First, extract these two values from `res`.
+
+Let's refresh ourselves on what the column names are here.
+
+```
+colnames(res)
+```
+{: .language-r}
+
+```
+[1] "baseMean"       "log2FoldChange" "lfcSE"          "stat"          
+[5] "pvalue"         "padj"
+```
+{: .output}
+
+Extract columns `log2FoldChange` and `padj` into objects of the same name.
+
+>
+> > ## Solution
+> >
+> > ```
+> > log2FoldChange = res$log2FoldChange
+> > padj = res$padj
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Plot `log2FoldChange` on the x-axis and `padj` on the y-axis.
+
+>
+> > ## Solution
+> >
+> > ```
+> > plot(log2FoldChange,padj)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+![log2FC_vs_padj_raw]({{ page.root }}/fig/log2FC_vs_padj_raw.png)
+
+Add argument to make the points smaller.
+
+Argument:
+
+```
+pch="."
+```
+
+>
+> > ## Solution
+> >
+> > ```
+> > plot(log2FoldChange,padj,pch=".")
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+![log2FC_vs_padj_raw_small_points]({{ page.root }}/fig/log2FC_vs_padj_raw_small_points.png) 
+
+Hm, this still doesn't look quite right.
+
+If I search for what a volcano plot should look like, I get something closer to [this](https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-viz-with-volcanoplot/tutorial.html).
+
+![volcano_from_internet_search]({{ page.root }}/fig/volcano_from_internet_search.png) 
+
+I believe we need to take `-log10` of `padj`.
+
+Let's do that, and save as `padj_transformed`.
+
+Then, redo plot using this new variable.
+
+>
+> > ## Solution
+> >
+> > ```
+> > padj_transformed = -log10(padj)
+> >
+> > plot(log2FoldChange,padj_transformed,pch=".")
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+![log2FC_vs_padj_transformed]({{ page.root }}/fig/log2FC_vs_padj_transformed.png)
+
+## Preparing files for functional enrichment (ORA/GSEA)
+
+Next, we will want to take the results of differential expression testing, and prepare for input into functional enrichment, either over-representation (ORA) or gene set enrichment (GSEA) analysis.
+
+Then, we will import these inputs to a web-based tool called [WebGestalt](https://www.webgestalt.org/).
+
+In over-representation analysis, the idea is to test whether genes that are significantly differential expressed are enriched for certain categories of genes (gene sets). The input to this is a list of the gene IDs/names for the differentially expressed genes.
+
+In gene set enrichment analysis, genes are ranked by how differential expressed they are, and whether they are upregulated or downregulated. The input to this is a table with the gene IDs/names of all genes, and the test-statistic (here the `stat` column), ordered by the test-statistic.
+
+### Preparing for input into ORA
+
+Here, we will prepare the input for ORA by first getting all the gene IDs into an object called `geneids`.
+
+These gene IDs are stored in the row names of the results (`res`), so we can get them out using the `rownames` function.
+
+>
+> > ## Solution
+> >
+> > ```
+> > geneids = rownames(res)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Next, subset `geneids` to just the differentially expressed genes using the previously calculated indices (that we made for the heatmap step).
+
+Syntax to subset an object using previously calculated indices.
+
+```
+x_subset = x[previously_calculated_indices]
+```
+
+Let's output to an object called geneids.sig.
+
+>
+> > ## Solution
+> >
+> > ```
+> > geneids.sig = geneids[degs]
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Output to a text file called `geneids_sig.txt` using the writeLines command.
+
+Let's get the syntax for this command.
+
+```
+?writeLines
+```
+{: .language-r}
+
+```
+Usage:
+
+     writeLines(text, con = stdout(), sep = "\n", useBytes = FALSE)
+     
+Arguments:
+
+    text: A character vector
+
+     con: A connection object or a character string.
+```
+{: .output}
+
+There is no example in the help message, but I found one on [Stack Overflow](https://stackoverflow.com/questions/2470248/write-lines-of-text-to-a-file-in-r) that may be helpful (paraphrased below).
+
+```
+mywords = c("Hello","World")
+output_file = "output.txt"
+writeLines(text = mywords, con = output_file)
+```
+
+Let's run this here.
+
+>
+> > ## Solution
+> >
+> > ```
+> > output_file = geneids_sig.txt
+> >
+> > writeLines(text = geneids.sig, con = output_file)
+> > ```
+> > {: .language-r}
+> >
+> > ```
+> > Error: object 'geneids_sig.txt' not found
+> > ```
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
+Oops, let's fix.
+
+>
+> > ## Solution
+> >
+> > ```
+> > output_file = "geneids_sig.txt"
+> >
+> > writeLines(text = geneids.sig, con = output_file)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+### Preparing for input into GSEA
+
+Let's move on to creating the input for GSEA. This will be a data frame with two columns.
+
+- `gene` : The gene ID (already have these for all genes in `geneids`)
+- `stat` : The `stat` column from the differential expression results (`res`)
+
+We will use the `data.frame` function here.
+
+```
+?data.frame
+```
+{: .language-r}
+
+```
+Examples:
+
+L3 <- LETTERS[1:3]
+char <- sample(L3, 10, replace = TRUE)
+d <- data.frame(x = 1, y = 1:10, char = char)
+```
+{: .output}
+
+Let's call this data frame `gsea.input`.
+
+>
+> > ## Solution
+> >
+> > ```
+> > gsea.input = data.frame(gene = geneids,
+> >     stat = res$stat)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Sort by the stat column.
+
+>
+> > ## Solution
+> >
+> > ```
+> > order_genes = order(gsea.input$stat)
+> >
+> > gsea.input = gsea.input[order_genes,]
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Output to a tab-delimited text file `gsea_input.txt` using the `write.table` function.
+
+>
+> > ## Solution
+> >
+> > ```
+> > output_file = "gsea_input.txt"
+> > write.table(gsea.input,file=output_file,sep="\t")
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+## Running functional enrichment (GO/GSEA)
+
+Let's head to the website [WebGestalt](https://www.webgestalt.org/).
+
+Click "Click to upload" next to "Upload ID List".
+
+![webgestalt1]({{ page.root }}/fig/webgestalt1.png)
+
+Upload geneids_sig.txt.
+
+For the reference set, select "genome protein-coding".
+
