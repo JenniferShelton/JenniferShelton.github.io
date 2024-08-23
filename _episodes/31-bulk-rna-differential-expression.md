@@ -842,7 +842,222 @@ mcols(res)$description
 
 Ready to start to explore and interpret these results.
 
-## Visualizing differential expression
+## Visualizing differential expression as a heatmap
 
-### Heatmap of expression per sample, per DE gene
+Use the `which` function to get the indices (row numbers) of the genes with adjusted p-value < .01 (false discovery rate of 1%).
 
+Then, save as an object called `degs`.
+
+First, which column index or name contains the adjusted p-values?
+
+>
+> > ## Solution
+> > 
+> > Column "padj", or column number 6.
+> {: .solution}
+{: .challenge}
+
+Then, we will need to extract this column. A few possible ways listed below.
+
+>
+> > ## Solution
+> >
+> > res$padj
+> > res[,6]
+> > res[,"padj"]
+> {: .solution}
+{: .challenge}
+
+Next, help message for the `which` command (from base package) gives the following:
+
+```
+Usage:
+
+     which(x, arr.ind = FALSE, useNames = TRUE)
+     arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
+     
+Arguments:
+
+       x: a ‘logical’ vector or array.  ‘NA’s are allowed and omitted
+          (treated as if ‘FALSE’).
+
+Examples:
+
+     which(LETTERS == "R")
+..
+which(1:10 > 3, arr.ind = TRUE)
+```
+
+So, we just need to add a statement to get only values less than 0.01 from the column.
+
+>
+> > ## Solution
+> >
+> > ```
+> > degs = which(res$padj < .01)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+How many differentially expressed genes do we find?
+
+```
+length(degs)
+```
+
+```
+[1] 2901
+```
+{: .output}
+
+Next, let's subset the normalized expression matrix (`rlogMatrix`) to only these genes, and output to a new matrix rlogMatrix.degs.
+
+Syntax of matrix subsetting:
+
+```
+mydat.subset = mydat[indices_to_subset,]
+```
+
+>
+> > ## Solution
+> >
+> > ```
+> > rlogMatrix.degs = rlogMatrix[degs,]
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Let's run the pheatmap command on this matrix to output a heatmap to the console.
+
+```
+pheatmap(object = rlogMatrix.degs)
+```
+{: .language-r}
+
+```
+Error in pheatmap(object = rlogMatrix.degs) : 
+  argument "mat" is missing, with no default
+```
+{: .output}
+
+Well, that's why we should read the help message! Seems the main argument for the input object to pheatmap is `mat`, not `object`.
+
+```
+pheatmap(mat = rlogMatrix.degs)
+```
+{: .language-r}
+
+![DE_heatmap_no_arguments]({{ page.root }}/fig/DE_heatmap_no_arguments.png)
+
+Does not seem super informative! 
+
+Let's look at the pheatmap help message again and see if we can add some arguments to make it better.
+
+```
+?pheatmap
+```
+{: .language-r}
+
+Scrolling down to arguments, we see:
+
+```
+scale: character indicating if the values should be centered and
+          scaled in either the row direction or the column direction,
+          or none. Corresponding values are ‘"row"’, ‘"column"’ and
+          ‘"none"’
+```
+{: .output}
+
+Let's scale across the genes, so by row.
+
+And also this:
+
+```
+show_rownames: boolean specifying if row names are be shown.
+```
+{: .output}
+
+Boolean means either TRUE or FALSE. Let's turn this off.
+
+>
+> > ## Solution
+> >
+> > ```
+> > pheatmap(mat = rlogMatrix.degs,
+> >     scale="row",
+> >     show_rownames=FALSE)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+![DE_heatmap_with_arguments]({{ page.root }}/fig/DE_heatmap_with_arguments.png)
+
+Think we mostly have what we want now. 
+
+Except, the "SRR" sample names are not very informative.
+
+It would be good to have an annotation bar at the top of the heatmap that said what cell line each sample is from, and whether it is treated or untreated.
+
+Going back to the pheatmap help message:
+
+```
+annotation_row: data frame that specifies the annotations shown on left
+          side of the heatmap. Each row defines the features for a
+          specific row. The rows in the data and in the annotation are
+          matched using corresponding row names. Note that color
+          schemes takes into account if variable is continuous or
+          discrete.
+
+annotation_col: similar to annotation_row, but for columns.
+```
+{: .output}
+
+We already have a data frame with the annotation we are looking for, so just need to give it as an argument here.
+
+>
+> > ## Solution
+> >
+> > ```
+> > pheatmap(mat = rlogMatrix.degs,
+> >     scale="row",
+> >     show_rownames=FALSE,
+> >     annotation_row=expdesign)
+> > ```
+> > {: .language-r}
+> >
+> > ```
+> > Error in seq.int(rx[1L], rx[2L], length.out = nb) : 
+> > 'from' must be a finite number
+> > In addition: Warning messages:
+> > 1: In min(x) : no non-missing arguments to min; returning Inf
+> > 2: In max(x) : no non-missing arguments to max; returning -Inf
+> > ```
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
+Oops - looks like we input as an argument to annotation_row, when should have been an argument to annotation_col.
+
+>
+> > ## Solution
+> >
+> > ```
+> > pheatmap(mat = rlogMatrix.degs,
+> >     scale="row",
+> >     show_rownames=FALSE,
+> >     annotation_col=expdesign)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+![DE_heatmap_with_annotation]({{ page.root }}/fig/DE_heatmap_with_annotation.png)
+
+Looks like the samples separate primarily by treatment, as we would expect here since these are the differentially expressed genes.
+
+We also see some variability by cell line, as we would have expected from the PCA plot.
+
+Finally, we see a mix of genes upregulated vs. downregulated in the treated condition.
