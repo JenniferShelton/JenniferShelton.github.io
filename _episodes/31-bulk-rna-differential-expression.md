@@ -13,12 +13,16 @@ objectives:
 - Apply standard bulk workflow pre-processing methods such as DESeq2 normalization given a gene-sample count matrix.
 - Execute dimensional reduction (PCA) and corresponding visualization.
 - Understand design formulas and how to apply them to run differential expression.
-- Summarize differential expression (DE) results using a heatmap visualization.
+- Summarize differential expression (DE) results using a heatmap visualization as well as MA and volcano plots.
 - Interpret data visualizations from the above steps.
-- Use base R commands to output text files from DE results for input into functional enrichment (GO/GSEA).
-- Run GO/GSEA using a web-based tool, and describe the meaning of the resulting output.
+- Use base R commands to output text files from DE results for input into functional enrichment (ORA/GSEA).
+- Run ORA/GSEA using a web-based tool, and describe the meaning of the resulting output.
 keypoints:
-- Will add this later.
+- Normalization is necessary to account for different library sizes between samples.
+- Dimensional reduction (PCA) can help us understand the relationship between samples, and how it tracks with biological and technical variables.
+- We often want to include technical variables in the design formula, so that the differential expression comparison may include controlling for these as we solve for the effect of the biological variable.
+- Heatmaps are a useful visualization for understanding differential expression results, but must often be scaled by gene to become interpretable.
+- ORA and GSEA accept very different inputs (only DE genes versus all genes), and their outputs may be different as well as a result (though often they include similar categories).
 ---
 
 # About this tutorial
