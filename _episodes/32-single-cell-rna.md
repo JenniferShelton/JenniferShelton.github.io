@@ -114,9 +114,9 @@ Then, we will run all of the following commands within that session.
 Load all the libraries you will need for this tutorial using the `library` command. Today we will load `Seurat`, `dplyr`, and `plyr`.
 
 ```
+library(plyr)
 library(dplyr)
 library(Seurat)
-library(plyr)
 ```
 {: .language-r}
 
