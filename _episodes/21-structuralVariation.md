@@ -107,7 +107,7 @@ paired reads are introduced the two coverage metrics can vary widely.
 > 
 > ##### Translocation read signature
 > ![Translocation read signature]({{ page.root }}/fig/SV.translocationSig.png)
-{:. solution}
+{: .solution}
 
 > ## Challenge
 >
@@ -115,8 +115,8 @@ paired reads are introduced the two coverage metrics can vary widely.
 >
 > > Insert image
 > >
-> {:. solution}
-{:. challenge}
+> {: .solution}
+{: .challenge}
 
 ![SV caller comparison]({{ page.root }}/fig/SV.algComparison.png)
 
