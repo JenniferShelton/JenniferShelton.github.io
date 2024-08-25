@@ -94,19 +94,31 @@ paired reads are introduced the two coverage metrics can vary widely.
 ##### Read depth
 ![Read depth]({{ page.root }}/fig/SV.readDepth.png)
 
-## Read signatures
+> ## Read signatures
+> 
+> ##### Deletion read signature
+> ![Deletion read signature]({{ page.root }}/fig/SV.deletionSig.png)
+> 
+> ##### Inversion read signature
+> ![Inversion read signature]({{ page.root }}/fig/SV.inversionSig.png)
+> 
+> ##### Tandem duplication read signature
+> ![Tandem duplication read signature]({{ page.root }}/fig/SV.tandemDupSig.png)
+> 
+> ##### Translocation read signature
+> ![Translocation read signature]({{ page.root }}/fig/SV.translocationSig.png)
+{:. solution}
 
-##### Deletion read signature
-![Deletion read signature]({{ page.root }}/fig/SV.deletionSig.png)
+> ## Challenge
+>
+> What do you think the read signature of an insertion might look like
+>
+> > Insert image
+> >
+> {:. solution}
+{:. challenge}
 
-##### Inversion read signature
-![Inversion read signature]({{ page.root }}/fig/SV.inversionSig.png)
-
-##### Tandem duplication read signature
-![Tandem duplication read signature]({{ page.root }}/fig/SV.tandemDupSig.png)
-
-##### Translocation read signature
-![Translocation read signature]({{ page.root }}/fig/SV.translocationSig.png)
+![SV caller comparison]({{ page.root }}/fig/SV.algComparison.png)
 
 ## Caller concordance
 
