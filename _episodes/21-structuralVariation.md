@@ -111,8 +111,9 @@ paired reads are introduced the two coverage metrics can vary widely.
 
 > ## Challenge
 >
-> What do you think the read signature of an insertion might look like
+> What do you think the read signature of an insertion might look like?
 >
+> > ## Solution
 > > Insert image
 > >
 > {: .solution}
