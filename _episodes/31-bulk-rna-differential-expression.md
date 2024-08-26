@@ -1738,10 +1738,10 @@ Let's change the file suffix to ".rnk" instead of ".txt" (rename the file).
 
 Below is shown how to do this using Mac's Finder program - you can do this however you would normally for your system.
 
-![mac_finder_rename_1of4]){{ page.root }}/fig/mac_finder_rename_1of4.png)
-![mac_finder_rename_2of4]){{ page.root }}/fig/mac_finder_rename_2of4.png)
-![mac_finder_rename_3of4]){{ page.root }}/fig/mac_finder_rename_3of4.png)
-![mac_finder_rename_4of4]){{ page.root }}/fig/mac_finder_rename_4of4.png)
+![mac_finder_rename_1of4])({{ page.root }}/fig/mac_finder_rename_1of4.png)
+![mac_finder_rename_2of4])({{ page.root }}/fig/mac_finder_rename_2of4.png)
+![mac_finder_rename_3of4])({{ page.root }}/fig/mac_finder_rename_3of4.png)
+![mac_finder_rename_4of4])({{ page.root }}/fig/mac_finder_rename_4of4.png)
 
 Now, go back and redo all of the above, but input gsea_input_corrected_minus_NA.rnk.
 
