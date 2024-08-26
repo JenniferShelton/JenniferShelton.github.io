@@ -39,7 +39,31 @@ Himes BE, Jiang X, Wagner P, Hu R, Wang Q, Klanderman B, Whitaker RM, Duan Q, La
 
 DOI link [here.](https://doi.org/10.1371/journal.pone.0099625)
 
+# Setting up to run this tutorial
+
+Open Launcher.
+
+![morehouse_launcher]({{ page.root }}/fig/morehouse_launcher.png)
+
+Go to "R" under "Notebook".
+
+![morehouse_launcher_highlight_R_notebook]({{ page.root }}/fig/morehouse_launcher_highlight_R_notebook.png)
+
+![morehouse_R_notebook]({{ page.root }}/fig/morehouse_R_notebook.png)
+
+Press the "+" at the top to open another tab.
+
+![morehouse_R_notebook_highlight_add_tab]({{ page.root }}/fig/morehouse_R_notebook_highlight_add_tab.png)
+
+This time, go to "Other", then "Terminal".
+
+![morehouse_launcher_highlight_terminal]({{ page.root }}/fig/morehouse_launcher_highlight_terminal.png)
+
+![morehouse_terminal]({{ page.root }}/fig/morehouse_terminal.png)
+
 # Locating the data on the file system
+
+This section will be run in the "Terminal" tab.
 
 The data has already been downloaded, and is in CSV format for easy reading into R.
 
@@ -48,15 +72,14 @@ The main files we will be working with today are a gene x sample count matrix, a
 Data is available in this directory:
 
 ```
-# List path here.
+/data/RNA/bulk
 ```
 
 If we list that path like so:
 
 ```
-ls /path/to/dir
+ls /data/RNA/bulk
 ```
-{: .language-r}
 
 We find the following files:
 
@@ -66,13 +89,22 @@ airway_sample_metadata.csv
 ```
 {: .output}
 
-# Start an R session
+To list the files with their full paths, we can use "*".
 
-Start an R or RStudio session as you did in this previous lesson on R.
+```
+ls /data/RNA/bulk/*
+```
 
-Then, we will run all of the following commands within that session.
+```
+/data/RNA/bulk/airway_raw_counts.csv.gz  /data/RNA/bulk/airway_sample_metadata.csv
+```
+{: .output}
 
 # Bulk RNA differential expression workflow in R with DESeq2
+
+The following will all be run in the R notebook tab.
+
+However, let's also leave the Terminal tab open for later.
 
 ## Load libraries.
 
