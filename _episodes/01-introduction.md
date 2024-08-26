@@ -16,6 +16,12 @@ keypoints:
 ---
 
 ## The Shell
+To start we will open a terminal.
+ 
+1. Go to the [link](https://docs.google.com/spreadsheets/d/1t78ladvpt8t-uEaG1EeYRATiBIrelZMBJcKANbAGdHw/edit?usp=sharing) given to you at the workshop
+2. Select "Terminal" from the "JupyterLab" launcher (or blue button with a plus in the upper left corner)
+3. After you have done this put up a green sticky not if you see a flashing box next to a `$`
+
 When the shell is first opened, you are presented with a **prompt**,
 indicating that the shell is waiting for input.
 
@@ -40,7 +46,7 @@ environments by default put your user name and the host name before the `$`. Suc
 a prompt might look like, e.g.:
 
 ```bash
-jshelton@localhost $
+student@workshop-1:~$ 
 ```
 
 There are many ways for a user to interact with a computer. For example, we often use a Graphical User 
@@ -167,22 +173,12 @@ you to “rent” one or more linked computers for as long as you require, at lo
 cluster (depending on how often it is used vs idle, etc). This is the basic principle behind the 
 cloud. You define your computational requirements and off you go.
 
-## Logging onto a cloud instance
-
-## Logging back in
-
-
-
-## Verifying your environment
-
-## Staying Connected to the Cloud
-
-Suspending an instance is analogous to closing the lid of your laptop, putting the instance into a SUSPENDED state. Suspending an instance differs from stopping an instance in the following ways: Suspended instances preserve the files on the vm and you continue to be charged by Google. 
-
-To keep your program running while you are not logged (or when your internet connection drops breifly) in we will use `tmux`.
-
-
 The cloud is a part of our everyday life (e.g. using Amazon, Google, Netflix, or an ATM involves remote computing). The topic is fascinating, but this lesson says a few minutes or less so let’s get back to working on it for the workshop.
+
+For this workshop starting a vm and setting up your working environment has been done for you. Going forward reach out to your organizations system administrators for your cluster for suggestions. To read more on your own here are lessons about working on the cloud and a local HPC. Additional lesson's that you can run from a remote computer:
+- [Using a HPC Cluster](https://carpentries-incubator.github.io/hpc-intro/)
+- [Cloud computing](https://datacarpentry.org/cloud-genomics)
+
 
 
 
