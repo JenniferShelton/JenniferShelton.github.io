@@ -28,7 +28,15 @@ This Single-cell RNA (scRNA) workflow is based on [this vignette](https://satija
 
 The 10X website provides more information and downloadable files for this dataset [here](https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
 
+# Setting up to run this tutorial
+
+Just as you did this morning for the bulk RNA workshop, open two tabs: one with an R notebook, and one with Terminal.
+
+We will use the Terminal tab to download and unpack the data, and then the remainder of this workflow will be in R.
+
 # Download and unpack the data
+
+Go to the Terminal tab.
 
 We will be using the filtered gene-cell matrix downloaded from the following link:
 
@@ -101,13 +109,9 @@ barcodes.tsv  genes.tsv  matrix.mtx
 
 We now have the relative path to the directory with the files we need. We will use this path to load the data into R.
 
-# Start an R session
-
-Start an R or RStudio session as you did in this previous lesson on R.
-
-Then, we will run all of the following commands within that session.
-
 # Single-cell workflow in R with Seurat
+
+The following will all be run in the R notebook tab.
 
 ## Load libraries.
 
@@ -161,7 +165,7 @@ Let's do something similar here, but replace 'path/to/data/directory' with the a
 >>
 >> ```
 >> data_dir = 'filtered_gene_bc_matrices/hg19'
->> expression_matrix <- Read10X(data.dir = data_dir)
+>> expression_matrix = Read10X(data.dir = data_dir)
 >> ```
 >> {: .language-r}
 > {: .solution}
