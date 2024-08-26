@@ -1378,6 +1378,61 @@ Oops, let's fix.
 > {: .solution}
 {: .challenge}
 
+Go to the Terminal tab, and let's look at this file in more detail. 
+
+First, do head and tail.
+
+```bash
+head geneids_sig.txt
+```
+
+```
+ENSG00000000003
+ENSG00000000971
+ENSG00000001167
+ENSG00000002834
+ENSG00000003096
+ENSG00000003402
+ENSG00000004059
+ENSG00000004487
+ENSG00000004700
+ENSG00000004799
+```
+{: .output}
+
+```bash
+tail geneids_sig.txt
+```
+
+```
+ENSG00000272695
+ENSG00000272761
+ENSG00000272796
+ENSG00000272841
+ENSG00000272870
+ENSG00000273038
+ENSG00000273131
+ENSG00000273179
+ENSG00000273259
+ENSG00000273290
+```
+{: .output}
+
+Also check number of lines.
+
+```bash
+wc -l geneids_sig.txt
+```
+
+```
+2901 geneids_sig.txt
+```
+{: .output}
+
+All looks good.
+
+Normally, you would download the file you just created to your laptop, but we may not always have a way to transfer files from the cloud VM to your laptop. So, let's download the file from the Github for this workshop. Download link [here](https://github.com/JenniferShelton/JenniferShelton.github.io/blob/gh-pages/data/geneids_sig.txt).
+
 ### Preparing for input into GSEA
 
 Let's move on to creating the input for GSEA. This will be a data frame with two columns.
@@ -1441,19 +1496,193 @@ Output to a tab-delimited text file `gsea_input.txt` using the `write.table` fun
 > {: .solution}
 {: .challenge}
 
-### Download files
+Let's switch over to the Terminal tab and look at this file in more detail.
 
-Download geneids_sig.txt and gsea_input.txt to your laptop.
+```
+head gsea_input.txt
+```
 
-In a browser, go to the appropriate path at https://console.cloud.google.com/storage/browser.
+```
+"gene"	"stat"
+"10923"	"ENSG00000162692"	-19.4160587914648
+"14737"	"ENSG00000178695"	-18.8066074036207
+"3453"	"ENSG00000107562"	-18.0775817519565
+"9240"	"ENSG00000148848"	-18.0580936880167
+"8911"	"ENSG00000146250"	-17.7950173361052
+"3402"	"ENSG00000106976"	-17.6137734750388
+"11121"	"ENSG00000163394"	-17.4484303669187
+"5627"	"ENSG00000124766"	-17.1299063626842
+"3259"	"ENSG00000105989"	-15.8949963870475
+```
+{: .output}
 
-Here is an example for bucket gs://hgeiger.
+Info on formatting of the file for input into GSEA available [here](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29), from the Broad Institute's documentation.
 
-![google_cloud_console_hgeiger]({{ page.root }}/fig/google_cloud_console_hgeiger.png)
+This says that there should be two columns - one for the feature identifiers (i.e. gene IDs or symbols) and one for the weight of the gene (here, the stat column). But our output has three columns - this is not what we want.
 
-Click the down button next to the file names to open the file.
+Let's go back to the R notebook tab and see if we can fix this.
 
-Then, right click and do "save as" to download.
+Comparing to the example in the file format documentation, it seems we should do the following:
+
+- Remove the quotation marks.
+- Remove the header.
+- Remove the first column.
+
+Go back to R and see if we can find arguments in the `read.table` function to help with this.
+
+```
+?read.table
+```
+
+```
+Arguments:
+
+quote: a logical value (‘TRUE’ or ‘FALSE’) or a numeric vector.  If
+          ‘TRUE’, any character or factor columns will be surrounded by
+          double quotes.  If a numeric vector, its elements are taken
+          as the indices of columns to quote.  In both cases, row and
+          column names are quoted if they are written.  If ‘FALSE’,
+          nothing is quoted.
+row.names: either a logical value indicating whether the row names of
+          ‘x’ are to be written along with ‘x’, or a character vector
+          of row names to be written.
+
+col.names: either a logical value indicating whether the column names
+          of ‘x’ are to be written along with ‘x’, or a character
+          vector of column names to be written.  See the section on
+          ‘CSV files’ for the meaning of ‘col.names = NA’.
+```
+{: .output}
+
+Looks like we need to add a few arguments to get our output formatted correctly.
+
+Let's output to a new file `gsea_input_corrected.txt`.
+
+>
+> > ## Solution
+> >
+> > ```
+> > output_file = "gsea_input_corrected.txt"
+> > write.table(x = gsea.input,file=output_file,sep="\t",row.names=FALSE,col.names=FALSE,quote=FALSE)
+> > ```
+> > {: .language-r}
+> {: .solution}
+{: .challenge}
+
+Go back to the Terminal tab, and look at this file again.
+
+```
+head gsea_input_corrected.txt
+```
+
+```
+ENSG00000162692	-19.4160587914648
+ENSG00000178695	-18.8066074036207
+ENSG00000107562	-18.0775817519565
+ENSG00000148848	-18.0580936880167
+ENSG00000146250	-17.7950173361052
+ENSG00000106976	-17.6137734750388
+ENSG00000163394	-17.4484303669187
+ENSG00000124766	-17.1299063626842
+ENSG00000105989	-15.8949963870475
+ENSG00000108821	-15.2668170602372
+```
+{: .output}
+
+Looks ok - what about tail?
+
+```
+tail gsea_input_corrected.txt
+```
+
+```
+ENSG00000273470	NA
+ENSG00000273471	NA
+ENSG00000273475	NA
+ENSG00000273479	NA
+ENSG00000273480	NA
+ENSG00000273481	NA
+ENSG00000273482	NA
+ENSG00000273484	NA
+ENSG00000273490	NA
+ENSG00000273491	NA
+```
+{: .output}
+
+Let's also check the line count.
+
+```
+wc -l gsea_input_corrected.txt
+```
+
+```
+63677 gsea_input_corrected.txt
+```
+{: .output}
+
+Hm - don't think we should be including genes with an NA for the stat column?
+
+Let's fix again.
+
+Let's use `grep` to remove lines with "NA", and output to a new file `gsea_input_corrected_minus_NA.txt`.
+
+>
+> > ## Solution
+> >
+> > ```bash
+> > grep -v NA gsea_input_corrected.txt > gsea_input_corrected_minus_NA.txt
+> > ```
+> {: .solution}
+{: .challenge}
+
+Check again.
+
+```
+head gsea_input_corrected_minus_NA.txt
+```
+
+```
+ENSG00000162692	-19.4160587914648
+ENSG00000178695	-18.8066074036207
+ENSG00000107562	-18.0775817519565
+ENSG00000148848	-18.0580936880167
+ENSG00000146250	-17.7950173361052
+ENSG00000106976	-17.6137734750388
+ENSG00000163394	-17.4484303669187
+ENSG00000124766	-17.1299063626842
+ENSG00000105989	-15.8949963870475
+ENSG00000108821	-15.2668170602372
+```
+
+```
+tail gsea_input_corrected_minus_NA.txt
+```
+
+```
+ENSG00000154734	20.2542354089516
+ENSG00000125148	20.9292144890544
+ENSG00000162614	21.6140905458227
+ENSG00000157214	21.968453609644
+ENSG00000211445	22.4952633774851
+ENSG00000189221	23.6530144138538
+ENSG00000101347	24.2347153246759
+ENSG00000120129	24.2742584224751
+ENSG00000165995	24.7125510867281
+ENSG00000152583	24.8561114516005
+```
+
+```
+wc -l gsea_input_corrected_minus_NA.txt
+```
+
+```
+33469 gsea_input_corrected_minus_NA.txt
+```
+{: .output}
+
+We now have fewer lines, because we removed the lines for the genes with an "NA" in the stat column.
+
+You can download a copy of this file [here](https://github.com/JenniferShelton/JenniferShelton.github.io/blob/gh-pages/data/gsea_input_corrected_minus_NA.txt).
 
 ## Running functional enrichment (ORA/GSEA)
 
