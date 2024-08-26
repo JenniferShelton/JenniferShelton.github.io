@@ -125,7 +125,7 @@ First, before we read anything into R, what is the full path to the raw counts f
 > > ## Solution
 > >
 > > ```
-> > /path/to/airway_raw_counts.csv.gz
+> > /data/RNA/bulk/airway_raw_counts.csv.gz
 > > ```
 > {: .solution}
 {: .challenge}
@@ -145,12 +145,12 @@ Main argument here is `file`. Let's try filling in the path from above.
 > > ## Solution
 > >
 > > ```
-> > read.csv(file=airway_raw_counts.csv.gz)
+> > read.csv(file=/data/RNA/bulk/airway_raw_counts.csv.gz)
 > > ```
 > > {: .language-r}
 > >
 > > ```
-> > Error: object 'airway_raw_counts.csv.gz' not found
+> > Error: object '/data/RNA/bulk/airway_raw_counts.csv.gz' not found
 > > ```
 > > {: .output}
 > {: .solution}
@@ -162,7 +162,7 @@ Oops, let's fix that.
 > > ## Solution
 > >
 > > ```
-> > read.csv(file="airway_raw_counts.csv.gz")
+> > read.csv(file="/data/RNA/bulk/airway_raw_counts.csv.gz")
 > > ```
 > >
 > > ```
@@ -190,7 +190,7 @@ Still not quite right! Let's save the result of this command in an object called
 > > ## Solution
 > >
 > > ```
-> > raw.counts = read.csv(file="airway_raw_counts.csv.gz")
+> > raw.counts = read.csv(file="/data/RNA/bulk/airway_raw_counts.csv.gz")
 > > ```
 > > {: .language-r}
 > {: .solution}
@@ -248,7 +248,7 @@ Let's use this argument to read in the file again using read.csv, this time taki
 > > ## Solution
 > >
 > > ```
-> > raw.counts = read.csv(file="airway_raw_counts.csv.gz",row.names=1)
+> > raw.counts = read.csv(file="/data/RNA/bulk/airway_raw_counts.csv.gz",row.names=1)
 > > ```
 > > {: .language-r}
 > {: .solution}
@@ -296,10 +296,10 @@ So, we have 63,677 genes, and 8 samples (as we saw when we did head).
 
 Next, read in the file with the study design.
 
-File name is this, under the same path as the other file.
+Remember path to this file is:
 
 ```
-airway_sample_metadata.csv
+/data/RNA/bulk/airway_sample_metadata.csv
 ```
 
 We can once again use the csv command, and take the first column as row names.
@@ -310,7 +310,7 @@ Read into an object called `expdesign`.
 > > ## Solution
 > >
 > > ```
-> > expdesign = read.csv("airway_sample_metadata.csv",row.names=1)
+> > expdesign = read.csv("/data/RNA/bulk/airway_sample_metadata.csv",row.names=1)
 > > ```
 > > {: .language-r}
 > {: .solution}
