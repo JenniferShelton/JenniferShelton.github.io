@@ -150,7 +150,9 @@ Main argument here is `file`. Let's try filling in the path from above.
 > > {: .language-r}
 > >
 > > ```
-> > Error: object '/data/RNA/bulk/airway_raw_counts.csv.gz' not found
+> > Error in parse(text = x, srcfile = src): <text>:1:15: unexpected '/'
+> > 1: read.csv(file=/
+> > ^Traceback:
 > > ```
 > > {: .output}
 > {: .solution}
@@ -166,25 +168,38 @@ Oops, let's fix that.
 > > ```
 > >
 > > ```
-> >               gene_id SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516
-> > 1     ENSG00000000003        679        448        873        408       1138
-> > 2     ENSG00000000005          0          0          0          0          0
-> > 3     ENSG00000000419        467        515        621        365        587
-> > 4     ENSG00000000457        260        211        263        164        245
-> > 5     ENSG00000000460         60         55         40         35         78
-> > 6     ENSG00000000938          0          0          2          0          1
-> > 7     ENSG00000000971       3251       3679       6177       4252       6721
-> > 8     ENSG00000001036       1433       1062       1733        881       1424
-> > 9     ENSG00000001084        519        380        595        493        820
-> > 10    ENSG00000001167        394        236        464        175        658
+> > A data.frame: 63677 × 9
+> > gene_id	SRR1039508	SRR1039509	SRR1039512	SRR1039513	SRR1039516	SRR1039517	SRR1039520	SRR1039521
+> > <chr>	<int>	<int>	<int>	<int>	<int>	<int>	<int>	<int>
+> > ENSG00000000003	679	448	873	408	1138	1047	770	572
+> > ENSG00000000005	0	0	0	0	0	0	0	0
+> > ENSG00000000419	467	515	621	365	587	799	417	508
+> > ENSG00000000457	260	211	263	164	245	331	233	229
+> > ENSG00000000460	60	55	40	35	78	63	76	60
+> > ENSG00000000938	0	0	2	0	1	0	0	0
+> > ENSG00000000971	3251	3679	6177	4252	6721	11027	5176	7995
+> > ENSG00000001036	1433	1062	1733	881	1424	1439	1359	1109
+> > ENSG00000001084	519	380	595	493	820	714	696	704
+> > ENSG00000001167	394	236	464	175	658	584	360	269
 > > ...
-> > [ reached 'max' / getOption("max.print") -- omitted 52566 rows ]
+> > ENSG00000273484	0	0	0	0	0	0	0	0
+> > ENSG00000273485	2	3	1	1	1	1	1	0
+> > ENSG00000273486	14	11	25	8	20	32	12	11
+> > ENSG00000273487	5	9	4	11	10	10	4	10
+> > ENSG00000273488	7	5	8	3	8	16	11	14
+> > ENSG00000273489	0	0	0	1	0	1	0	0
+> > ENSG00000273490	0	0	0	0	0	0	0	0
+> > ENSG00000273491	0	0	0	0	0	0	0	0
+> > ENSG00000273492	0	0	1	0	0	0	0	0
+> > ENSG00000273493	0	0	0	0	1	0	0	0
 > > ```
 > > {: .output}
 > {: .solution}
 {: .challenge}
 
-Still not quite right! Let's save the result of this command in an object called `raw.counts`.
+Looks like we just read in as standard input/output, rather than saving to an object.
+
+Let's save the result of this command in an object called `raw.counts`.
 
 >
 > > ## Solution
@@ -316,25 +331,7 @@ Read into an object called `expdesign`.
 > {: .solution}
 {: .challenge}
 
-Look at the first few rows of this object.
-
-```
-head(expdesign)
-```
-{: .language-r}
-
-```
-              cell   dex avgLength
-SRR1039508  N61311 untrt       126
-SRR1039509  N61311   trt       126
-SRR1039512 N052611 untrt       126
-SRR1039513 N052611   trt        87
-SRR1039516 N080611 untrt       120
-SRR1039517 N080611   trt       126
-```
-{: .output}
-
-Actually, we only have a few samples here, so let's just print the whole thing.
+Look at the object.
 
 ```
 expdesign
@@ -399,7 +396,11 @@ mycounts = matrix(1:100,ncol=4)
 condition <- factor(c("A","A","B","B"))
 condition = data.frame(condition = condition)
 #condition now looks like this:
-
+#  condition
+#1         A
+#2         A
+#3         B
+#4         B
 dds = DESeqDataSetFromMatrix(countData = mycounts,
   colData = condition,
   design = ~condition)
@@ -552,16 +553,6 @@ Again, let's view the help message for this function.
 ```
 {: .language-r}
 
-```
-Help on topic ‘plotPCA’ was found in the following packages:
-
-  Package               Library
-  BiocGenerics          /nfs/sw/miniconda3/miniconda3-3.22.0/envs/R-4.2.3/lib/R/library
-  DESeq2                /nfs/sw/miniconda3/miniconda3-3.22.0/envs/R-4.2.3/lib/R/library
-```
-{: .output}
-
-Select that we want the message for the DESeq2 version of this command.
 
 We find the following documentation.
 
@@ -579,8 +570,58 @@ Arguments:
 
 intgroup: interesting groups: a character vector of names in
           ‘colData(x)’ to use for grouping
+
+Examples:
+
+dds <- makeExampleDESeqDataSet(betaSD=1)
+vsd <- vst(dds, nsub=500)
+plotPCA(vsd)
 ```
 {: .output}
+
+A more explicitly stated version of the example:
+
+```
+dds = makeExampleDESeqDataSet(betaSD=1)
+raw.counts_example = assay(dds)
+expdesign_example = colData(dds)
+head(raw.counts_example)
+expdesign_example
+```
+
+```
+sample1	sample2	sample3	sample4	sample5	sample6	sample7	sample8	sample9	sample10	sample11	sample12
+gene1	6	6	2	8	17	2	0	4	17	7	3	10
+gene2	27	48	40	26	12	39	7	5	4	14	9	6
+gene3	8	7	4	2	1	1	2	21	4	2	9	0
+gene4	36	24	41	25	44	25	39	19	8	31	17	62
+gene5	22	36	10	28	33	9	55	58	71	12	68	22
+gene6	1	12	5	6	15	1	2	0	7	4	0	1
+
+DataFrame with 12 rows and 1 column
+         condition
+          <factor>
+sample1          A
+sample2          A
+sample3          A
+sample4          A
+sample5          A
+...            ...
+sample8          B
+sample9          B
+sample10         B
+sample11         B
+sample12         B
+```
+{: .output}
+
+```
+dds = DESeqDataSetFromMatrix(countData = raw.counts_example,
+    colData = expdesign_example,
+    design=~condition)
+vsd <- vst(dds, nsub=500)
+plotPCA(vsd,intgroup = "condition")
+```
 
 Let's start by plotting based on `cell` variable.
 
@@ -888,8 +929,10 @@ First, which column index or name contains the adjusted p-values?
 
 >
 > > ## Solution
-> > 
+> >
+> > ```
 > > Column "padj", or column number 6.
+> > ```
 > {: .solution}
 {: .challenge}
 
@@ -898,9 +941,12 @@ Then, we will need to extract this column. A few possible ways listed below.
 >
 > > ## Solution
 > >
+> > ```
 > > res$padj
 > > res[,6]
 > > res[,"padj"]
+> > ```
+> > {: .language-r}
 > {: .solution}
 {: .challenge}
 
