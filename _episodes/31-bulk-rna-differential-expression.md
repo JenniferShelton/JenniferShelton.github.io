@@ -622,41 +622,41 @@ dds = DESeqDataSetFromMatrix(countData = raw.counts_example,
     colData = expdesign_example,
     design=~condition)
 vsd <- vst(dds, nsub=500)
-plotPCA(vsd,intgroup = "condition")
+plotPCA(object = vsd)
 ```
 
-Let's start by plotting based on `cell` variable.
+We already ran DESeqDataSetFromMatrix, as well as transformation (we ran rlogTransformation instead of vst, but same idea).
+
+So, just need to plug the object from rlogTransformation into plotPCA.
 
 >
 > > ## Solution
 > >
 > > ```
-> > plotPCA(object = rlogMatrix, intgroup = "cell")
+> > plotPCA(object = rlogObject)
 > > ```
 > > {: .language-r}
 > >
 > > ```
-> > Error in (function (classes, fdef, mtable)  : 
-> > unable to find an inherited method for function ‘plotPCA’ for signature ‘"matrix"’
+> > Error in .local(object, ...) : 
+> > the argument 'intgroup' should specify columns of colData(dds)
 > > ```
 > > {: .output}
 > {: .solution}
 {: .challenge}
 
-Looks like we input the wrong object - should use the object that comes directly out of the rlogTransformation command.
+In the example, we did not need to explicitly state what variable to color by in the plot, since there was only one (`condition`).
 
-Which object is that?
+However here, we have two possible variables , so we need to explicitly state.
 
->
-> > ## Solution
-> >
-> > ```
-> > rlogObject
-> > ```
-> {: .solution}
-{: .challenge}
+In the example, if we had explicitly stated to color by condition, it would look like this.
 
-Let's try the plotPCA command again using this object.
+```
+plotPCA(object = vsd, intgroup = "condition")
+```
+{: .language-r}
+
+Let's use the same syntax here to try running plotPCA on `rlogObject` again, this time explicitly stating to color by `cell` using the `intgroup` argument.
 
 >
 > > ## Solution
