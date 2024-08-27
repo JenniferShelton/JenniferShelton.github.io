@@ -219,7 +219,7 @@ Then, we can proceed with the next steps in this workflow based on our Seurat ob
 > > ## Solution
 > >
 > > ```
-> > seurat_object[["percent.mt"]] = PercentageFeatureSet(object = seurat_object, pattern="MT-")
+> > seurat_object[["percent.mt"]] = PercentageFeatureSet(object = seurat_object, pattern="^MT-")
 > > ```
 > > {: .language-r}
 > {: .solution}
