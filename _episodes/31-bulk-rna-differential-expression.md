@@ -77,7 +77,7 @@ Data is available in this directory:
 
 If we list that path like so:
 
-```
+```bash
 ls /data/RNA/bulk
 ```
 
@@ -91,7 +91,7 @@ airway_sample_metadata.csv
 
 To list the files with their full paths, we can use `*`.
 
-```
+```bash
 ls /data/RNA/bulk/*
 ```
 
