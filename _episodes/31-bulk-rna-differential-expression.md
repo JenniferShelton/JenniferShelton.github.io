@@ -166,7 +166,8 @@ Oops, let's fix that.
 > > ```
 > > read.csv(file="/data/RNA/bulk/airway_raw_counts.csv.gz")
 > > ```
-> >
+> > {: .language-r}
+> > 
 > > ```
 > > A data.frame: 63677 × 9
 > > gene_id	SRR1039508	SRR1039509	SRR1039512	SRR1039513	SRR1039516	SRR1039517	SRR1039520	SRR1039521
@@ -301,6 +302,7 @@ Check how many rows there are.
 ```
 nrow(raw.counts)
 ```
+{: .language-r}
 
 ```
 [1] 63677
