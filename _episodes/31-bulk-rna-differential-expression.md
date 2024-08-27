@@ -25,6 +25,14 @@ keypoints:
 - ORA and GSEA accept very different inputs (only DE genes versus all genes), and their outputs may be different as well as a result (though often they include similar categories).
 ---
 
+# Lecture portion
+
+The workshop will include a lecture component of around one hour before the practical session later on.
+
+Slides for this available here:
+
+https://docs.google.com/presentation/d/1iwCRgTGkC3m-SYG1YpT8FZRpxACbwmHd/edit?usp=sharing&ouid=113731483841703906621&rtpof=true&sd=true
+
 # About this tutorial
 
 This workflow is based on material from the rnaseqGene page on Bioconductor [(link)](https://master.bioconductor.org/packages/release/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html).
