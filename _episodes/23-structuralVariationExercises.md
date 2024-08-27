@@ -41,10 +41,10 @@ objectives:
 > How many variants do we call using sniffles? 
 >
 > > ## Solution
-[//]: # > > ~~~
-[//]: # > > zgrep -v "^#" NA12878_NRHG.sniffles.vcf.gz | wc -l
-[//]: # > > ~~~
-[//]: # > > {: .source}
+> > ~~~
+> > zgrep -v "^#" NA12878_NRHG.sniffles.vcf.gz | wc -l
+> > ~~~
+> > {: .source}
 > > ~~~
 > > 4209
 > > ~~~
