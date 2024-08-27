@@ -32,7 +32,14 @@ objectives:
 > How many variants do we call using sniffles? 
 >
 > > ## Solution
-> > Insert code block here
+> > ~~~
+> > zgrep -v "^#" NA12878_NRHG.sniffles.vcf.gz | wc -l
+> > ~~~
+> > {: .source}
+> > ~~~
+> > 4209
+> > ~~~
+> > {: .output}
 > {: .solution}
 >
 > What is the breakdown by type? 
@@ -40,4 +47,7 @@ objectives:
 > > ## Solution
 > > Insert code block here
 > {: .solution}
+>
+> > ## Discussion
+> >  
 {: .challenge}
