@@ -47,7 +47,7 @@ Tab completion is your friend. If there are only three things I want you to reme
 ## Copy and Paste
 Copy and paste is not your friend. It may be possible to copy and paste commands from this markdown into the Jupyter terminal.
 Please note that this more often than not fails in general because text in html or pdf or Word documents has non-printing characters or non-standard 
-punctuation (like em dashes and diretional quotation marks) which are not processed by the unix shell and will generate errors.
+punctuation (like em dashes and directional quotation marks) which are not processed by the unix shell and will generate errors.
 The same is true with copying text that spans multiple lines. Because of this, most of the code blocks in this section are intentionally constructed to
 prevent copying and pasting. That is, the commands will be constructed, but full paths will not be given and real names of files will be substituted with placeholders.
 As a convention, if a name is in *UPPERCASE ITALIC* or as \_UPPERCASE\_, it is the placeholder for a filename or directory name you need to provide. If you copy and paste this,
@@ -228,8 +228,8 @@ samtools merge _MERGEDBAM_ _INPUTSAM_...
 ```
 
 Note that the syntax is a lot simpler. Also, because all the input files go at the end without any option/argument
-flags, you can use a glob (*) to send all the sam files in a directory without typing them out (e.g.,
-/data/alignment/chr20/NA12878.aln/NA12878*sam), which is a lot easier to type. However, you will not there is 
+flags, you can use a glob (\*) to send all the sam files in a directory without typing them out (e.g.,
+/data/alignment/chr20/NA12878.aln/NA12878*sam), which is a lot easier to type. However, you will note there is 
 no index, and if you looked inside, the reads not sorted. So we still need to do:
 
 ```bash
@@ -299,7 +299,7 @@ Alternatively, you can run HaplotypeCaller on the entire chr 20 bam, but tell it
 gatk HaplotypeCaller -O _VCF_ -L chr20:61723571-62723570 -I _BAM_ -R /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa
 ```
 
-Calling variant is only half the process. Now we need to filter them. We also do that with GATK. For a whole genome,
+Calling variants is only half the process. Now we need to filter them. We also do that with GATK. For a whole genome,
 we typically use Variant Quality Score Recalibration (VQSR), but there are not enough variants in the tiny
 region we called to build a model for that, so we will use the best practices filtering. It's a long tedious command again:
 
