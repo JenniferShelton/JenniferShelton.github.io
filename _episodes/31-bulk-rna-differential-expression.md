@@ -687,7 +687,7 @@ Next, repeat but this time color by `dex`.
 
 > ## Interpreting the PCA plot
 >
-> Let's look at the two plots we made (can regenerate the first plot again if needed), and answer the following.
+> Let's look at the two plots we made, and answer the following.
 >
 > - What principal component separates the four different cell lines? Which one separates treated vs. untreated?
 > - How much variance is explained by each principal component (hint: see axis labels)?
