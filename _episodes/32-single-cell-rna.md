@@ -20,6 +20,14 @@ keypoints:
 - Annotation often requires starting with broad cell types, then moving to more specific.
 ---
 
+# Lecture portion
+
+The workshop will include a lecture component of around one hour before the practical session later on.
+
+Slides for this available here:
+
+https://docs.google.com/presentation/d/11nRiclWxwU6ZpLU6YVDm0peImwwQ0ZLzdTIrRMVZqPU/edit?usp=sharing
+
 # About this tutorial
 
 This Single-cell RNA (scRNA) workflow is based on [this vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
