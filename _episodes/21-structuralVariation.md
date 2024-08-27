@@ -1,6 +1,7 @@
 ---
 title: "Structural Variation in short reads"
 teaching: 90
+exercises: 0
 questions:
 - What is a structural variant?
 - Why is structural variantion important?
