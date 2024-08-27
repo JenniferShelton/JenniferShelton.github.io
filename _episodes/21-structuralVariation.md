@@ -1,7 +1,6 @@
 ---
 title: "Structural Variation in short reads"
-teaching: 1.5 hr
-exercises: 2 hr
+teaching: 90
 questions:
 - What is a structural variant?
 - Why is structural variantion important?
@@ -119,12 +118,6 @@ paired reads are introduced the two coverage metrics can vary widely.
 > {: .solution}
 {: .challenge}
 
-![SV caller comparison]({{ page.root }}/fig/SV.algComparison.png)
-
-## Caller concordance
-
-Because SV callers 
-
 ## Copy number analysis
 
 Calling of copy number variation from WGS data is done using read depth, where reads are counted
@@ -136,3 +129,10 @@ DNA quality, and other factors. This makes calling CNVs difficult and is why man
 on large variants where it is easier to normalize away smaller confounding changes in read depth.
 
 ![CNV analysis]({{ page.root }}/fig/SV.cnvAnalysis.png)
+
+
+## Caller concordance
+
+Because SV callers 
+
+![SV caller comparison]({{ page.root }}/fig/SV.algComparison.png)
