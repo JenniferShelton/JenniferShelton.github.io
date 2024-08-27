@@ -327,7 +327,7 @@ Read into an object called `expdesign`.
 > > ## Solution
 > >
 > > ```
-> > expdesign = read.csv("/data/RNA/bulk/airway_sample_metadata.csv",row.names=1)
+> > expdesign = read.csv(file="/data/RNA/bulk/airway_sample_metadata.csv",row.names=1)
 > > ```
 > > {: .language-r}
 > {: .solution}
