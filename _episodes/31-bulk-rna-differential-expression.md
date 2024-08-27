@@ -989,6 +989,7 @@ How many differentially expressed genes do we find?
 ```
 length(degs)
 ```
+{: .language-r}
 
 ```
 [1] 2901
@@ -1689,8 +1690,6 @@ You can download a copy of this file [here](https://github.com/JenniferShelton/J
 ## Running functional enrichment (ORA/GSEA)
 
 Let's head to the website [WebGestalt](https://www.webgestalt.org/).
-
-Leave the R session open in case we need to go back and output more files from there.
 
 ### Run ORA
 
