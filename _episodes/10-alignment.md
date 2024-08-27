@@ -1,5 +1,5 @@
 ---
-Title: "Read Alignment and Small Variant Calling"
+title: "Read Alignment and Small Variant Calling"
 ---
 ## Getting Started
 Log in to your instances through Jupyter notebooks and launch a terminal.
