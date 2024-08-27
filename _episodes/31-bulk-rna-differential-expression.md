@@ -395,16 +395,16 @@ If we explicitly stated the arguments in the example (and named the objects less
 
 ```
 mycounts = matrix(1:100,ncol=4)
-condition <- factor(c("A","A","B","B"))
-condition = data.frame(condition = condition)
-#condition now looks like this:
+group = factor(c("A","A","B","B"))
+expdesign_example = data.frame(condition = group)
+#expdesign_example now looks like this:
 #  condition
 #1         A
 #2         A
 #3         B
 #4         B
 dds = DESeqDataSetFromMatrix(countData = mycounts,
-  colData = condition,
+  colData = expdesign_example,
   design = ~condition)
 ```
 
