@@ -89,7 +89,7 @@ airway_sample_metadata.csv
 ```
 {: .output}
 
-To list the files with their full paths, we can use "*".
+To list the files with their full paths, we can use `*`.
 
 ```
 ls /data/RNA/bulk/*
