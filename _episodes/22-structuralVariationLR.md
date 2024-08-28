@@ -32,24 +32,38 @@ improving the base quality for their data.
 
 ![ONT MinION]({{ page.root }}/fig/SV.ontMin.png)
 ![ONT PromethION]({{ page.root }}/fig/SV.ontProm.png)
-![ONT PromethION]({{ page.root }}/fig/SV.ontRL.png)
-![ONT PromethION]({{ page.root }}/fig/SV.ontQual.png)
+![ONT PromethION Read Length]({{ page.root }}/fig/SV.ontRL.png)
+![ONT PromethION Quality]({{ page.root }}/fig/SV.ontQual.png)
 
 
 ## Advantages of long reads
 
 The advantage of long reads is they map much more uniquely to the genome and can often span
-repetitive elements in the genome that cause mapping quality issues with short reads. Longer reads
-are also much more likely to span an entire insertion or deletion event making the breakpoint 
-resolution much better in SVs called from long reads. 
+repetitive elements in the genome that cause mapping quality issues with short reads. In long 
+reads we are able to detect much larger events and in cases where the event is entirely inside
+a read we are able to determine the breakpoints with much higher accuracy.
 
 ## SV calling in long reads
 
-Alignment
+### Alignment
 
-Assembly
+This works similarly to calling InDels in short reads where our primary information is the raw
+gapped alignment to the reference. 
+
+![Sniffles]({{ page.root }}/fig/SV.sniffles.png)
+
+### Assembly
 
 ## Drawbacks
+
+* We are still limited to some extent by the length of our reads and our ablility to span an entire 
+  event with one or more reads and some regions of the genome are still very difficult to sequence 
+  and align to.
+* Long read sequencing is becoming more affordable but is still much more expensive than short read
+  sequencing.
+* Throughput is lower, reducing the turn around time for projects with large numbers of samples.
+* Sequencing prep, especially for ultra-long protocols is tedious and difficult to perform 
+  consitently.
 
 ## Genotyping LR SVs in SR data
 
