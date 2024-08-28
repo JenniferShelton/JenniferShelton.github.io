@@ -104,3 +104,8 @@ ultra-long read as they represent many reads stiched together.
 > ## Question
 > Does anyone know of any other technologies being used for structural variation?
 {: .objectives}
+
+> ## Callback
+>
+> ![SV tech comparison]({{ page.root }}/fig/SV.techComparison.png)
+{: .solution}
