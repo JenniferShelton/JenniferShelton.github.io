@@ -15,6 +15,13 @@ keypoints:
 - There is often significant disagreement between SV callers.
 ---
 
+## Review
+### Simple read alignment
+![Simple Alignment]({{ page.root }}/fig/SV.simpleAln.png)
+
+### Simple InDel
+![Simple SVs]({{ page.root }}/fig/SV.simpleSV.png)
+
 ## What are structural variants
 
 Structural variation is most typically defined as variation affecting larger fragments of the genome
@@ -54,11 +61,6 @@ of the genome.
 > ![Translocation]({{ page.root }}/fig/SV.translocation.png)
 {: .solution}
 
-### Simple read alignment
-![Simple Alignment]({{ page.root }}/fig/SV.simpleAln.png)
-
-### Simple InDel
-![Simple SVs]({{ page.root }}/fig/SV.simpleSV.png)
 
 
 ## Detecting structural variants in short-read data
