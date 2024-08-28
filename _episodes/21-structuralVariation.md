@@ -123,7 +123,7 @@ paired reads are introduced the two coverage metrics can vary widely.
 > What do you think the read signature of an insertion might look like?
 >
 > > ## Solution
-> > Insert image
+> > ![Insertion Signature]({{ page.root }}/fig/SV.insertionSig.png)
 > >
 > {: .solution}
 {: .challenge}
