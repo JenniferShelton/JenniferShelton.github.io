@@ -1,6 +1,6 @@
 ---
 title: "Structural Variation in long reads"
-teaching: 60
+teaching: 30
 exercises: 0
 questions:
 - What are the advantages/disadvantages of long reads?
@@ -47,8 +47,12 @@ a read we are able to determine the breakpoints with much higher accuracy.
 
 ### Alignment
 
-This works similarly to calling InDels in short reads where our primary information is the raw
-gapped alignment to the reference. 
+Sniffles uses a three step approach to calling SVs. First it scans the read alignments looking for
+split reads and inline events. Inline events are insertions and deletions that occur entirely within
+the read. It puts these SVs into bins and then looks for neighboring bins that can be merged using a
+repeat aware approach to create these clusters of SV candidates. Each cluster is then re-analyzed 
+and a final determination is made based on read support, expected coverage changes and breakpoint
+variance.
 
 ![Sniffles]({{ page.root }}/fig/SV.sniffles.png)
 
@@ -72,6 +76,13 @@ ultra-long read as they represent many reads stiched together.
   consitently.
 
 ## Genotyping LR SVs in SR data
+
+### Paragraph
+![Paragraph]({{ page.root }}/fig/SV.paragraph.png)
+
+### Pangenie
+
+![Pangenie]({{ page.root }}/fig/SV.pangenie.png)
 
 
 > ## Question
