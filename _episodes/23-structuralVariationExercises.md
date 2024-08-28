@@ -146,7 +146,7 @@ sniffles \
 Open it in the editor on the side panel and change `/data/SV/bams/NA12878.chr1-6-20.bam` to
 `/data/alignment/combined/NA12878.dedup.bam`. 
 
-~~~ 15 min
+~~~
 cd /workshop/output/sv
 
 ~/paragraph-v2.4a/bin/multigrmpy.py \
@@ -157,7 +157,6 @@ cd /workshop/output/sv
  --threads 8 \
  -M 400
 ~~~
-{: .source}
 
 ## Secondary challenges
 
