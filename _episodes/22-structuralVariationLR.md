@@ -14,6 +14,27 @@ keypoints:
 
 ## Long read platforms
 
+The two major platforms in long read sequencing are PacBio and Oxford Nanopore. 
+
+PacBio's flagship is the Revio, which produces reads in the 5kb to 35kb range with very high accuracy.
+
+
+![PacBio]({{ page.root }}/fig/SV.pbSeq.png)
+![PacBio read length and quality]({{ page.root }}/fig/SV.pbRL.png)
+
+Oxford Nanopore produces sequencers that range in size from the MinION, which is roughly smart
+phone sized to the PromethION, the high throughput version that we have at NYGC. There are some
+differences in the read outputs of the various platforms but the MinION has been shown to produce 
+N50 read lengths over 100kb with maximum read lengths greater than 800kb using ONT's ultra-long
+sequencing prep. The PromethION can produce even greater N50 values and can produce megabase long
+reads. Typically these reads are lowe overall base quality than PacBio but ONT has steadily been
+improving the base quality for their data.
+
+![ONT MinION]({{ page.root }}/fig/SV.ontMin.png)
+![ONT PromethION]({{ page.root }}/fig/SV.ontProm.png)
+![ONT PromethION]({{ page.root }}/fig/SV.ontRL.png)
+![ONT PromethION]({{ page.root }}/fig/SV.ontQual.png)
+
 
 ## Advantages of long reads
 
