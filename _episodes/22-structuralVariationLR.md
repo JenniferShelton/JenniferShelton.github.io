@@ -71,6 +71,7 @@ ultra-long read as they represent many reads stiched together.
 * Throughput is lower, reducing the turn around time for projects with large numbers of samples.
 * Sequencing prep, especially for ultra-long protocols is tedious and difficult to perform 
   consitently.
+* Due to cost, we typically don't sequence samples at as high of depth.
 * We are still limited to some extent by the length of our reads and our ablility to span an entire 
   event with one or more reads and some regions of the genome are still very difficult to sequence 
   and align to.
