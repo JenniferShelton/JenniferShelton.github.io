@@ -12,11 +12,63 @@ objectives:
 ---
 
 ## Exercises
-1. Run minimap2 on chromosome 20
-2. Run manta on our SR data for chromosomes 1, 6, and 20
+1. Run manta on our SR data for chromosomes 1, 6, and 20
+2. Run minimap2 on chromosome 20
 3. Run samtools merge for LR data
 4. Run sniffles on merged LR bam
 
+
+## Before we really start
+
+> ## Super fun exercise
+>
+> ~~~
+> cd
+> wget https://github.com/arq5x/bedtools2/releases/download/v2.31.0/bedtools.static
+> chmod a+x bedtools.static
+> mv bedtools.static miniconda3/envs/siw/bin/bedtools
+> ~~~
+> {: .source}
+{: .challenge}
+
+## Manta
+
+There are two steps to running manta on our data. First, we tell Manta what the 
+inputs are by running `configManta.py`. 
+
+~~~ First
+mkdir /workshop/output/sv
+cd /workshop/output/sv
+~~~
+
+Now run the following code pieces one at a time.
+
+~~~
+/software/manta-1.6.0.centos6_x86_64/bin/configManta.py \
+ --bam /data/alignment/combined/NA12878.dedup.bam \
+ --referenceFasta /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+ --runDir manta_NA12878
+~~~
+
+~~~
+./manta_NA12878/runWorkflow.py \
+ --mode local \
+ --jobs 8 \
+ --memGb unlimited 
+~~~
+
+> ## Challenge
+>
+> Run manta on NA12878's parents (NA12891 and NA12892)
+>
+{: .challenge}
+
+~~~ ls -lh manta_*/results/variants/diploidSV.vcf.gz
+-rw-r--r-- 1 student student 137K Aug 27 22:54 manta_NA12878/results/variants/diploidSV.vcf.gz
+-rw-r--r-- 1 student student 141K Aug 27 23:04 manta_NA12891/results/variants/diploidSV.vcf.gz
+-rw-rw-r-- 1 student student 141K Aug 27 23:07 manta_NA12892/results/variants/diploidSV.vcf.gz
+~~~
+{: .output}
 
 ## Minimap2
 
@@ -60,53 +112,6 @@ zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
     * -M        : Use minimiser for clustering unaligned/unplaced reads
     * -m        : Set maximum memory per thread
     * -O        : Specify output format
-
-## Before we really start
-
-> ## Super fun exercise
->
-> ~~~
-> cd
-> wget https://github.com/arq5x/bedtools2/releases/download/v2.31.0/bedtools.static
-> chmod a+x bedtools.static
-> mv bedtools.static miniconda3/envs/siw/bin/bedtools
-> ~~~
-> {: .source}
-{: .challenge}
-
-## Manta
-
-There are two steps to running manta on our data. First, we tell Manta what the 
-inputs are by running `configManta.py`. 
-
-First `cd /workshop/output/sv`. Then run the following code pieces one at a time.
-
-~~~
-/software/manta-1.6.0.centos6_x86_64/bin/configManta.py \
- --bam /data/alignment/combined/NA12878.dedup.bam \
- --referenceFasta /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
- --runDir manta_NA12878
-~~~
-
-~~~
-./manta_NA12878/runWorkflow.py \
- --mode local \
- --jobs 8 \
- --memGb unlimited 
-~~~
-
-> ## Challenge
->
-> Run manta on NA12878's parents (NA12891 and NA12892)
->
-{: .challenge}
-
-~~~ ls -lh manta_*/results/variants/diploidSV.vcf.gz
--rw-r--r-- 1 student student 137K Aug 27 22:54 manta_NA12878/results/variants/diploidSV.vcf.gz
--rw-r--r-- 1 student student 141K Aug 27 23:04 manta_NA12891/results/variants/diploidSV.vcf.gz
--rw-rw-r-- 1 student student 141K Aug 27 23:07 manta_NA12892/results/variants/diploidSV.vcf.gz
-~~~
-{: .output}
 
 ## Sniffles
 ~~~
@@ -168,5 +173,25 @@ First `cd /workshop/output/sv`. Then run the following code pieces one at a time
 {: .challenge}
 
 ## Regenotyping
+
+We need to make a copy of this file and adjust the path.
+
 ~~~
+cd 
+cp /data/SV/inputs/NA12878.paragraph_manifest.txt .
+~~~
+
+Open it in the editor on the side panel and change `/data/SV/bams/NA12878.chr1-6-20.bam` to
+`/data/alignment/combined/NA12878.dedup.bam`. 
+
+~~~ 15 min
+cd /workshop/output/sv
+
+~/paragraph-v2.4a/bin/multigrmpy.py \
+ -i /data/SV/inputs/HGSVC_NA12878.chr1-6-20.vcf.gz \
+ -m ./NA12878.paragraph_manifest.txt \
+ -r /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+ -o paragraph_NA12878 \
+ --threads 8 \
+ -M 400
 ~~~

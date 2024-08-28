@@ -38,6 +38,11 @@ improving the base quality for their data.
 
 ## Advantages of long reads
 
+The advantage of long reads is they map much more uniquely to the genome and can often span
+repetitive elements in the genome that cause mapping quality issues with short reads. Longer reads
+are also much more likely to span an entire insertion or deletion event making the breakpoint 
+resolution much better in SVs called from long reads. 
+
 ## SV calling in long reads
 
 Alignment
