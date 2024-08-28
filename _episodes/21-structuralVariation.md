@@ -54,8 +54,10 @@ of the genome.
 > ![Translocation]({{ page.root }}/fig/SV.translocation.png)
 {: .solution}
 
-## Simple Indels
+### Simple read alignment
 ![Simple Alignment]({{ page.root }}/fig/SV.simpleAln.png)
+
+### Simple InDel
 ![Simple SVs]({{ page.root }}/fig/SV.simpleSV.png)
 
 
