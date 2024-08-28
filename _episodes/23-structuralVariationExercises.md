@@ -79,13 +79,13 @@ Run the following code pieces one at a time.
 
 > ## Challenge
 >
-> If we take the first 10000 lines of a fastq file how many reads do we get?
+> If we take the first 1000 lines of a fastq file how many reads do we get?
 >
 {: .challenge}
 
 ~~~
 zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
-| head 10000 \
+| head 20000 \
 | minimap2 \
     -ayYL \
     --MD \
@@ -157,6 +157,7 @@ cd /workshop/output/sv
  --threads 8 \
  -M 400
 ~~~
+{: .source}
 
 ## Secondary challenges
 
