@@ -77,10 +77,15 @@ Run the following code pieces one at a time.
 
 ## Minimap2
 
-~~~
-cd /workshop/output/sv
+> ## Challenge
+>
+> If we take the first 10000 lines of a fastq file how many reads do we get?
+>
+{: .challenge}
 
+~~~
 zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
+| head 10000 \
 | minimap2 \
     -ayYL \
     --MD \
@@ -93,7 +98,6 @@ zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
     /dev/stdin \
 | samtools \
     sort \
-    --threads 8 \
     -M \
     -m 4G \
     -O bam \
@@ -113,16 +117,48 @@ zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
     * -t   : number of threads
     * -R   : SAM read group line
 * Samtools
-    * --threads : Number of additional threads to use
     * -M        : Use minimiser for clustering unaligned/unplaced reads
     * -m        : Set maximum memory per thread
     * -O        : Specify output format
 
 ## Sniffles
 ~~~
+sniffles \
+ --threads 8 \
+ --input /data/SV/long_read/minimap2/NA12878_NRHG.minimap2.chr1-6-20.bam \
+ --vcf NA12878_NRHG.sniffles.vcf
 ~~~
 
-## Challenges
+## Regenotyping
+
+
+> ## Another super fun exercise
+>
+> We need to make a copy of a file and change some of its contents.
+>
+> ~~~
+> cd 
+> cp /data/SV/inputs/NA12878.paragraph_manifest.txt .
+> ~~~
+> {: .source}
+{: .challenge}
+
+Open it in the editor on the side panel and change `/data/SV/bams/NA12878.chr1-6-20.bam` to
+`/data/alignment/combined/NA12878.dedup.bam`. 
+
+~~~ 15 min
+cd /workshop/output/sv
+
+~/paragraph-v2.4a/bin/multigrmpy.py \
+ -i /data/SV/inputs/HGSVC_NA12878.chr1-6-20.vcf.gz \
+ -m ./NA12878.paragraph_manifest.txt \
+ -r /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+ -o paragraph_NA12878 \
+ --threads 8 \
+ -M 400
+~~~
+
+## Secondary challenges
 
 > ## Manta
 >
@@ -136,9 +172,6 @@ zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
 >
 > What is the breakdown by type?
 >
-> > ## Solution
-> > Insert code block here
-> {: .solution}
 {: .challenge}
 
 > ## Sniffles
@@ -176,27 +209,3 @@ zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
 > > ## Discussion
 > >  
 {: .challenge}
-
-## Regenotyping
-
-We need to make a copy of this file and adjust the path.
-
-~~~
-cd 
-cp /data/SV/inputs/NA12878.paragraph_manifest.txt .
-~~~
-
-Open it in the editor on the side panel and change `/data/SV/bams/NA12878.chr1-6-20.bam` to
-`/data/alignment/combined/NA12878.dedup.bam`. 
-
-~~~ 15 min
-cd /workshop/output/sv
-
-~/paragraph-v2.4a/bin/multigrmpy.py \
- -i /data/SV/inputs/HGSVC_NA12878.chr1-6-20.vcf.gz \
- -m ./NA12878.paragraph_manifest.txt \
- -r /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
- -o paragraph_NA12878 \
- --threads 8 \
- -M 400
-~~~
