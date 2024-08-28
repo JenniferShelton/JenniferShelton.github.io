@@ -75,14 +75,13 @@ ultra-long read as they represent many reads stiched together.
   event with one or more reads and some regions of the genome are still very difficult to sequence 
   and align to.
 
+## Genotyping LR SVs in SR data
 
 > ## Challenge
 >
-> Given the next section title, what two approaches might we take in creating a hybrid SV call set
+> Given the section title, what two approaches might we take in creating a hybrid SV call set
 > that uses both long and short reads?
 {: .challenge}
-
-## Genotyping LR SVs in SR data
 
 ### Paragraph
 ![Paragraph]({{ page.root }}/fig/SV.paragraph.png)
