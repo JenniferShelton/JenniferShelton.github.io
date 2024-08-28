@@ -31,17 +31,21 @@ objectives:
 > {: .source}
 {: .challenge}
 
+## First
+
+We'll make our output directory and change our current directory to it.
+
+~~~
+mkdir /workshop/output/sv
+cd /workshop/output/sv
+~~~
+
 ## Manta
 
 There are two steps to running manta on our data. First, we tell Manta what the 
 inputs are by running `configManta.py`. 
 
-~~~ First
-mkdir /workshop/output/sv
-cd /workshop/output/sv
-~~~
-
-Now run the following code pieces one at a time.
+Run the following code pieces one at a time.
 
 ~~~
 /software/manta-1.6.0.centos6_x86_64/bin/configManta.py \
@@ -63,7 +67,8 @@ Now run the following code pieces one at a time.
 >
 {: .challenge}
 
-~~~ ls -lh manta_*/results/variants/diploidSV.vcf.gz
+`ls -lh manta_*/results/variants/diploidSV.vcf.gz`
+~~~
 -rw-r--r-- 1 student student 137K Aug 27 22:54 manta_NA12878/results/variants/diploidSV.vcf.gz
 -rw-r--r-- 1 student student 141K Aug 27 23:04 manta_NA12891/results/variants/diploidSV.vcf.gz
 -rw-rw-r-- 1 student student 141K Aug 27 23:07 manta_NA12892/results/variants/diploidSV.vcf.gz
