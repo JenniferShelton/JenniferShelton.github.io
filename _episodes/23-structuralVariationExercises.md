@@ -11,6 +11,36 @@ objectives:
 - Regenotype LR SVs in a short read data set
 ---
 
+## Exercises
+1. Run minimap2 on chromosome 20
+2. Run manta on chromosomes 1, 6, and 20
+3. Run samtools merge for LR data
+4. Run sniffles on merged LR bam
+
+
+~~~
+zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
+| minimap2 \
+    -ayYL \
+    --MD \
+    --cs \
+    -z 600,200 \
+    -x map-ont \
+    -t 8 \
+    -R "@RG\tID:NA12878\tSM:NA12878\tPL:ONT\tPU:PromethION" \
+    /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+    /dev/stdin \
+| samtools \
+    sort \
+    --threads \
+    -M \
+    -l 0 \
+    -m 4G \
+    -O bam \
+> NA12878.minimap2.bam
+~~~
+
+
 > ## Super fun exercise
 >
 > ~~~
@@ -54,7 +84,18 @@ objectives:
 > What is the breakdown by type? 
 >
 > > ## Solution
-> > Insert code block here
+> > ~~~
+> > zgrep -v "^#" NA12878_NRHG.sniffles.vcf.gz | cut -f 8 | cut -f 2 -d ";" | sort | uniq -c 
+> > ~~~
+> > {: .source}
+> > ~~~
+> >     11 SVTYPE=BND
+> >   1727 SVTYPE=DEL
+> >      1 SVTYPE=DUP
+> >   2464 SVTYPE=INS
+> >      6 SVTYPE=INV
+> > ~~~
+> > {: .output}
 > {: .solution}
 >
 > > ## Discussion
