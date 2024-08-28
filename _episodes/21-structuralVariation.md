@@ -140,9 +140,21 @@ on large variants where it is easier to normalize away smaller confounding chang
 
 ![CNV analysis]({{ page.root }}/fig/SV.cnvAnalysis.png)
 
+## Caller resolution
+
+We consider caller resolution to be how likely each algorithm is to determine the exact breakpoints
+of the SV. Precise location of SV breakpoints is an advantage when merging and regenotyping SVs.
+Here we are looking at the read signatures we've discussed so far: read depth, read pair, and split
+reads. We also see here another category which is assembly, which in this context means local
+assembly of the reads from the SV region is used to better determine the breakpoints of the SV.
+
+![SV caller comparison]({{ page.root }}/fig/SV.algComparison.png)
 
 ## Caller concordance
 
-Because SV callers 
+Because SV callers can both use different types of read evidence and apply different weights to the
+various read signatures, concordance between SV callers is usually quite low in comparison to SNV
+and InDel variant callers. Concordance between SV calls using different technologies show an even
+more pronounced lack of concordance.
 
-![SV caller comparison]({{ page.root }}/fig/SV.algComparison.png)
+![SV tech comparison]({{ page.root }}/fig/SV.techComparison.png)
