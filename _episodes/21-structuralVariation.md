@@ -54,6 +54,11 @@ of the genome.
 > ![Translocation]({{ page.root }}/fig/SV.translocation.png)
 {: .solution}
 
+## Simple Indels
+![Simple Alignment]({{ page.root }}/fig/SV.simpleAln.png)
+![Simple SVs]({{ page.root }}/fig/SV.simpleSV.png)
+
+
 ## Detecting structural variants in short-read data
 
 Because structural variants are most often larger than the individual reads we must use different 
