@@ -66,14 +66,21 @@ ultra-long read as they represent many reads stiched together.
 
 ## Drawbacks
 
-* We are still limited to some extent by the length of our reads and our ablility to span an entire 
-  event with one or more reads and some regions of the genome are still very difficult to sequence 
-  and align to.
 * Long read sequencing is becoming more affordable but is still much more expensive than short read
   sequencing.
 * Throughput is lower, reducing the turn around time for projects with large numbers of samples.
 * Sequencing prep, especially for ultra-long protocols is tedious and difficult to perform 
   consitently.
+* We are still limited to some extent by the length of our reads and our ablility to span an entire 
+  event with one or more reads and some regions of the genome are still very difficult to sequence 
+  and align to.
+
+
+> ## Challenge
+>
+> Given the next section title, what two approaches might we take in creating a hybrid SV call set
+> that uses both long and short reads?
+{: .challenge}
 
 ## Genotyping LR SVs in SR data
 
@@ -84,6 +91,15 @@ ultra-long read as they represent many reads stiched together.
 
 ![Pangenie]({{ page.root }}/fig/SV.pangenie.png)
 
+> ## Solution
+> 
+> We can:
+> 1. Sequence a number of individuals with long reads and genotype those SV calls in our short
+>    read sample set.
+> 2. We can leverage existing long read SV callsets and genotype those SVs into out short read
+>    sample set.
+>
+{: .solution}
 
 > ## Question
 > Does anyone know of any other technologies being used for structural variation?
