@@ -54,6 +54,12 @@ gapped alignment to the reference.
 
 ### Assembly
 
+We touched on assembly in the short read section but here we actually refer to whole genome
+assembly compared to local assembly in short reads. By assembling as much of the genome as 
+possible, including novel insertions, we create a bigger picture of our sample. These assembled
+fragments, called contigs, can then be aligned to the reference. The contigs act as a sort of
+ultra-long read as they represent many reads stiched together.
+
 ## Drawbacks
 
 * We are still limited to some extent by the length of our reads and our ablility to span an entire 
