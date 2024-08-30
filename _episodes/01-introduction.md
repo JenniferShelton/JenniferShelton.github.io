@@ -18,7 +18,7 @@ keypoints:
 ## The Shell
 To start we will open a terminal.
  
-1. Go to the [link](https://docs.google.com/spreadsheets/d/1t78ladvpt8t-uEaG1EeYRATiBIrelZMBJcKANbAGdHw/edit?usp=sharing) given to you at the workshop
+1. Go to the [link](https://www.nygenome.org) given to you at the workshop
 2. Select "Terminal" from the "JupyterLab" launcher (or blue button with a plus in the upper left corner)
 3. After you have done this put up a green sticky not if you see a flashing box next to a `$`
 
