@@ -219,29 +219,33 @@ Resources:
 
 ### Step-by-step version:
 1. Create input vcf folder
-~~~
-tar -xvzf input_vcfs.tar.gz
-~~~
-OR
-~~~
-mkdir input_vcfs
+> ~~~
+> tar -xvzf input_vcfs.tar.gz
+> ~~~
 
-cp COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf input_vcfs/
-~~~
+OR
+
+> ~~~
+> mkdir input_vcfs
+>
+> cp COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf input_vcfs/
+> ~~~
 
 2. Install genome
-~~~
-from SigProfilerMatrixGenerator import install as genInstall
 
-genInstall.install('GRCh38', rsync=False, bash=True)
-~~~
+> ~~~
+> from SigProfilerMatrixGenerator import install as genInstall
+> 
+> genInstall.install('GRCh38', rsync=False, bash=True)
+> ~~~
 
 3. Generate mutational spectrum count matrix
-~~~
-from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as matGen
 
-matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "input_vcfs", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
-~~~
+> ~~~
+> from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as matGen
+> 
+> matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "input_vcfs", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
+> ~~~
 
 Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS7a (UV exposure) (input_vcfs/output/plots/SBS_96_plots_SIW_2025.pdf)
 <img width="736" alt="Screenshot 2025-05-30 at 4 06 22 PM" src="https://github.com/user-attachments/assets/d1bf02c2-5877-434c-9f99-5de24fd92444" />
@@ -249,11 +253,11 @@ Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS
 
 
 4. Deconvolve mutational signatures
-~~~
-from SigProfilerAssignment import Analyzer as Analyze
-
-Analyze.cosmic_fit(samples="input_vcfs/output/SBS/SIW_2025.SBS96.all", output="output", input_type="matrix", context_type="96", genome_build="GRCh38")
-~~~
+> ~~~
+> from SigProfilerAssignment import Analyzer as Analyze
+>
+> Analyze.cosmic_fit(samples="input_vcfs/output/SBS/SIW_2025.SBS96.all", output="output", input_type="matrix", context_type="96", genome_build="GRCh38")
+> ~~~
 
 5. Look at plots of mutational signatures
 (output/Assignment_Solution/Activities/Assignment_Solution_Activity_Plots.pdf)
