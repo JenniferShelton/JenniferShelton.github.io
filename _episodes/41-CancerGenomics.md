@@ -225,18 +225,21 @@ tar -xvzf input_vcfs.tar.gz
 OR
 ~~~
 mkdir input_vcfs
+
 cp COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf input_vcfs/
 ~~~
 
 2. Install genome
 ~~~
 from SigProfilerMatrixGenerator import install as genInstall
+
 genInstall.install('GRCh38', rsync=False, bash=True)
 ~~~
 
 3. Generate mutational spectrum count matrix
 ~~~
 from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as matGen
+
 matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "input_vcfs", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
 ~~~
 
@@ -248,8 +251,10 @@ Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS
 4. Deconvolve mutational signatures
 ~~~
 from SigProfilerAssignment import Analyzer as Analyze
+
 Analyze.cosmic_fit(samples="input_vcfs/output/SBS/SIW_2025.SBS96.all", output="output", input_type="matrix", context_type="96", genome_build="GRCh38")
 ~~~
+
 5. Look at plots of mutational signatures
 (output/Assignment_Solution/Activities/Assignment_Solution_Activity_Plots.pdf)
 >> ## Solution
@@ -297,10 +302,10 @@ Next, let’s plot a basic summary of the cohort, including the variant type, co
 plotmafSummary(maf=brca, rmOutlier=TRUE, addStat='median', dashboard=TRUE, titvRaw=FALSE)
 >> dev.off()
 >> ~~~
+>> <img width="474" alt="Screenshot 2025-05-30 at 4 10 02 PM" src="https://github.com/user-attachments/assets/cde6e498-7ba9-4584-9d80-0aaaf64bbf67" />
 > {: .solution}
 {: .challenge}
 
-<img width="474" alt="Screenshot 2025-05-30 at 4 10 02 PM" src="https://github.com/user-attachments/assets/cde6e498-7ba9-4584-9d80-0aaaf64bbf67" />
 
 
 We can expand out the top 10 most mutated genes into an oncoprint (also called an oncoplot), showing distribution of mutations in each sample. Oncoprints can contain information from SNVs and INDELs, but also copy number variants. 
@@ -312,10 +317,10 @@ We can expand out the top 10 most mutated genes into an oncoprint (also called a
 >> oncoplot(maf=brca, top=10) 
 >> dev.off()
 >> ~~~
+>> <img width="486" alt="Screenshot 2025-05-30 at 4 10 29 PM" src="https://github.com/user-attachments/assets/01991cec-4a2b-450c-9aa2-df6a448cb04c" />
 > {: .solution}
 {: .challenge}
 
-<img width="486" alt="Screenshot 2025-05-30 at 4 10 29 PM" src="https://github.com/user-attachments/assets/01991cec-4a2b-450c-9aa2-df6a448cb04c" />
 
 
 It can also be useful to zoom in on specific genes, to understand how the mutations are distributed within the genes – are they clustered in a few “hotspots”?
@@ -328,12 +333,13 @@ It can also be useful to zoom in on specific genes, to understand how the mutati
 >> lollipopPlot(maf=brca, gene=’TP53’, AACol=’HGVSp_Short’, showMutationRate=TRUE)
 >> dev.off()
 >> ~~~
+>> <img width="395" alt="Screenshot 2025-05-30 at 4 11 21 PM" src="https://github.com/user-attachments/assets/7365f5af-e8f5-497d-87a9-9eec8b226d3a" />
+>> <img width="416" alt="Screenshot 2025-05-30 at 4 11 09 PM" src="https://github.com/user-attachments/assets/f2d67cc5-9117-4609-b11b-ffb52908cdeb" />
+>> <img width="459" alt="Screenshot 2025-05-30 at 4 11 00 PM" src="https://github.com/user-attachments/assets/2212fcd8-1c17-43be-b81c-e1e0227a4c37" />
 > {: .solution}
 {: .challenge}
 
-<img width="395" alt="Screenshot 2025-05-30 at 4 11 21 PM" src="https://github.com/user-attachments/assets/7365f5af-e8f5-497d-87a9-9eec8b226d3a" />
-<img width="416" alt="Screenshot 2025-05-30 at 4 11 09 PM" src="https://github.com/user-attachments/assets/f2d67cc5-9117-4609-b11b-ffb52908cdeb" />
-<img width="459" alt="Screenshot 2025-05-30 at 4 11 00 PM" src="https://github.com/user-attachments/assets/2212fcd8-1c17-43be-b81c-e1e0227a4c37" />
+
 
 
 Notice anything different when comparing the distribution of mutations in TTN versus PIK3CA and TP53? TTN is a very long gene and accumulates mutations by chance. Therefore, mutations in this gene are uniformly distributed, rather than clustered in regions of functional importance. The distribution of mutations in a gene’s coding sequence is a signal utilized in some driver gene discovery tools such as [OncodriveCLUST](https://www.google.com/url?q=https://academic.oup.com/bioinformatics/article/29/18/2238/240376&sa=D&source=docs&ust=1748636888210148&usg=AOvVaw2fjg456YNeSQgXfruUIEKs).
