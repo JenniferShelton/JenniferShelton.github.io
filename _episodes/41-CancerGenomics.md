@@ -266,6 +266,7 @@ Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS
 >> SBS7a: UV-light exposure
 >> SBS7b: UV-light expsure
 >> SBS38: Unknown. Found only in ultraviolet light associated melanomas suggesting potential indirect damage from UV-light.
+>>
 >> <img width="207" alt="Screenshot 2025-05-30 at 4 08 40 PM" src="https://github.com/user-attachments/assets/c68423c2-6a31-436d-9a28-231dc4a6182f" />
 > {: .solution}
 {: .challenge}
