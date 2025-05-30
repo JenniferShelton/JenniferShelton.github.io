@@ -75,11 +75,13 @@ bcftools -h
 > {: .source}
 {: .challenge}
 
-# insert image here: header v variants
+<img width="655" alt="Screenshot 2025-05-30 at 3 37 08 PM" src="https://github.com/user-attachments/assets/31c410c4-84d6-45e1-adbf-808fb5f2584a" />
+
 
 VCFs can contain information about multiple samples. In a cancer context, this is usually the paired tumor and normal, but you can imagine a situation in which we have multiple tumors from the same patient (e.g. a primary and metastasis). Each variant call can be thought of as having two parts, variant-level information (e.g., position, reference allele, impact on gene coding sequence), and more fine-grained sample-level information for a given variant (e.g. VAF, sequencing depth). 
 
-# insert image here: variant-level vs sample-level info
+<img width="778" alt="Screenshot 2025-05-30 at 3 37 13 PM" src="https://github.com/user-attachments/assets/3868438d-622c-4758-b3c2-8585ca772259" />
+
 
 Typically, we want to filter somatic variants to reduce false positives. The FILTER column indicates the relevant filters for a given variant call. Before filtering, this field is blank or contains just a period (“.”). In the earlier filtering step, Mutect2 “soft-filtered” the calls. That is, it filled in the FILTER column for us, but did not yet remove the calls. Sometimes it’s helpful to inspect these flagged calls to debug some downstream issue. To “hard filter”, we want to only keep calls with a PASS in the FILTER column. 
 
