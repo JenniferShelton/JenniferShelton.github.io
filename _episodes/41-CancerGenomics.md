@@ -356,10 +356,9 @@ As mentioned earlier, it can be helpful to comapre a cohort against previously-p
 >> tcgaCompare(maf=brca, cohortName=‘Workshop', logscale=TRUE, capture_size=50)
 >> dev.off()
 >> ~~~
+>> <img width="398" alt="Screenshot 2025-05-30 at 4 11 51 PM" src="https://github.com/user-attachments/assets/6ab3eba7-7855-44fd-b46e-b967708a9a2f" />
 > {: .solution}
 {: .challenge}
-
-<img width="398" alt="Screenshot 2025-05-30 at 4 11 51 PM" src="https://github.com/user-attachments/assets/6ab3eba7-7855-44fd-b46e-b967708a9a2f" />
 
 
 The oncoprint hinted at patterns of mutual exclusivity. We can check this in a more statistically rigorous manner with the `somaticInteractions` function.
@@ -371,13 +370,6 @@ The oncoprint hinted at patterns of mutual exclusivity. We can check this in a m
 >> somaticInteractions(maf=brca, top=20, pvalue=c(0.05, 0.1))
 >> dev.off()
 >> ~~~
+>> <img width="379" alt="Screenshot 2025-05-30 at 4 12 08 PM" src="https://github.com/user-attachments/assets/fab25087-9df0-422e-b233-08dbfdfa312a" />
 > {: .solution}
 {: .challenge}
-
-<img width="379" alt="Screenshot 2025-05-30 at 4 12 08 PM" src="https://github.com/user-attachments/assets/fab25087-9df0-422e-b233-08dbfdfa312a" />
-
-
-
-
-
-
