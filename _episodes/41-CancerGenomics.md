@@ -65,12 +65,11 @@ bcftools -h
 ~~~
 {: .source}
 
-> **Exercise**: Print just the header with BCFtools, print just the variants with bcftools view
+**Exercise**: Print just the header with BCFtools, print just the variants with bcftools view
 >
 > ~~~
 > 1. bcftools view -h ${vcf} OR bcftools head ${vcf}
 > 2. bcftools view -H ${vcf}
-
 > ~~~
 > {: .source}
 {: .challenge}
