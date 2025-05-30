@@ -59,13 +59,13 @@ Another commonly used file format for representing variants is the Mutation Anno
 Like SAM/BAM files, VCFs are split into two parts: the header, followed by the variant calls.
 
 
-Exercise: Print the help menu for BCFtools
+**Exercise**: Print the help menu for BCFtools
 ~~~
 bcftools -h
 ~~~
 {: .source}
 
-> Exercise: Print just the header with BCFtools, print just the variants with bcftools view
+> **Exercise**: Print just the header with BCFtools, print just the variants with bcftools view
 >
 > ~~~
 > 1. bcftools view -h ${vcf} OR bcftools head ${vcf}
@@ -83,7 +83,7 @@ VCFs can contain information about multiple samples. In a cancer context, this i
 
 Typically, we want to filter somatic variants to reduce false positives. The FILTER column indicates the relevant filters for a given variant call. Before filtering, this field is blank or contains just a period (“.”). In the earlier filtering step, Mutect2 “soft-filtered” the calls. That is, it filled in the FILTER column for us, but did not yet remove the calls. Sometimes it’s helpful to inspect these flagged calls to debug some downstream issue. To “hard filter”, we want to only keep calls with a PASS in the FILTER column. 
 
-> Exercise: Filter out the Mutect2 calls with bcftools filter
+> **Exercise**: Filter out the Mutect2 calls with bcftools filter
 >> ## Solution
 >>
 >> ```
@@ -106,7 +106,7 @@ The FORMAT column describes the order of sample-level annotations. Each sample i
 
 # insert screenshot with FORMAT highlighted
 
-> Exercise: What samples are contained in the Mutect2 VCF?
+> **Exercise**: What samples are contained in the Mutect2 VCF?
 >
 >> ## Hint
 >>
@@ -124,7 +124,7 @@ Finally, the reference genome contigs used in variant calling are also listed in
 
 Oftentimes, we want to access variants based on their position in the genome. Doing this in a reasonable amount of time requires an index. BCFtools comes with the utilities **bgzip** and **tabix** for accomplishing this. **Bgzip** implements a modified version of the gzip compression algorithm, compressing the data in blocks of a predetermined size. These bgzipped files are perfectly standards-compliant gzip files and will still work with zcat/gunzip/etc. Tabix is a general purpose algorithm for indexing **coordinate-sorted** genomic coordinate data in tabular format that relies on bgzip compression to work.  
 
-> Exercise: Sort the Mutect2 VCF, bgzip, and tabix-index VCF with bcftools sort, bgzip, and tabix
+> **Exercise**: Sort the Mutect2 VCF, bgzip, and tabix-index VCF with bcftools sort, bgzip, and tabix
 >
 >> ## Solution
 >>
@@ -140,7 +140,7 @@ Oftentimes, we want to access variants based on their position in the genome. Do
 > {: .solution}
 {: .challenge}
 
-> Exercise: Print the variants overlapping the interval “chr1:1-1000000” in the uncompressed VCF with **bcftools view**. Try the same thing with the bgzipped+indexed VCF
+> **Exercise**: Print the variants overlapping the interval “chr1:1-1000000” in the uncompressed VCF with **bcftools view**. Try the same thing with the bgzipped+indexed VCF
 >
 >> ## Solution
 >>
@@ -160,7 +160,7 @@ Oftentimes, we want to access variants based on their position in the genome. Do
 
 ## Extracting variants and plotting the VAF distribution
 
-> Exercise: Extract chromosome, position, and tumor VAF from the VCF. In order to extract the correct VAF values, you’ll need to provide BCFtools with the tumor sample name listed in the header. 
+> **Exercise**: Extract chromosome, position, and tumor VAF from the VCF. In order to extract the correct VAF values, you’ll need to provide BCFtools with the tumor sample name listed in the header. 
 > [Extracting information from VCFs](https://samtools.github.io/bcftools/howtos/query.html)
 >> ## Solution
 >> 
@@ -170,7 +170,7 @@ Oftentimes, we want to access variants based on their position in the genome. Do
 > {: .solution}
 {: .challenge}
 
-> Exercise:  Plot VAF plot for chr21 and chr22. Identify something different on chr22. (for loop)
+> **Exercise**:  Plot VAF plot for chr21 and chr22. Identify something different on chr22. (for loop)
 > 
 >> ## Solution
 >> 
@@ -199,7 +199,7 @@ Oftentimes, we want to access variants based on their position in the genome. Do
 2. chr22:29289914-29290094 - Five clustered variants all supported by the same set of reads, with soft-clip on the left. "Group by base at ..." is our friend here
 3. chr22:19132585 - 7bp insertion with flanking mismatches and soft-clipping
 
-> Bonus exercise: What organism is the contamination coming from?
+> **Bonus exercise**: What organism is the contamination coming from?
 > 
 >> ## Solution
 >> Right-click one of the artifact-supporting reads > Copy read sequence > paste into BLAST
@@ -216,7 +216,7 @@ Resources:
 * Pre-run test inputs/outputs: `mutational_signatures/pre_run_files`
 
 ### Step-by-step version:
-> 1. Create input vcf folder
+1. Create input vcf folder
 > ~~~
 > tar -xvzf input_vcfs.tar.gz
 > ~~~
@@ -226,13 +226,13 @@ Resources:
 > cp COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf input_vcfs/
 > ~~~
 >
-> 2. Install genome
+2. Install genome
 > ~~~
 > from SigProfilerMatrixGenerator import install as genInstall
 > genInstall.install('GRCh38', rsync=False, bash=True)
 > ~~~
 >
-> 3. Generate mutational spectrum count matrix
+3. Generate mutational spectrum count matrix
 > ~~~
 > from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as matGen
 > matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "input_vcfs", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
@@ -241,12 +241,12 @@ Resources:
 # note from Tim: have students compare the SBS96 count matrix to the COSMIC database here. Looks closes to SBS7a (UV exposure) (input_vcfs/output/plots/SBS_96_plots_SIW_2025.pdf)
 # insert screenshots of mutational spectrum here
 
-> 4. Deconvolve mutational signatures
+4. Deconvolve mutational signatures
 > ~~~
 > from SigProfilerAssignment import Analyzer as Analyze
 > Analyze.cosmic_fit(samples="input_vcfs/output/SBS/SIW_2025.SBS96.all", output="output", input_type="matrix", context_type="96", genome_build="GRCh38")
 > ~~~
-> 5. Look at plots of mutational signatures
+5. Look at plots of mutational signatures
 > (output/Assignment_Solution/Activities/Assignment_Solution_Activity_Plots.pdf)
 >> ## Solution
 >> SBS5: Unknown clock-like signature
@@ -300,7 +300,7 @@ plotmafSummary(maf=brca, rmOutlier=TRUE, addStat='median', dashboard=TRUE, titvR
 
 We can expand out the top 10 most mutated genes into an oncoprint (also called an oncoplot), showing distribution of mutations in each sample. Oncoprints can contain information from SNVs and INDELs, but also copy number variants. 
 
-> Exercise: Generate an oncoprint of the top 10 most mutated genes in the breast cancer cohort
+> **Exercise**: Generate an oncoprint of the top 10 most mutated genes in the breast cancer cohort
 >> ## Solution
 >> ~~~
 >> pdf('oncoprint.pdf')
@@ -313,7 +313,7 @@ We can expand out the top 10 most mutated genes into an oncoprint (also called a
 # insert maf oncoprint screenshot here
 
 It can also be useful to zoom in on specific genes, to understand how the mutations are distributed within the genes – are they clustered in a few “hotspots”?
-> Exercise: Generate lollipop plots of top 3 most frequently mutated genes in the oncoprint
+> **Exercise**: Generate lollipop plots of top 3 most frequently mutated genes in the oncoprint
 >> ## Solution
 >> ~~~
 >> pdf('lollipop.pdf')
@@ -343,7 +343,7 @@ As mentioned earlier, it can be helpful to comapre a cohort against previously-p
 
 The oncoprint hinted at patterns of mutual exclusivity. We can check this in a more statistically rigorous manner with the `somaticInteractions` function.
 
-> Exercise: Check patterns of co-occurence and mutual exclusivity
+> **Exercise**: Check patterns of co-occurence and mutual exclusivity
 >> ## Solution
 >> ~~~
 >> pdf('interactions.pdf')
