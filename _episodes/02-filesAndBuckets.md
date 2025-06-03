@@ -23,7 +23,7 @@ keypoints:
 - Directory names in a path are separated with `/` on Unix.
 - Slash (`/`) on its own is the root directory of the whole file system.
 - An absolute path specifies a location from the root of the file system.
-- A relative path specifies a location starting from the current location.
+- A relative path specifies a location starting from any location other than the root.
 - A `~` indicates your home directory
 - A `-` indicates the last directory that you were in
 - Dot (`.`) on its own means ‘the current directory’; `..` means ‘the directory above the current one’.
@@ -68,7 +68,7 @@ Another way to diagram the filesystem is like this. The root directory is always
 
 
 
-**Relative Path** : a path that starts from current location, any path that does not start from the root. 
+**Relative Path** : a path that starts from current location or any location other than the root. 
 
 `.` : current working directory
 
@@ -92,6 +92,7 @@ ls -F ~/
 ```
 
 `cd` : a command to change your current working directory
+
 `-` : previous directory. The dash is interpreted as the last directory that the user was in.
 
 ```bash
@@ -222,7 +223,9 @@ $ echo $PATH
 $ echo $PATH
 ```
 
+>```
 >/home/student/bin:/home/student/miniconda3/envs/siw/bin:/home/student/miniconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/snap/bin:/software/manta-1.6.0.centos6_x86_64/bin:/home/student/paragraph-v2.4a/bin:/home/student/gatk-4.6.0.0
+>```
 >{: .output}
 
 
