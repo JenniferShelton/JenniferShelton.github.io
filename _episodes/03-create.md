@@ -11,6 +11,7 @@ objectives:
 ---
 
 ## Creating directories
+
 We now know how to explore files and directories, but how do we create them in the first place?
 
 In this episode we will learn about creating and moving files and directories, using our home directory.
