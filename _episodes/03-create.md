@@ -50,7 +50,7 @@ vi genome.fa
 ```
 
 In `vi` type <kbd>i</kbd>. Then type out a few [FASTA](https://en.wikipedia.org/wiki/FASTA_format) records. Like the ones below. 
-When you are finished editing type <kbd>esc</kbd>, then type `:wq` to save and quit.
+When you are finished editing type <kbd>esc</kbd>, then type `:wq` follwed by <kbd>return</kbd> to save and quit.
 
 ```
 >chr1
