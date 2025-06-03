@@ -1,6 +1,10 @@
 ---
 title: "Read Alignment and Small Variant Calling"
 ---
+## Intro to Alignment Lecture
+
+https://drive.google.com/file/d/1HysQvr9pEj0DInCuF9oBqHCpzA2ZlUDT/view?usp=sharing
+
 ## Getting Started
 Log in to your instances through Jupyter notebooks and launch a terminal.
 
@@ -38,7 +42,7 @@ Keeping your work organized this way is a key part of running multi-step analysi
 Yesterday we discussed absolute and relative paths. During this session you will need to keep track of where you are in the filesystem (pwd),
 how to access your input data from there, and how to access your output files and directories from there.
 
-It is up to you if you want to do everything with abslute paths, with relative paths, or a mix. It is up to you if you want to cd to the output directory,
+It is up to you if you want to do everything with absolute paths, with relative paths, or a mix. It is up to you if you want to cd to the output directory,
 the input directory, or a third place. Do whichever feels most comfortable to you. Note that if you choose to do everything with absolute paths,
 your working directory does not matter, but you will type more.
 
@@ -118,8 +122,6 @@ The reads from chromosome 20 are in
 /data/alignment/chr20/NA12878.fq.dir/
 ```
 
-We will stop here and take a look at each of these file formats.
-
 ```bash
 less /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa
 less /data/alignment/chr20/NA12878.fq.dir/NA12878_TTGCCTAG-ACCACTTA_HCLHLDSXX_L001_1.fastq
@@ -156,7 +158,7 @@ and thus should share the same probabilities of sequencing errors or artifacts. 
 if we want to do read group specific processing. The argument to bwa mem is -R _RG_INFO_ and looks like this:
 
 ```bash
--R @RG\tID:NA12878_TTGCCTAG-ACCACTTA_HCLHLDSXX_L001\tPL:illumina\tPM:Unknown\tLB:NA12878\tDS:GRCh38\tSM:NA12878\tCN:NYGenome\tPU:HCLHLDSXX.1.TTGCCTAG
+-R '@RG\tID:NA12878_TTGCCTAG-ACCACTTA_HCLHLDSXX_L001\tPL:illumina\tPM:Unknown\tLB:NA12878\tDS:GRCh38\tSM:NA12878\tCN:NYGenome\tPU:HCLHLDSXX.1.TTGCCTAG-ACCACTTA'
 ```
 
 If you want to format this for your reads, you can reconstruct the information from the filename.
@@ -176,7 +178,11 @@ The bwa command should run for about 3 minutes. Once you finish one set, please 
 with a _different output file_. You will need at least 2 aligned sam files for the next steps. Your output sam file should be about 700Mb (for each run you do,
 but will vary slightly by read group). If it is much smaller than this or the program ran for much less time, you have done something wrong.
 
-We will pause here and take a look at the sam file format.
+We will stop here and take a look at each of these file formats (fasta, fastq, sam, bam, cram).
+
+## Intro to Variant Calling
+
+https://drive.google.com/file/d/1hVpzIwBL1HeLyupUwIhtHxn349veBWoX/view?usp=sharing
 
 ## Merging and Sorting
 As you noticed, you now have multiple sam files. This is typical that we do one alignment for each lane of sequencing we do,
