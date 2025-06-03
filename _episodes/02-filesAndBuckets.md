@@ -31,8 +31,102 @@ keypoints:
 
 ## The Filesystem
 
+The part of the operating system responsible for managing files and directories is called the file system. It organizes our data into files, which hold information, and directories (also called ‘folders’), which hold files or other directories.
+
+Several commands are frequently used to create, inspect, rename, and delete files and directories. To start exploring them, we’ll go to our open shell window.
+
+First, let’s find out where we are by running a command called pwd (which stands for ‘print working directory’). Directories are like places — at any time while we are using the shell, we are in exactly one place called our current working directory. Commands mostly read and write files in the current working directory, i.e. ‘here’, so knowing where you are before running a command is important. pwd shows you where you are:
+
+```bash
+$ pwd
+```
+
+Here, the response may be different on different computers. Often a session begins in the users home directory.
+
+To understand what a file system is, let’s have a look at how the file system as a whole is organized. For the sake of this example, we’ll be illustrating a portion of the file system on our workshop VM. After this illustration, you’ll be learning commands to explore your own filesystem, which will be constructed in a similar way, but not be exactly identical.
+
+On the workshop VM, part of the filesystem looks like this:
+
+```bash
+$ tree -L 2 /data/RNA/
+/data/RNA/
+├── bulk
+│   ├── airway_raw_counts.csv.gz
+│   └── airway_sample_metadata.csv
+└── single_cell
+    └── README
+```
+
+## Relative Paths
+
+`/` : root directory
+
+**Absolute Path** : a path that starts from the root of the file system. Any path that starts with `/` is an absolute path.
 
 
+
+**Relative Path** : a path that starts from current location, any path that does not start from the root. 
+
+`.` : current working directory
+
+```bash
+cd /data/alignment/references/
+ls ./GRCh38_1000genomes/
+```
+
+`..` : one level up directory, also known as the parent directory of the current directory
+
+```bash
+ls -F ../
+ls -F ../combined
+ls -a
+```
+
+`~` : user's home directory
+
+```bash
+ls -F ~/
+```
+
+`-` : previous directory. The dash is interpreted as the last directory that the user was in.
+
+```bash
+cd -
+```
+
+**Note:** if no special characters are used UNIX assumes your path begins in the current working directory
+
+Without changing directories create a relative path to list the contents of the “samtools” directory (showing a trailing slash to see which are directories)
+
+#Solution:
+ls -F ../../nfs/sw/samtools/
+
+#Code Challenge 2: What does the command "cd" without a directory name do?
+
+#Solution: changes the current working directory to the home directory
+
+
+
+> ## Create a Relative Path
+> 
+> Without changing directories create a **relative** path to list the contents of the `/data/alignment/combined`
+> directory (showing a trailing slash to see which are directories). For the second part of the code challenge,
+> what does the command `cd` without a directory name do?
+>
+> ```bash
+> $ cd /data/alignment/references/GRCh38_1000genomes/
+> ```
+> > ## Solution
+> >
+> > ```
+> > ks: command not found
+> > ```
+> > {: .output}
+> > This might happen if the command was mis-typed or if the program corresponding to that command
+> > is not installed. When your get an error message stay calm and give it a couple of read throughs. Error 
+> > messages can seem akwardly worded at first but they can really help guide your debugging.
+> {: .solution}
+{: .challenge}
 
 > ## CLI typing hints
 > - <kbd>Tab</kbd> : autocompletes paths (use this for speed and to avoid mistakes !!)
