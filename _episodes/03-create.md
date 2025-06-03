@@ -74,15 +74,22 @@ CTCTAAATCGAT
 # makes a copy with the same filename
 cp ~/genomes.fa ~/workshop/mock_data/fasta/
 # makes a copy with a new filename (both .fa and .fasta and .fna are valid FASTA file suffixes)
-cp ~/genomes.fa ~/workshop/mock_data/fasta/genomes.fasta
+cp ~/genomes.fa ~/genomes.fasta
 # see new file
 ls -thl ~/genomes.fa ~/workshop/mock_data/fasta/
+```
+
+**mv** : move files or directories (if they are moved in the same location then they are renamed)
+
+```bash
+mv ~/genomes.fasta ~/workshop/mock_data/fasta/
+mv ~/genomes.fa ~/new_name_genomes.fa
 ```
 
 **rm** : remove file (CAUTION: no undelete here !!)
 
 ```bash
-rm ~/genomes.fa
+rm ~/new_name_genomes.fa
 ```
 
 **rmdir** : remove empty directory
