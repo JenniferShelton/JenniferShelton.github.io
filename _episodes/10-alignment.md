@@ -1,7 +1,9 @@
 ---
 title: "Read Alignment and Small Variant Calling"
 ---
+
 ## Intro to Alignment Lecture
+
 
 https://drive.google.com/file/d/1HysQvr9pEj0DInCuF9oBqHCpzA2ZlUDT/view?usp=sharing
 
@@ -178,6 +180,7 @@ The bwa command should run for about 3 minutes. Once you finish one set, please 
 with a _different output file_. You will need at least 2 aligned sam files for the next steps. Your output sam file should be about 700Mb (for each run you do,
 but will vary slightly by read group). If it is much smaller than this or the program ran for much less time, you have done something wrong.
 
+
 We will stop here and take a look at each of these file formats (fasta, fastq, sam, bam, cram).
 
 ## Intro to Variant Calling
@@ -249,6 +252,12 @@ use the extension .bam.bai instead of just .bai. Both are valid.
 
 The whole samtools thing takes about the same time as GATK's one action. In my test it also made a sorted bam that was about 80%
 the size of GATK's, although both programs offer different levels of compression and the defaults may be different.
+
+We will stop here and take a look at each of the file formats we have used so far (fasta, fastq, sam, bam, cram).
+
+## Intro to Variant Calling
+
+https://drive.google.com/file/d/1hVpzIwBL1HeLyupUwIhtHxn349veBWoX/view?usp=sharing
 
 ## Marking Duplicates
 Sometimes you get identical read pairs (or single end reads with identical alignments, but those are more
