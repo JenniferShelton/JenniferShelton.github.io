@@ -91,6 +91,7 @@ ls -a
 ls -F ~/
 ```
 
+`cd` : a command to change your current working directory
 `-` : previous directory. The dash is interpreted as the last directory that the user was in.
 
 ```bash
@@ -191,6 +192,39 @@ $ samtools view -H /data/alignment/combined/NA12878.dedup.bam
 >...
 >```
 >{: .output}
+
+## How the Shell Finds Programs
+The PATH environment variables defines the shell's search path. 
+In the shell a variable is defined without a starting dollar sign but when the value 
+of the variable is retrived you add the `$` begining of the variable name. **Tips:** also wrap the variable name in curly braces `{}` so that the shell can clearly see the last character that belongs to the variable name. There cannot be a space on either side of the `=` sign.
+
+```bash
+# define a variable
+$ project_name="LUAD"
+# retrieve the value of the variable
+echo ${LUAD}
+# use export to define the variable for the shell session and for any programs called during the session
+$ export project_name="LUAD"
+```
+When you run a command like `ls` or `samtools`, the shell:
+Splits `$PATH` into components to get a list of directories
+Unix uses `:` as a separator
+The shell looks for the program in each directory in left-to-right.
+The shell runs the first program with that name that it finds
+
+```bash
+$ echo $PATH
+```
+
+`which` reported that samtools was in `/home/student/miniconda3/envs/siw/bin/`. This is the second directory listed in our `$PATH`.
+
+>```bash
+$ echo $PATH
+```
+
+>/home/student/bin:/home/student/miniconda3/envs/siw/bin:/home/student/miniconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/snap/bin:/software/manta-1.6.0.centos6_x86_64/bin:/home/student/paragraph-v2.4a/bin:/home/student/gatk-4.6.0.0
+>{: .output}
+
 
 
 > ## CLI typing hints
