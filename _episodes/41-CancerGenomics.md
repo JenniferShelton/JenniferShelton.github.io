@@ -4,6 +4,22 @@ teaching: 60
 exercises: 0
 ---
 
+## Open your terminal
+
+To start we will open a terminal.
+ 
+1. Go to the [link](https://pad.carpentries.org/Siw_atlanta) given to you at the workshop
+2. Paste the notebook link next to your name into your browser
+3. Select "Terminal" from the "JupyterLab" launcher (or blue button with a plus in the upper left corner)
+4. After you have done this put up a green sticky not if you see a flashing box next to a `$`
+
+What am I seeing: when the shell is first opened, you are presented with a **prompt**,
+indicating that the shell is waiting for input.
+
+```bash
+$
+```
+
 ## Slides
 
 You can view Nico's talk [here](https://docs.google.com/presentation/d/1nJU9T-r8qJBmPblQ2TJouOvBDUCVRVBBxEMTs2RLzk0/edit?usp=sharing)
