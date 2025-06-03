@@ -207,11 +207,9 @@ echo ${LUAD}
 # use export to define the variable for the shell session and for any programs called during the session
 $ export project_name="LUAD"
 ```
-When you run a command like `ls` or `samtools`, the shell:
-Splits `$PATH` into components to get a list of directories
-Unix uses `:` as a separator
-The shell looks for the program in each directory in left-to-right.
-The shell runs the first program with that name that it finds
+When you run a command like `ls` or `samtools`, the shell splits `$PATH` into components to get a list of directories.
+Unix uses `:` as a separator. The shell looks for the program in each directory in left-to-right.
+Then the shell runs the first program with that name that it finds.
 
 `which` reported that samtools was in `/home/student/miniconda3/envs/siw/bin/`. This is the second directory listed in our `$PATH`.
 
