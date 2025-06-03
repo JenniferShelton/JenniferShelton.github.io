@@ -132,7 +132,7 @@ your current directory (directory is synonymous with folder). Any line that star
 ls 
 
 # pass one or more paths of files or directories as argument(s)
-ls /bin
+ls /home/student/
 ```
 
 In a GUI you may customize your finder/file browser based on how you like to search. In general if you can do it on a GUI 
@@ -141,16 +141,16 @@ to see the date they were edited.
 
 ```bash
 # call ls to list bin and show the most recently changed files first (with the `-t` option/flag)
-ls -t /usr
+ls -t /home/student/
 
 # add the `-l` to show who owns the file, file size, and what date is was last edited
-ls -t -l /usr
+ls -t -l /home/student/
 
 # a flags to distinguish Folders from files (`-F`) and to show "human readable" filesizes (`-h`)
-ls -t -l -F -h /usr
+ls -t -l -F -h /home/student/
 
 # combine short flags for faster typing
-ls -lthF /usr
+ls -lthF /home/student/
 ```
 
 The basic syntax of a unix command is:
