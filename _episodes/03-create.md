@@ -45,8 +45,7 @@ touch genome.fa
 ```
 
 **vi** : a plain text editor that is already installed on many linux computers. This is not the most 
-user-friendly plain text editor. A more user-friendly option is [TextWrangler](https://www.barebones.com/products/textwrangler/
-). You may independtly install this on your laptop if you need an editor for future programming tasks. It is free and allows you edit
+user-friendly plain text editor. A more user-friendly option is [BBEdit](https://www.barebones.com/products/bbedit/). You may independtly install this on your laptop if you need an editor for future programming tasks. It is free and allows you edit
 custom scripts that are stored on a remote cluster.
 
 ```bash
