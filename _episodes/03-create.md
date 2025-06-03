@@ -69,11 +69,11 @@ CTCTAAATCGAT
 
 ```bash
 # makes a copy with the same filename
-cp ~/genomes.fa ~/mock_data/fasta/
+cp ~/genomes.fa ~/workshop/mock_data/fasta/
 # makes a copy with a new filename (both .fa and .fasta and .fna are valid FASTA file suffixes)
-cp ~/genomes.fa ~/mock_data/fasta/genomes.fasta
+cp ~/genomes.fa ~/workshop/mock_data/fasta/genomes.fasta
 # see new file
-ls -thl ~/genomes.fa ~mock_data/fasta/
+ls -thl ~/genomes.fa ~/workshop/mock_data/fasta/
 ```
 
 **rm** : remove file (CAUTION: no undelete here !!)
@@ -85,7 +85,56 @@ rm ~/genomes.fa
 **rmdir** : remove empty directory
 
 ```bash
-mkdir ~/mock_data/wrong
-rmdir ~/mock_data/wrong
+mkdir ~/workshop/mock_data/wrong
+rmdir ~/workshop/mock_data/wrong
 ```
 
+## File permissions
+
+**chmod** : command to set permissions of a file or directory
+
+```bash
+ls -thl ~/workshop/mock_data/fasta/genomes.fa
+```
+
+The command `ls -thl` lists the files in the current folder and displays them in the long listing format. While this may initially look complex, we can break this down in the following left to right order:
+
+A set of ten permission flags
+ - Link count (which is irrelevant to this course)
+ - The owner of the file
+ - The associated group
+ - The size of the file
+ - The data that the file was last modified
+ - The name of the file
+ - The permission flags are the important thing we want to look at here. We can further break these down into the following three basic
+
+Permission Types:
+
+ - Read - Which refers to a user’s capability to read the contents of the file.
+ - Write - Which refer to a user’s capability to write or modify a file or directory.
+ - Execute - Which affects a user’s capability to execute a file or view the contents of a directory.
+
+Each of these permission types is listed in the `_rwxrwxrwx` section of the `ls` output. The first character marked by an underscore is the special permission flag that can vary. It shows things like whether the item is a directory.
+
+The following set of three characters (`rwx)` is for the owner permissions.
+The second set of three characters (`rwx`) is for the Group permissions.
+The third set of three characters (`rwx`) is for the All Users permissions.
+
+See all options at http://www.onlineconversion.com/html_chmod_calculator.html.
+The value `7` is the file/directory can be read, written to and executed.
+With a `5` the file/directory can be read and executed (but not written to!).
+With a `0` the file/directory can't be read, written to or executed.
+
+Your bioinformatics sequence and reference files should be read only.
+
+```bash
+chmod -R 550 ~/workshop/mock_data/fasta
+echo "oops" > ~/workshop/mock_data/fasta/genomes.fa
+```
+
+Tokens and key files work something like passwords and should be read only by you (with no permissions for your group and other users).
+
+```bash
+touch ~/workshop/logs/gdc_token_example.txt
+chmod  500 ~/workshop/logs/gdc_token_example.txt
+```
