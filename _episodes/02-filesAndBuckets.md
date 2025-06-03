@@ -58,7 +58,7 @@ $ tree -L 2 /data/RNA/
 ```
 Another way to diagram the filesystem is like this. The root directory is always named `/`.
 
-![Simple File system]({{ page.root }}/fig/file_system.png)
+![Simple File system]({{ page.root }}/fig/‎file_system_diagram.png)
 
 ## Relative Paths
 
