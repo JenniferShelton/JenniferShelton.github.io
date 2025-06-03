@@ -26,6 +26,8 @@ The workshop will include a lecture component of around one hour before the prac
 
 Slides for this available [here](https://docs.google.com/presentation/d/11nRiclWxwU6ZpLU6YVDm0peImwwQ0ZLzdTIrRMVZqPU/edit#slide=id.g2f3292c099f_0_210).
 
+Testing edits here 06/23/25.
+
 # About this tutorial
 
 This Single-cell RNA (scRNA) workflow is based on [this vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) from the Satija lab, the authors of the Seurat software package.
