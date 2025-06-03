@@ -222,6 +222,11 @@ $ echo $PATH
 >```
 >{: .output}
 
+You can add a path for a tool that you need to your path. Make sure to also redefine the current `$PATH` variable as the last portion of the path. Otherwise you may lose the ability to run `cd`, `ls`, etc.
+
+```bash
+$ export PATH=/NEW_PATH/:$PATH
+```
 
 
 > ## CLI typing hints
