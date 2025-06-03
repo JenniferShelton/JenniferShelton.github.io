@@ -125,6 +125,7 @@ Commands like `ls` and (on our VM) `samtools` seem to exist as special words tha
 How can we run samtools when we don’t see any program named 
 samtools in our current working directory?
 
+## Location of Samtools
 ```bash
 # generate a samtools help menu
 samtools
@@ -132,23 +133,64 @@ samtools
 which samtools
 ```
 
-> ## Location of Samtools
+> VM path for samtools
 >```
 >/home/student/miniconda3/envs/siw/bin/samtools
 >```
 >{: .output}
 
+## Location of ls
 ```bash
 # show the absolute path to ls
 which ls
 ```
 
-> ## Location of Samtools
+> VM path for ls
 >```
 >/usr/bin/ls
 >```
 >{: .output}
 
+you or a systems administrator will probably install some bioinformatics programs that researchers use commonly
+In this workshop those have been installed at `/home/student/miniconda3/envs/siw/bin` using a environment manager called 
+conda. Ask your systems administrators to assist with software installation and/or tips 
+for installing tools.
+
+What if we want to know the [version](https://github.com/samtools/samtools/releases/) of samtools? 
+
+```bash
+samtools --version
+```
+
+>```
+>samtools 1.20
+>Using htslib 1.20
+>Copyright (C) 2024 Genome Research Ltd.
+>
+>Samtools compilation details:
+>    Features:       build=configure curses=yes 
+>    CC:             /opt/conda/conda-bld/samtools_1720645213030/_build_env/bin/x86_64-conda-linu
+>...
+>```
+>{: .output}
+
+You may want to start with the most recent version of a tool or need to use a previous tool to match prior analysis runs. It can be useful to record the absolute path to bioinformatics tools 
+in commands that you run for publication or intend to have to run again in a consistant fashion. It can also be useful to include the bioinformatics tool version in the path to the tool for clarity.
+
+If you are just glancing at the alignment header to see what genome it was aligned to (e.g. GRCh38) then you don't need to be so explicit.
+
+```bash
+$ samtools view -H /data/alignment/combined/NA12878.dedup.bam
+```
+
+>```
+>...
+>@RG     ID:NA12878_TTGCCTAG-ACCACTTA_HCLHLDSXX_L001     PL:illumina     PM:Unknown      LB:NA12878      DS:GRCh38       SM:NA12878       CN:NYGenome     PU:HCLHLDSXX.1.TTGCCTAG
+>@RG     ID:NA12878_TTGCCTAG-ACCACTTA_HCLHLDSXX_L002     PL:illumina     PM:Unknown      LB:NA12878      DS:GRCh38       SM:NA12878       CN:NYGenome     PU:HCLHLDSXX.2.TTGCCTAG
+>@RG     ID:NA12878_TTGCCTAG-ACCACTTA_HCLHLDSXX_L003     PL:illumina     PM:Unknown      LB:NA12878      DS:GRCh38       SM:NA12878       CN:NYGenome     PU:HCLHLDSXX.3.TTGCCTAG
+>...
+>```
+>{: .output}
 
 
 > ## CLI typing hints
