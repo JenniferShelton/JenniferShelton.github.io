@@ -118,6 +118,39 @@ cd -
 > {: .solution}
 {: .challenge}
 
+## Software on the File System the PATH Variable
+
+Commands like `ls` and (on our VM) `samtools` seem to exist as special words that the user can type to call a single version of a program. However, these programs are actual files on the file system that we can call because they are in one of the many locations that the shell knows to search when a command is executed.
+
+How can we run samtools when we don’t see any program named 
+samtools in our current working directory?
+
+```bash
+# generate a samtools help menu
+samtools
+# show the absolute path to samtools
+which samtools
+```
+
+> ## Location of Samtools
+>```
+>/home/student/miniconda3/envs/siw/bin/samtools
+>```
+>{: .output}
+
+```bash
+# show the absolute path to ls
+which ls
+```
+
+> ## Location of Samtools
+>```
+>/usr/bin/ls
+>```
+>{: .output}
+
+
+
 > ## CLI typing hints
 > - <kbd>Tab</kbd> : autocompletes paths (use this for speed and to avoid mistakes !!)
 > - <kbd>↑</kbd>/<kbd>↓</kbd> arrow : moves through previous commands
