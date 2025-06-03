@@ -56,6 +56,9 @@ $ tree -L 2 /data/RNA/
 └── single_cell
     └── README
 ```
+Another way to diagram the filesystem is like this. The root directory is always named `/`.
+
+![Simple File system]({{ page.root }}/fig/file_system.png)
 
 ## Relative Paths
 
@@ -122,9 +125,8 @@ ls -F ../../nfs/sw/samtools/
 > > ks: command not found
 > > ```
 > > {: .output}
-> > This might happen if the command was mis-typed or if the program corresponding to that command
-> > is not installed. When your get an error message stay calm and give it a couple of read throughs. Error 
-> > messages can seem akwardly worded at first but they can really help guide your debugging.
+> > ls -F ../../combined/
+> > Second part: changes the current working directory to the home directory
 > {: .solution}
 {: .challenge}
 
