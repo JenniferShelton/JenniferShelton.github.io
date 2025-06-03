@@ -99,17 +99,6 @@ cd -
 
 **Note:** if no special characters are used UNIX assumes your path begins in the current working directory
 
-Without changing directories create a relative path to list the contents of the “samtools” directory (showing a trailing slash to see which are directories)
-
-#Solution:
-ls -F ../../nfs/sw/samtools/
-
-#Code Challenge 2: What does the command "cd" without a directory name do?
-
-#Solution: changes the current working directory to the home directory
-
-
-
 > ## Create a Relative Path
 > 
 > Without changing directories create a **relative** path to list the contents of the `/data/alignment/combined`
@@ -121,11 +110,10 @@ ls -F ../../nfs/sw/samtools/
 > ```
 > > ## Solution
 > >
-> > ```
-> > ks: command not found
-> > ```
-> > {: .output}
+> > ```bash
 > > ls -F ../../combined/
+> > ```
+> > 
 > > Second part: changes the current working directory to the home directory
 > {: .solution}
 {: .challenge}
