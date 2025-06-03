@@ -15,19 +15,55 @@ keypoints:
 - Many bioinformatic tasks require large amounts of computing power
 ---
 
-## The Shell
+## Open your terminal
+
 To start we will open a terminal.
  
-1. Go to the [link](https://www.nygenome.org) given to you at the workshop
-2. Select "Terminal" from the "JupyterLab" launcher (or blue button with a plus in the upper left corner)
-3. After you have done this put up a green sticky not if you see a flashing box next to a `$`
+1. Go to the [link](https://pad.carpentries.org/Siw_atlanta) given to you at the workshop
+2. Paste the notebook link next to your name into your browser
+3. Select "Terminal" from the "JupyterLab" launcher (or blue button with a plus in the upper left corner)
+4. After you have done this put up a green sticky not if you see a flashing box next to a `$`
 
-When the shell is first opened, you are presented with a **prompt**,
+What am I seeing: when the shell is first opened, you are presented with a **prompt**,
 indicating that the shell is waiting for input.
 
 ```bash
 $
 ```
+
+## The Shell
+
+The shell is a program where users can type commands.
+With the shell, it's possible to invoke complicated programs like climate modeling software
+or simple commands that create an empty directory with only one line of code.
+The most popular Unix shell is Bash (the Bourne Again SHell ---
+so-called because it's derived from a shell written by Stephen Bourne).
+Bash is the default shell on most modern implementations of Unix and in most packages that provide
+Unix-like tools for Windows.
+Note that 'Git Bash' is a piece of software that enables Windows users to use a Bash like interface
+when interacting with Git.
+
+Using the shell will take some effort and some time to learn.
+While a GUI presents you with choices to select, CLI choices are not automatically presented to you,
+so you must learn a few commands like new vocabulary in a language you're studying.
+However, unlike a spoken language, a small number of "words" (i.e. commands) gets you a long way,
+and we'll cover those essential few today.
+
+The grammar of a shell allows you to combine existing tools into powerful
+pipelines and handle large volumes of data automatically. Sequences of
+commands can be written into a *script*, improving the reproducibility of
+workflows.
+
+In addition, the command line is often the easiest way to interact with remote machines
+and supercomputers.
+Familiarity with the shell is near essential to run a variety of specialized tools and resources
+including high-performance computing systems.
+As clusters and cloud computing systems become more popular for scientific data crunching,
+being able to interact with the shell is becoming a necessary skill.
+We can build on the command-line skills covered here
+to tackle a wide range of scientific questions and computational challenges.
+
+## The Prompt
 
 The shell typically uses `$` as the prompt, but may use a different symbol.
 In the examples for this lesson, we'll show the prompt as `$`.
@@ -49,6 +85,8 @@ a prompt might look like, e.g.:
 student@workshop-1:~$ 
 ```
 
+## Read Evaluate Print Loop
+
 There are many ways for a user to interact with a computer. For example, we often use a Graphical User 
 Interface (GUI). With a GUI we might roll a mouse to the logo of a folder and click or tap (on a touch 
 screen) to show the content of that folder. In a Commandline Interface the user can do all of the same 
@@ -63,16 +101,33 @@ computer as lines of text.
 4. the computer executes it and prints its output (if any)
 5. loop from step #4 back to step #1
 
-The most basic command is to call a program to perform its default action. For example, call the program `whoami` to 
-return your username. 
+## Reasons to learn about the shell
 
-```bash
-$ whoami
-```
+   - Many bioinformatics tools can only process large data in the command line version not the GUI.
+   - The shell makes your work less boring (same set of tasks with a large number of files)
+   - The shell makes your work less error-prone
+   - The shell makes your work more reproducible.
+   - Many bioinformatic tasks require large amounts of computing power
 
-You can also call a program and pass arguments to the program. For example, the `ls` command will list the contents of 
-your current directory (directory is synonymous with folder). Any line that starts with `#` will not be executed. We can 
-write comments to ourselves by starting the line with `#`. 
+> ## Let's call some programs
+>
+> The most basic command is to call a program to perform its default action. For example, call the program `whoami` to return your username. 
+>
+>```
+>whoami
+>```
+>
+>You can also call a program and pass arguments to the program, for example this command to find which shell we are using:
+>
+>```
+>echo $SHELL
+>```
+>{: .discussion}
+
+## The Filesystem
+
+The `ls` command will list the contents of 
+your current directory (directory is synonymous with folder). Any line that starts with `#` will not be executed. We can write comments to ourselves by starting the line with `#`. 
 
 ```bash
 # call ls to list current directory
