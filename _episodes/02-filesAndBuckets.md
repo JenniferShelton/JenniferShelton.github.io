@@ -213,13 +213,9 @@ Unix uses `:` as a separator
 The shell looks for the program in each directory in left-to-right.
 The shell runs the first program with that name that it finds
 
-```bash
-$ echo $PATH
-```
-
 `which` reported that samtools was in `/home/student/miniconda3/envs/siw/bin/`. This is the second directory listed in our `$PATH`.
 
->```bash
+```bash
 $ echo $PATH
 ```
 
