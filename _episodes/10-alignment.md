@@ -1,7 +1,9 @@
 ---
 title: "Read Alignment and Small Variant Calling"
 ---
-## Intro Lecture
+
+## Intro to Alignment Lecture
+
 
 https://drive.google.com/file/d/1HysQvr9pEj0DInCuF9oBqHCpzA2ZlUDT/view?usp=sharing
 
@@ -177,6 +179,13 @@ so if you do not want to do it, you can skip it.
 The bwa command should run for about 3 minutes. Once you finish one set, please pick a _different_ set of fastqs and align those to the _same reference_
 with a _different output file_. You will need at least 2 aligned sam files for the next steps. Your output sam file should be about 700Mb (for each run you do,
 but will vary slightly by read group). If it is much smaller than this or the program ran for much less time, you have done something wrong.
+
+
+We will stop here and take a look at each of these file formats (fasta, fastq, sam, bam, cram).
+
+## Intro to Variant Calling
+
+https://drive.google.com/file/d/1hVpzIwBL1HeLyupUwIhtHxn349veBWoX/view?usp=sharing
 
 ## Merging and Sorting
 As you noticed, you now have multiple sam files. This is typical that we do one alignment for each lane of sequencing we do,
