@@ -131,9 +131,10 @@ The second set of three characters (`rwx`) is for the Group permissions.
 The third set of three characters (`rwx`) is for the All Users permissions.
 
 See all options at http://www.onlineconversion.com/html_chmod_calculator.html.
-The value `7` is the file/directory can be read, written to and executed.
-With a `5` the file/directory can be read and executed (but not written to!).
-With a `0` the file/directory can't be read, written to or executed.
+
+- The value `7` is the file/directory can be read, written to and executed.
+- With a `5` the file/directory can be read and executed (but not written to!).
+- With a `0` the file/directory can't be read, written to or executed.
 
 Your bioinformatics sequence and reference files should be read only.
 
