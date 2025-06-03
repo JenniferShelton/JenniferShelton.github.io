@@ -1,0 +1,90 @@
+---
+title: "Working With Files and Directories"
+teaching: 31h
+exercises: 20
+questions:
+- How can I create, copy, and delete files and directories?
+- How can I edit files?
+objectives:
+- Delete, copy and move specified files and/or directories.
+- Create files in that hierarchy using an editor or by copying and renaming existing files.
+---
+
+## Creating directories
+We now know how to explore files and directories, but how do we create them in the first place?
+
+In this episode we will learn about creating and moving files and directories, using our home directory.
+
+First we see where we are and what we already have. We want to be in the home directory on the Desktop, which we can check using:
+
+```bash
+pwd
+# if needed we can change to the home directory with
+cd
+```
+
+Let’s create a new directory called workshop using the command `mkdir` (which has no output)
+
+**mkdir** : make directory
+
+```bash
+mkdir workshop
+ls -F ~/
+mkdir workshop/output/
+mkdir workshop/logs/
+mkdir workshop/scripts/
+mkdir workshop/mock_data/
+mkdir workshop/mock_data/fasta/
+```
+
+**touch** : create new, empty files
+
+```bash
+touch workshop/mock_data/genome.fa
+```
+
+
+```bash
+vi genome.fa
+```
+
+In `vi` type <kbd>i</kbd>. Then type out a few [FASTA](https://en.wikipedia.org/wiki/FASTA_format) records. Like the ones below. 
+When you are finished editing type <kbd>esc</kbd>, then type `:wq` to save and quit.
+
+```
+>chr1
+AACCGCGCGTACGCGCGCGCGC
+CTCTACNNNNNN
+>chr2
+TGTGTCTGAAANTGTCATGTCA
+NNNTCNTGTGTGTGAAAAAAAA
+NNTGCNA
+>chr3
+AACCGCGCGTATCTGAACGCGC
+CTCTAAATCGAT
+```
+
+**cp** : copy file(s) to a new location
+
+```bash
+# makes a copy with the same filename
+cp ~/genomes.fa ~/mock_data/fasta/
+# makes a copy with a new filename (both .fa and .fasta and .fna are valid FASTA file suffixes)
+cp ~/genomes.fa ~/mock_data/fasta/genomes.fasta
+# see new file
+ls -thl ~/genomes.fa ~mock_data/fasta/
+```
+
+**rm** : remove file (CAUTION: no undelete here !!)
+
+```bash
+rm ~/genomes.fa
+```
+
+**rmdir** : remove empty directory
+
+```bash
+mkdir ~/mock_data/wrong
+rmdir ~/mock_data/wrong
+```
+
