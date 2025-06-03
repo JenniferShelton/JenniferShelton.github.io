@@ -91,9 +91,7 @@ There are many ways for a user to interact with a computer. For example, we ofte
 Interface (GUI). With a GUI we might roll a mouse to the logo of a folder and click or tap (on a touch 
 screen) to show the content of that folder. In a Commandline Interface the user can do all of the same 
 actions (e.g. show the content of a folder). On the Commandline the user passes commands to the 
-computer as lines of text.
-
-- What is a Read Evaluate Print Loop (REPL)?
+computer as lines of text. Below are the steps in a Read Evaluate Print Loop (REPL):
 
 1. the shell presents a prompt (like `$`)
 2. user types a command and presses the <kbd>Enter</kbd> key
@@ -124,7 +122,7 @@ computer as lines of text.
 >```
 >{: .discussion}
 
-## The Filesystem
+## Glance at the Filesystem
 
 The `ls` command will list the contents of 
 your current directory (directory is synonymous with folder). Any line that starts with `#` will not be executed. We can write comments to ourselves by starting the line with `#`. 
@@ -147,6 +145,12 @@ ls -t /usr
 
 # add the `-l` to show who owns the file, file size, and what date is was last edited
 ls -t -l /usr
+
+# a flags to distinguish Folders from files (`-F`) and to show "human readable" filesizes (`-h`)
+ls -t -l -F -h /usr
+
+# combine short flags for faster typing
+ls -lthF /usr
 ```
 
 The basic syntax of a unix command is:
@@ -158,10 +162,10 @@ The basic syntax of a unix command is:
 ## Getting help
 
 `ls` has lots of other options. There are common ways to find out how to use a command and what options it 
-accepts (depending on your environment). Today we will call the unix command and the use the flag `--help`.
+accepts (depending on your environment). Today we will call the unix command `man` and pass the name of the program that we want a manual for as the argument for `man`.
 
 ```bash
-$ ls --help
+$ man ls
 ```
 
 ```
@@ -182,12 +186,12 @@ Help menus show you the basic syntax of the command. Optional elements are shown
 
 Help menus show both the long and short version of the flags. Use the short option when typing commands directly into the shell to minimize keystrokes and get your task done faster. Use the long option in scripts to provide clarity. It will be read many times and typed once.
 
-> ## When `--help` does not work
-> If `--help` does not show you a help menu there are other common ways to show help menus that you can try.
+> ## When `man` does not work
+> If `man PROGRAM` does not show you a help menu there are other common ways to show help menus that you can try.
 > 
-> - call the program `man` and pas the name of the command that you are curious about as the argument (`man ls`). 
+> - call the program with only the `--help` flag 
 > Type `q` to exit out of this help screen.
-> - some bioinformatics programs will show a help menu if you call the tool without any flags or arguments.
+> - some bioinformatics programs will show a help menu if you call the tool without any flags or arguments (e.g. `samtools`).
 {: .callout}
 
 > ## Command not found
