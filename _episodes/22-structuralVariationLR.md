@@ -53,6 +53,8 @@ We can call many more SVs using long reads, either by alignment (with enough dep
 > > * Long reads can often be mapped to regions of the genome where short reads fail to map.
 > > * Long reads can span larger events making discovery easier and increasing breakpoint accuracy.
 > >
+> > * False positives are one possible explaination for Illumina only SVs.
+> >
 > {: .solution}
 {: .challenge}
 
@@ -80,7 +82,7 @@ ultra-long read as they represent many reads stiched together.
 ## Drawbacks
 
 * Long read sequencing is becoming more affordable but is still much more expensive than short read
-  sequencing (SR << LR Alignment << LR Assembly).
+  sequencing `SR << LR Alignment << LR Assembly`.
 * Throughput is lower, reducing the turn around time for projects with large numbers of samples.
 * Sequencing prep, especially for ultra-long protocols is tedious and difficult to perform 
   consitently.
