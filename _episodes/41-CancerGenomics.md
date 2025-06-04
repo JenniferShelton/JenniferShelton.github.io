@@ -225,22 +225,28 @@ Finally, the reference genome contigs used in variant calling are also listed in
 >> ## Solution
 >> 
 >> ```
+>> # copy a VCF from a bucket
+>> mkdir ~/workshop/data/
+>> gcloud storage cp \
+>> gs://nygc-workshop-2024/cancer_genomics/COLO-829_2B--COLO-829BL_1B.snv.indel.results.v7.annotated.vcf.gz* \
+>> ~/workshop/data/
+>> 
 >> bcftools query \
 >> -s COLO-829_2B \
 >> -f "%CHROM\t%POS\t[%AF]\n" \
->> /data/cancer_genomics/COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf \
+>> ~/workshop/data/COLO-829_2B--COLO-829BL_1B.snv.indel.results.v7.annotated.vcf.gz \
 >> > ~/workspace/output/COLO-829_2B--COLO-829BL_1B.vafs.tsv
 >> ```
 > {: .solution}
 {: .challenge}
 
-> **Exercise**:  Plot VAF plot for chr21 and chr22. Identify something different on chr22. (for loop)
+> ## Plot VAF plot for chr21 and chr22. Identify something different on chr22. (for loop)
 > 
 >> ## Solution
 >> 
 >> ```R
 >> # pdf('~/workspace/output/vaf_histogram.pdf') # use lines like these to save to a file when needed)
->> f = 'COLO-829_2B--COLO-829BL_1B.vafs.tsv'
+>> f = '~/workspace/output/COLO-829_2B--COLO-829BL_1B.vafs.tsv'
 >> x = read.table(f, h=F, stringsAsFactors=F,
 >>                sep='\t', col.names=c('chr', 'pos', 'vaf')) 
 >>
@@ -252,14 +258,18 @@ Finally, the reference genome contigs used in variant calling are also listed in
 > {: .solution}
 {: .challenge}
 
+What do you think the source of the low VAF variants on chr22 could be?
+
 ## Inspecting alignments with IGV
 
 **Good candidates**:
+
 1. chr22:22949473 - a straightforward clonal SNV
 2. chr1:3243220 - a straightforward deletion
 3. chr2:48028500 - a straightforward insertion
 
 **Bad candidates**:
+
 1. chr22:24,098,035 and chr22:24,098,086 - supporting reads have multiple mismatches, soft-clip on the left
 2. chr22:29289914-29290094 - Five clustered variants all supported by the same set of reads, with soft-clip on the left. "Group by base at ..." is our friend here
 3. chr22:19132585 - 7bp insertion with flanking mismatches and soft-clipping
@@ -282,6 +292,7 @@ Resources:
 
 ### Step-by-step version:
 1. Create input vcf folder
+   
 >```bash
 > tar -xvzf input_vcfs.tar.gz
 > ```
