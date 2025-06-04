@@ -60,7 +60,7 @@ $ tail GRCh38_full_analysis_set_plus_decoy_hla.fa
 
 **^** : regex (regular expression) which matches the first character
 
-**|** : pipes output from the command on the left as input to the command on the right
+**\|** : pipes output from the command on the left as input to the command on the right
 
 The vertical bar, <kbd>|</kbd>, between the two commands is called a pipe. It tells the shell that we want to use the output of the command on the left as the input to the command on the right. Nothing prevents us from chaining pipes consecutively. We can for example send the output of `head` directly to `grep`, and then send the resulting output to `sort` (a command that sorts lines of text). This removes the need for any intermediate files.
 
