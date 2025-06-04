@@ -63,7 +63,7 @@ Run the following code pieces one at a time.
 ~~~
 
 ~~~
-./manta_NA12878/runWorkflow.py \
+./_OUT_/runWorkflow.py \
  --mode local \
  --jobs 8 \
  --memGb unlimited 
@@ -75,13 +75,22 @@ Run the following code pieces one at a time.
 >
 {: .challenge}
 
-`ls -lh manta_*/results/variants/diploidSV.vcf.gz`
+`ls -lh _OUT_/results/variants/diploidSV.vcf.gz`
 ~~~
 -rw-r--r-- 1 student student 137K Aug 27 22:54 manta_NA12878/results/variants/diploidSV.vcf.gz
 -rw-r--r-- 1 student student 141K Aug 27 23:04 manta_NA12891/results/variants/diploidSV.vcf.gz
 -rw-rw-r-- 1 student student 141K Aug 27 23:07 manta_NA12892/results/variants/diploidSV.vcf.gz
 ~~~
 {: .output}
+
+> ## Note - data compression
+>
+> Storing the raw text of our analyses is very inefficient so we often compress our data using
+> data compression programs (gzip, bgzip). This is comes at a cost of convenience though, we can't
+> use our "normal" tools (cat, less, grep) to access these files in the same way we couldn't use
+> less to read our BAM files yesterday. However, many tools come with an equivalent for compressed
+> file usage - zcat, zless, zgrep.
+{: .keypoints}
 
 ## Minimap2
 
@@ -93,7 +102,7 @@ Run the following code pieces one at a time.
 
 ~~~
 zcat /data/SV/long_read/inputs/NA12878_NRHG.chr20.fq.gz \
-| head 20000 \
+| head -n 20000 \
 | minimap2 \
     -ayYL \
     --MD \
@@ -144,15 +153,22 @@ sniffles \
 >
 > We need to make a copy of a file and change some of its contents.
 >
-> ~~~
-> cd 
+> ~~~ 
 > cp /data/SV/inputs/NA12878.paragraph_manifest.txt .
+>
+> vi NA12878.paragraph_manifest.txt
 > ~~~
+> Change `/data/SV/bams/NA12878.chr1-6-20.bam` to `/data/alignment/combined/NA12878.dedup.bam`. 
 > {: .source}
 {: .challenge}
 
-Open it in the editor on the side panel and change `/data/SV/bams/NA12878.chr1-6-20.bam` to
-`/data/alignment/combined/NA12878.dedup.bam`. 
+`cat`
+~~
+id	path	depth	read length	sex
+NA12878	/data/alignment/combined/NA12878.dedup.bam	33.94	150	F
+~~
+{: .output}
+
 
 ~~~
 cd /workshop/output/sv
