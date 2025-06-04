@@ -75,7 +75,10 @@ Run the following code pieces one at a time.
 >
 {: .challenge}
 
-`ls -lh _OUT_/results/variants/diploidSV.vcf.gz`
+```
+ls -lh _OUT_/results/variants/diploidSV.vcf.gz
+```
+
 ~~~
 -rw-r--r-- 1 student student 137K Aug 27 22:54 manta_NA12878/results/variants/diploidSV.vcf.gz
 -rw-r--r-- 1 student student 141K Aug 27 23:04 manta_NA12891/results/variants/diploidSV.vcf.gz
@@ -162,11 +165,13 @@ sniffles \
 > {: .source}
 {: .challenge}
 
-`cat`
-~~
+```
+cat
+```
+~~~
 id	path	depth	read length	sex
 NA12878	/data/alignment/combined/NA12878.dedup.bam	33.94	150	F
-~~
+~~~
 {: .output}
 
 
