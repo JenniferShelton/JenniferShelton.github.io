@@ -46,12 +46,11 @@ There are two steps to running manta on our data. First, we tell Manta what the
 inputs are by running `configManta.py`. 
 
 
-``` Relevant files - don't try to execute this, it is just to help you understand what files you need.
+~~~ Relevant files - don't try to execute this, it is just to help you understand what files you need.
 _BAM_ -> /data/alignment/combined/NA12878.dedup.bam
 
 _REF_ -> /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa
-
-```
+~~~
 
 Run the following code pieces one at a time.
 
@@ -75,7 +74,9 @@ Run the following code pieces one at a time.
 >
 {: .challenge}
 
-`ls -lh _OUT_/results/variants/diploidSV.vcf.gz`
+~~~ BASH
+ls -lh _OUT_/results/variants/diploidSV.vcf.gz
+~~~
 
 ~~~
 -rw-r--r-- 1 student student 137K Aug 27 22:54 manta_NA12878/results/variants/diploidSV.vcf.gz
