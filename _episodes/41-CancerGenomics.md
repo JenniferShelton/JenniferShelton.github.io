@@ -41,6 +41,28 @@ Mutect2 uses the matched normal to additionally exclude rare germline variation 
 > {: .source}
 {: .challenge}
 
+
+> ## Going further with Mutect2 runs (this is a slower command not run in the workshop)
+>
+> Real projects should be filtered for technical artifacts with a Panel of Normals (PON)
+> and with common germline variants. The `--germline-resource` and `--panel-of-normals` flags
+> are used if Mutect2 is the tool filtering your somatic calls. In the example below the population allele
+> frequency for the alleles that are not in the germline resource is 0.00003125. Read more in the
+> [Mutect2 documentation](https://gatk.broadinstitute.org/hc/en-us/articles/360036485152-Mutect2).
+> 
+> ~~~
+> gatk Mutect2 \
+> -R /data/cancer_genomics/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+> -I /data/cancer_genomics/COLO-829_2B.variantRegions.cram \
+> -I /data/cancer_genomics/COLO-829BL_1B.variantRegions.cram \
+> --germline-resource AF_ONLY_GNOMAD.vcf.gz \
+> --af-of-alleles-not-in-resource 0.00003125 \
+> --panel-of-normals YOUR_PON.vcf.gz \
+> -O ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf
+> ~~~
+> {: .source}
+{: .hint}
+
 ## Filter somatic variant calls
 
 After calling the variants, we filter out low-quality calls using the FilterMutectCalls tool which applies various filters like minimum variant-supporting read depth and mapping quality to distinguish true somatic mutations from artifacts. The full set of filters is described in the [Mutect2 GitHub repository](https://github.com/broadinstitute/gatk/blob/master/docs/mutect/mutect.pdf).
