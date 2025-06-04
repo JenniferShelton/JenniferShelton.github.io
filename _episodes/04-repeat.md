@@ -47,6 +47,7 @@ We’ll start with the directory `/data/alignment/references/GRCh38_1000genomes/
 The `.fa` extension indicates that a files is in [FASTA format](https://zhanggroup.org/FASTA/), a simple text format that specifies the nucleic or amino acid sequences.
 
 **head** : returns the first lines of a file (default number of lines is 10)
+
 **tail** : returns the last lines of a file (default number of lines is 10)
 
 ```bash
@@ -56,7 +57,9 @@ $ tail GRCh38_full_analysis_set_plus_decoy_hla.fa
 ```
 
 **grep** : program to find lines that match a pattern
+
 **^** : regex (regular expression) which matches the first character
+
 **|** : pipes output from the command on the left as input to the command on the right
 
 The vertical bar, <kbd>|</kbd>, between the two commands is called a pipe. It tells the shell that we want to use the output of the command on the left as the input to the command on the right. Nothing prevents us from chaining pipes consecutively. We can for example send the output of `head` directly to `grep`, and then send the resulting output to `sort` (a command that sorts lines of text). This removes the need for any intermediate files.
@@ -81,6 +84,8 @@ $ ls /data/alignment/references/*/*fa
 $ cat /data/alignment/references/*/*fa | grep -c "^>"
 ```
 
+## Writing to files
+
 **>** : redirects output to a file
 
 The greater than symbol, <kbd>></kbd>, tells the shell to redirect the command’s output to a file instead of printing it to the screen. This command prints no screen output, because everything that wc would have printed has gone into the file lengths.txt instead. If the file doesn’t exist prior to issuing the command, the shell will create the file. **If the file exists already, it will be silently overwritten, which may lead to data loss.** Thus, redirect commands require caution.
@@ -89,12 +94,88 @@ The greater than symbol, <kbd>></kbd>, tells the shell to redirect the command�
 $ cat /data/alignment/references/*/*fa | grep -c "^>" > ~/workshop/output/seq_counts.txt
 $ cat ~/workshop/output/seq_counts.txt
 ```
-**>>** : appends output to the end of a file
+**\>\>** : appends output to the end of a file
 
 ```bash
 $ cat /data/alignment/references/*/*fa | grep -c "^>" >> ~/workshop/output/seq_counts.txt
 $ cat ~/workshop/output/seq_counts.txt
 ```
 
+## Loops
 
+Loops are a programming construct which allow us to repeat a command or set of commands for each item in a list. As such they are key to productivity improvements through automation. Similar to wildcards and tab completion, using loops also reduces the amount of typing required (and hence reduces the number of typing mistakes).
+
+Suppose we have dozens of genome sequence alignment files in [SAM, BAM or CRAM format](https://samtools.github.io/hts-specs/SAMv1.pdf). For this example, we’ll use the `/data/*/*cram` files which only have two example files, but the principles can be applied to many many more files at once.
+
+The structure of these files is the same and that allows many tools (including QC tools to evaluate them). Let’s look at the files:
+
+```bash
+$ # the header describes the reference and read groups
+$ samtools view -H /data/alignment/combined/NA12878.dedup.bam
+$ # the first three alignments are printed to the screen to look at
+$ samtools view /data/alignment/combined/NA12878.dedup.bam | head -3
+```
+
+We would like to get QC metrics for each alignment file. For each file, we would need to execute the command `samtools flagstat`. We’ll use a loop to solve this problem, but first let’s look at the general form of a loop, using the pseudo-code below:
+
+```bash
+# The word "for" indicates the start of a "For-loop" command
+for thing in list_of_things 
+#The word "do" indicates the start of job execution list
+do 
+    # Indentation within the loop is not required, but aids legibility
+    operation_using/command $thing 
+# The word "done" indicates the end of a loop
+done
+```
+
+and we can apply this to our example like this:
+
+```bash
+for cram in /data/*/*cram; do
+    echo ${cram}
+    echo "working..."
+    samtools flagstat ${cram}
+    echo "done"
+done
+```
+
+> ## Follow the Prompt
+> The shell prompt changes from `$` to `>` and back again as we were typing in our loop. The second prompt, `>`, is
+> different to remind us that we haven’t finished typing a complete command yet. A semicolon, `;`, can be used
+> to separate two commands written on a single line.
+{: .testimonial}
+
+When the shell sees the keyword for, it knows to repeat a command (or group of commands) once for each item in a list. Each time the loop runs (called an iteration), an item in the list is assigned in sequence to the variable, and the commands inside the loop are executed, before moving on to the next item in the list. Inside the loop, we call for the variable’s value by putting `$` in front of it. The `$` tells the shell interpreter to treat the variable as a variable name and substitute its value in its place, rather than treat it as text or an external command.
+
+In this example, the list is three filenames: `/data/cancer_genomics/COLO-829BL_1B.variantRegions.cram` and `/data/cancer_genomics/COLO-829_2B.variantRegions.cram`. Each time the loop iterates, we first use echo to print the value that the variable `${cram}` currently holds. This is not necessary for the result, but beneficial for us here to have an easier time to follow along. Next, we will run the flagstat command on the file currently referred to by `${cram}`. The first time through the loop, `${cram}` is `COLO-829BL_1B.variantRegions.cram`. The interpreter runs the command head on `COLO-829BL_1B.variantRegions.cram` and prints the QC metrics. For the second iteration, `${cram}` becomes `COLO-829_2B.variantRegions.cram`. This time, the shell runs head on `COLO-829_2B.variantRegions.cram` and prints the QC metrics. Since the list was only two items, the shell exits the for loop.
+
+> ## Same Symbols, Different Meanings
+> Here we see `>` being used as a shell prompt, whereas `>` is also used to redirect output. Similarly, `$` is
+> used as a shell prompt, but, as we saw earlier, it is also used to ask the shell to get the value of a variable.
+>
+> If the shell prints `>` or `$` then it expects you to type something, and the symbol is a prompt.
+>
+> If you type `>` or `$` yourself, it is an instruction from you that the shell should redirect output or get
+> the value of a variable.
+{: .testimonial}
+
+When using variables it is good practice to put the names into curly braces to clearly delimit the variable name: `$cram` is equivalent to `${cram}`, but is different from `${cr}am`. You may find this notation in other people’s programs.
+
+We have called the variable in this loop cram in order to make its purpose clearer to human readers. The shell itself doesn’t care what the variable is called; if we wrote this loop as:
+
+```bash
+for x in /data/*/*cram; do
+    echo ${x}
+    echo "working..."
+    samtools flagstat ${x}
+    echo "done"
+done
+```
+
+It would work exactly the same way. Don’t do this. Programs are only useful if people can understand them, so meaningless names (like x) or misleading names (like `temperature`) increase the odds that the program won’t do what its readers think it does.
+
+In the above examples, the variables (thing, filename, x and temperature) could have been given any other name, as long as it is meaningful to both the person writing the code and the person reading it.
+
+Note also that loops can be used for other things than filenames, like a list of numbers or a subset of data.
 
