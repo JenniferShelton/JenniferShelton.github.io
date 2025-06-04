@@ -33,11 +33,10 @@ Mutect2 uses the matched normal to additionally exclude rare germline variation 
 >
 > ~~~
 > gatk Mutect2 \
->   -R --- (reference.fasta) \
->   -I COLO-829_2B.variantRegions.cram \
->   -I COLO-829_829BL_1B.variantRegions.cram \
->   -germline-resource --- (gnomad file) \
->   -O --- (raw variants output vcf)
+> -R /data/cancer_genomics/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+> -I /data/cancer_genomics/COLO-829_2B.variantRegions.cram \
+> -I /data/cancer_genomics/COLO-829BL_1B.variantRegions.cram \
+> -O ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf
 > ~~~
 > {: .source}
 {: .challenge}
@@ -50,9 +49,11 @@ After calling the variants, we filter out low-quality calls using the FilterMute
 >
 > ~~~
 > gatk FilterMutectCalls \
->   -V --- (raw variants output vcf) \
->   -R --- (reference fasta) \
->   -O --- (filtered variants  vcf)
+>   --reference /data/cancer_genomics/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+>   -V ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf \
+>   --stats ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf.stats \
+>   -O ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf
+
 > ~~~
 > {: .source}
 {: .challenge}
