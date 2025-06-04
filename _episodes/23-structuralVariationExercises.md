@@ -45,13 +45,21 @@ cd /workshop/output/sv
 There are two steps to running manta on our data. First, we tell Manta what the 
 inputs are by running `configManta.py`. 
 
+
+``` Relevant files - don't try to execute this, it is just to help you understand what files you need.
+_BAM_ -> /data/alignment/combined/NA12878.dedup.bam
+
+_REF_ -> /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa
+
+```
+
 Run the following code pieces one at a time.
 
 ~~~
 /software/manta-1.6.0.centos6_x86_64/bin/configManta.py \
- --bam /data/alignment/combined/NA12878.dedup.bam \
- --referenceFasta /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
- --runDir manta_NA12878
+ --bam _BAM_ \
+ --referenceFasta _REF_ \
+ --runDir _OUT_
 ~~~
 
 ~~~
