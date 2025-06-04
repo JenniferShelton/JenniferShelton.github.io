@@ -38,10 +38,23 @@ improving the base quality for their data.
 
 ## Advantages of long reads
 
-The advantage of long reads is they map much more uniquely to the genome and can often span
-repetitive elements in the genome that cause mapping quality issues with short reads. In long 
-reads we are able to detect much larger events and in cases where the event is entirely inside
-a read we are able to determine the breakpoints with much higher accuracy.
+We can call many more SVs using long reads, either by alignment (with enough depth) or assembly 
+(with sufficient assembly quality)<sup>1</sup>.
+1. [Ebert et al. Haplotype-resolved diverse human genomes and integrated analysis of structural variation](https://www.science.org/doi/10.1126/science.abf7117)
+
+![LRvsSR]({{ page.root }}/fig/SV.LRvsSR.png)
+
+
+> ## Challenge
+>
+> Why are we able to call more variants with long reads? Why are there Illumina only SVs?
+>
+> > ## Solution
+> > * Long reads can often be mapped to regions of the genome where short reads fail to map.
+> > * Long reads can span larger events making discovery easier and increasing breakpoint accuracy.
+> >
+> {: .solution}
+{: .challenge}
 
 ## SV calling in long reads
 
@@ -64,18 +77,10 @@ possible, including novel insertions, we create a bigger picture of our sample. 
 fragments, called contigs, can then be aligned to the reference. The contigs act as a sort of
 ultra-long read as they represent many reads stiched together.
 
-## Advantages
-
-* We can call many more SVs using long reads, either by alignment (with enough depth) or assembly 
-  (with sufficient assembly quality)<sup>1</sup>.
-		1. [Ebert et al. Haplotype-resolved diverse human genomes and integrated analysis of structural variation](https://www.science.org/doi/10.1126/science.abf7117)
-
-![LRvsSR]({{ page.root }}/fig/SV.LRvsSR.png)
-
 ## Drawbacks
 
 * Long read sequencing is becoming more affordable but is still much more expensive than short read
-  sequencing.
+  sequencing (SR << LR Alignment << LR Assembly).
 * Throughput is lower, reducing the turn around time for projects with large numbers of samples.
 * Sequencing prep, especially for ultra-long protocols is tedious and difficult to perform 
   consitently.
