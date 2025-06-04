@@ -64,6 +64,12 @@ possible, including novel insertions, we create a bigger picture of our sample. 
 fragments, called contigs, can then be aligned to the reference. The contigs act as a sort of
 ultra-long read as they represent many reads stiched together.
 
+## Advantages
+
+* We can call many more SVs using long reads, either by alignment (with enough depth) or assembly 
+  (with sufficient assembly quality)<sup>1</sup>.
+		1. [Ebert et al. Haplotype-resolved diverse human genomes and integrated analysis of structural variation](https://www.science.org/doi/10.1126/science.abf7117)
+
 ![LRvsSR]({{ page.root }}/fig/SV.LRvsSR.png)
 
 ## Drawbacks
