@@ -31,12 +31,27 @@ Mutect2 uses the matched normal to additionally exclude rare germline variation 
 
 > ## Executing Mutect2
 >
+> In this example Mutect2 will be run in a few intervals. This will speed up a minature test
+> run of a Mutect2 command. In reality you might decide to restrict Mutect2 to the WGS calling
+> regions recommended in the [Mutect2 resource bundle](https://console.cloud.google.com/storage/browser/_details/genomics-public-data/resources/broad/hg38/v0/wgs_calling_regions.hg38.interval_list;tab=live_object?inv=1&invt=AbzPZA).
 > ~~~
+> 
+> # create a BED file of chr22 intervals to do a fast test run
+> 
+> cat \
+>   /data/cancer_genomics/allSitesVariant.bed \
+>   | grep "^chr22" \
+>   > ~/workspace/output/allSitesVariant.chr22.bed
+> 
+> # run Mutect2 calling command
+> 
 > gatk Mutect2 \
-> -R /data/cancer_genomics/GRCh38_full_analysis_set_plus_decoy_hla.fa \
-> -I /data/cancer_genomics/COLO-829_2B.variantRegions.cram \
-> -I /data/cancer_genomics/COLO-829BL_1B.variantRegions.cram \
-> -O ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf
+>   -R /data/cancer_genomics/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+>   --intervals ~/workspace/output/allSitesVariant.chr22.bed \
+>   -I /data/cancer_genomics/COLO-829_2B.variantRegions.cram \
+>   -I /data/cancer_genomics/COLO-829BL_1B.variantRegions.cram \
+>   -O ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf
+> 
 > ~~~
 > {: .source}
 {: .challenge}
@@ -49,16 +64,17 @@ Mutect2 uses the matched normal to additionally exclude rare germline variation 
 > are used if Mutect2 is the tool filtering your somatic calls. In the example below the population allele
 > frequency for the alleles that are not in the germline resource is 0.00003125. Read more in the
 > [Mutect2 documentation](https://gatk.broadinstitute.org/hc/en-us/articles/360036485152-Mutect2).
+>
 > 
 > ~~~
 > gatk Mutect2 \
-> -R /data/cancer_genomics/GRCh38_full_analysis_set_plus_decoy_hla.fa \
-> -I /data/cancer_genomics/COLO-829_2B.variantRegions.cram \
-> -I /data/cancer_genomics/COLO-829BL_1B.variantRegions.cram \
-> --germline-resource AF_ONLY_GNOMAD.vcf.gz \
-> --af-of-alleles-not-in-resource 0.00003125 \
-> --panel-of-normals YOUR_PON.vcf.gz \
-> -O ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf
+>   -R /data/cancer_genomics/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+>   -I /data/cancer_genomics/COLO-829_2B.variantRegions.cram \
+>   -I /data/cancer_genomics/COLO-829BL_1B.variantRegions.cram \
+>   --germline-resource AF_ONLY_GNOMAD.vcf.gz \
+>   --af-of-alleles-not-in-resource 0.00003125 \
+>   --panel-of-normals YOUR_PON.vcf.gz \
+>   -O ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.unfiltered.vcf
 > ~~~
 > {: .source}
 {: .hint}
