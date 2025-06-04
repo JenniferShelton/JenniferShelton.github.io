@@ -64,6 +64,8 @@ possible, including novel insertions, we create a bigger picture of our sample. 
 fragments, called contigs, can then be aligned to the reference. The contigs act as a sort of
 ultra-long read as they represent many reads stiched together.
 
+![Long-reads vs Short-reads]({{ page.root }}/fig/SV.LR_vs_SR.png)
+
 ## Drawbacks
 
 * Long read sequencing is becoming more affordable but is still much more expensive than short read
