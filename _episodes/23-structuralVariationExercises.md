@@ -53,7 +53,7 @@ inputs are by running `configManta.py`.
 > ~~~
 {: .keypoints}
 
-Run the following code pieces one at a time.
+Run the following code blocks one at a time.
 
 ~~~
 /software/manta-1.6.0.centos6_x86_64/bin/configManta.py \
@@ -175,14 +175,22 @@ NA12878	/data/alignment/combined/NA12878.dedup.bam	33.94	150	F
 {: .output}
 
 
-~~~
-cd /workshop/output/sv
+> ## Relevant files - don't try to execute this, it is just to help you understand what files you need.
+> ~~~
+> _VCF_ -> /data/SV/inputs/HGSVC_NA12878.chr1-6-20.vcf.gz
+> 
+> _MANIFEST_ -> ./NA12878.paragraph_manifest.txt
+>
+> _REF_ -> /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa
+> ~~~
+{: .keypoints}
 
+~~~
 ~/paragraph-v2.4a/bin/multigrmpy.py \
- -i /data/SV/inputs/HGSVC_NA12878.chr1-6-20.vcf.gz \
- -m ./NA12878.paragraph_manifest.txt \
- -r /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
- -o paragraph_NA12878 \
+ -i _VCF_ \
+ -m _MANIFEST_ \
+ -r _REF_ \
+ -o _OUT_ \
  --threads 8 \
  -M 400
 ~~~
