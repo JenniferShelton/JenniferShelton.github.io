@@ -416,9 +416,9 @@ It can also be useful to zoom in on specific genes, to understand how the mutati
 >> ## Solution
 >> ```
 >> #pdf('lollipop.pdf')
->> lollipopPlot(maf=brca, gene=’PIK3CA’, AACol=HGVSp_Short, showMutationRate=TRUE)
->> lollipopPlot(maf=brca, gene=’TTN’, AACol=’HGVSp_Short’, showMutationRate=TRUE)
->> lollipopPlot(maf=brca, gene=’TP53’, AACol=’HGVSp_Short’, showMutationRate=TRUE)
+>> lollipopPlot(maf=brca, gene='PIK3CA', AACol=HGVSp_Short, showMutationRate=TRUE)
+>> lollipopPlot(maf=brca, gene='TTN', AACol=’HGVSp_Short’, showMutationRate=TRUE)
+>> lollipopPlot(maf=brca, gene='TP53', AACol=’HGVSp_Short’, showMutationRate=TRUE)
 >> #dev.off()
 >> ```
 >> <img width="395" alt="Screenshot 2025-05-30 at 4 11 21 PM" src="https://github.com/user-attachments/assets/7365f5af-e8f5-497d-87a9-9eec8b226d3a" />
@@ -436,7 +436,7 @@ As mentioned earlier, it can be helpful to comapre a cohort against previously-p
 >> ## Solution
 >> ```
 >> # pdf('tcga_comparison.pdf')
->> tcgaCompare(maf=brca, cohortName=‘Workshop', logscale=TRUE, capture_size=50)
+>> tcgaCompare(maf=brca, cohortName='Workshop', logscale=TRUE, capture_size=50)
 >> # dev.off()
 >> ```
 >> <img width="398" alt="Screenshot 2025-05-30 at 4 11 51 PM" src="https://github.com/user-attachments/assets/6ab3eba7-7855-44fd-b46e-b967708a9a2f" />
