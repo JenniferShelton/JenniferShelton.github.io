@@ -361,14 +361,22 @@ Start an interactive R session
 Next, let's load up the R packages we'll need. Check what TCGA datasets are available and load up the breast cancer cohort.
 
 >> ## Solution
->> ~~~
->> library(maftools) 
+>> ```
+>>
+>> dir.create("~/site-library")
+>> if (!require("BiocManager", quietly = TRUE))
+>>     install.packages("BiocManager", lib="~/site-library")
+>> .libPaths("~/site-library")
+>> library(BiocManager)
+>> BiocManager::install("maftools", lib="~/site-library")
+>> BiocManager::install("PoisonAlien/TCGAmutations", lib="~/site-library")
+>> library(maftools)
 >> library(TCGAmutations)
 >>
 >> tcga_available()
 >>
 >> brca = tcga_load(study = "BRCA")
->> ~~~
+>> ```
 > {: .solution}
 {: .challenge}
 
@@ -377,11 +385,11 @@ In an interactive R session, just typing the variable will print its contents. L
 Next, let’s plot a basic summary of the cohort, including the variant type, coding consequences, reference and alternate alleles, tumor mutation burden, and the top 10 most mutated genes.
 
 >> ## Solution
->> ~~~
->> pdf('maf_summary.pdf'
+>> ```
+>> # pdf('maf_summary.pdf' # use when you need to make a pdf
 plotmafSummary(maf=brca, rmOutlier=TRUE, addStat='median', dashboard=TRUE, titvRaw=FALSE)
->> dev.off()
->> ~~~
+>> # dev.off()
+>> ```
 >> <img width="474" alt="Screenshot 2025-05-30 at 4 10 02 PM" src="https://github.com/user-attachments/assets/cde6e498-7ba9-4584-9d80-0aaaf64bbf67" />
 > {: .solution}
 {: .challenge}
@@ -392,11 +400,11 @@ We can expand out the top 10 most mutated genes into an oncoprint (also called a
 
 > **Exercise**: Generate an oncoprint of the top 10 most mutated genes in the breast cancer cohort
 >> ## Solution
->> ~~~
->> pdf('oncoprint.pdf')
+>> ```
+>> # pdf('oncoprint.pdf')
 >> oncoplot(maf=brca, top=10) 
->> dev.off()
->> ~~~
+>> # dev.off()
+>> ```
 >> <img width="486" alt="Screenshot 2025-05-30 at 4 10 29 PM" src="https://github.com/user-attachments/assets/01991cec-4a2b-450c-9aa2-df6a448cb04c" />
 > {: .solution}
 {: .challenge}
@@ -406,13 +414,13 @@ We can expand out the top 10 most mutated genes into an oncoprint (also called a
 It can also be useful to zoom in on specific genes, to understand how the mutations are distributed within the genes – are they clustered in a few “hotspots”?
 > **Exercise**: Generate lollipop plots of top 3 most frequently mutated genes in the oncoprint
 >> ## Solution
->> ~~~
->> pdf('lollipop.pdf')
+>> ```
+>> #pdf('lollipop.pdf')
 >> lollipopPlot(maf=brca, gene=’PIK3CA’, AACol=HGVSp_Short, showMutationRate=TRUE)
 >> lollipopPlot(maf=brca, gene=’TTN’, AACol=’HGVSp_Short’, showMutationRate=TRUE)
 >> lollipopPlot(maf=brca, gene=’TP53’, AACol=’HGVSp_Short’, showMutationRate=TRUE)
->> dev.off()
->> ~~~
+>> #dev.off()
+>> ```
 >> <img width="395" alt="Screenshot 2025-05-30 at 4 11 21 PM" src="https://github.com/user-attachments/assets/7365f5af-e8f5-497d-87a9-9eec8b226d3a" />
 >> <img width="416" alt="Screenshot 2025-05-30 at 4 11 09 PM" src="https://github.com/user-attachments/assets/f2d67cc5-9117-4609-b11b-ffb52908cdeb" />
 >> <img width="459" alt="Screenshot 2025-05-30 at 4 11 00 PM" src="https://github.com/user-attachments/assets/2212fcd8-1c17-43be-b81c-e1e0227a4c37" />
@@ -426,11 +434,11 @@ Notice anything different when comparing the distribution of mutations in TTN ve
 
 As mentioned earlier, it can be helpful to comapre a cohort against previously-published data. Let's compare this cohort's tumor mutation burden (TMB) to the rest of TCGA.
 >> ## Solution
->> ~~~
->> pdf('tcga_comparison.pdf')
+>> ```
+>> # pdf('tcga_comparison.pdf')
 >> tcgaCompare(maf=brca, cohortName=‘Workshop', logscale=TRUE, capture_size=50)
->> dev.off()
->> ~~~
+>> # dev.off()
+>> ```
 >> <img width="398" alt="Screenshot 2025-05-30 at 4 11 51 PM" src="https://github.com/user-attachments/assets/6ab3eba7-7855-44fd-b46e-b967708a9a2f" />
 > {: .solution}
 {: .challenge}
@@ -440,11 +448,11 @@ The oncoprint hinted at patterns of mutual exclusivity. We can check this in a m
 
 > **Exercise**: Check patterns of co-occurence and mutual exclusivity
 >> ## Solution
->> ~~~
->> pdf('interactions.pdf')
+>> ```
+>> # pdf('interactions.pdf')
 >> somaticInteractions(maf=brca, top=20, pvalue=c(0.05, 0.1))
->> dev.off()
->> ~~~
+>> # dev.off()
+>> ```
 >> <img width="379" alt="Screenshot 2025-05-30 at 4 12 08 PM" src="https://github.com/user-attachments/assets/fab25087-9df0-422e-b233-08dbfdfa312a" />
 > {: .solution}
 {: .challenge}
