@@ -294,12 +294,6 @@ Resources:
 1. Create input vcf folder
    
 >```bash
-> tar -xvzf input_vcfs.tar.gz
-> ```
-
-OR
-
->```bash
 > mkdir -p /home/student/workshop/input_vcfs
 > mkdir -p /home/student/workshop/output
 >
@@ -311,7 +305,7 @@ OR
 
 2. Install genome
 
-> ```R
+> ```python
 > from SigProfilerMatrixGenerator import install as genInstall
 > 
 > genInstall.install('GRCh38', rsync=False, bash=True)
@@ -319,7 +313,7 @@ OR
 
 3. Generate mutational spectrum count matrix
 
-> ```R
+> ```python
 > from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as matGen
 > 
 > matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "/home/student/workshop/input_vcfs/", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
@@ -331,10 +325,13 @@ Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS
 
 
 4. Deconvolve mutational signatures
-> ```R
+> ```python
 > from SigProfilerAssignment import Analyzer as Analyze
 >
-> Analyze.cosmic_fit(samples="/home/student/workshop/input_vcfs/output/SBS/SIW_2025.SBS96.all", output="/home/student/workshop/output", input_type="matrix", context_type="96", genome_build="GRCh38")
+> Analyze.cosmic_fit(samples="/home/student/workshop/input_vcfs/output/SBS/SIW_2025.SBS96.all", 
+                   output="/home/student/workshop/output", 
+                   input_type="matrix", context_type="96", 
+                   genome_build="GRCh38")
 > ```
 
 5. Look at plots of mutational signatures
