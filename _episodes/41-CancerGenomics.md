@@ -114,11 +114,11 @@ $ bcftools -h
 
 ```bash
 $ # view VCF header
-$ bcftools view -h ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf
+$ bcftools view -h ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf
 $ # alternately...
-$ bcftools head ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf
+$ bcftools head ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf
 $ # view the variant calls
-$ bcftools view -H ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf | head
+$ bcftools view -H ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf | head
 ```
 
 <img width="655" alt="Screenshot 2025-05-30 at 3 37 08 PM" src="https://github.com/user-attachments/assets/31c410c4-84d6-45e1-adbf-808fb5f2584a" />
@@ -135,8 +135,8 @@ VCFs can contain information about multiple samples. In a cancer context, this i
 >> ## Solution
 >> ```
 >> bcftools filter -i "FILTER='PASS'" \
->> -o ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.vcf \
->> ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf
+>> -o ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.vcf \
+>> ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.vcf
 >> ```
 > {: .solution}
 {: .challenge}
@@ -182,17 +182,17 @@ Finally, the reference genome contigs used in variant calling are also listed in
 >>
 >> ```bash
 >> bcftools sort \
->> -o ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf \
->> ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.vcf
->> bgzip ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf 
->> tabix ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf.gz
+>> -o ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf \
+>> ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.vcf
+>> bgzip ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf 
+>> tabix ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf.gz
 >>
 >> # Shorter answer (done in a single short bcftools command)
 >> 
 >> bcftools sort \
 >> -O z -Wtbi \
->> -o ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf.gz \
->> ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.vcf
+>> -o ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf.gz \
+>> ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.vcf
 >> ```
 > {: .solution}
 {: .challenge}
@@ -203,7 +203,7 @@ Finally, the reference genome contigs used in variant calling are also listed in
 >>
 >> ```
 >> bcftools view \
->> ~/workspace/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf.gz \
+>> ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf.gz \
 >> 'chr1:1-1000000'
 >> ```
 > {: .solution}
@@ -235,7 +235,7 @@ Finally, the reference genome contigs used in variant calling are also listed in
 >> -s COLO-829_2B \
 >> -f "%CHROM\t%POS\t[%AF]\n" \
 >> ~/workshop/data/COLO-829_2B--COLO-829BL_1B.snv.indel.results.v7.annotated.vcf.gz \
->> > ~/workspace/output/COLO-829_2B--COLO-829BL_1B.vafs.tsv
+>> > ~/workshop/output/COLO-829_2B--COLO-829BL_1B.vafs.tsv
 >> ```
 > {: .solution}
 {: .challenge}
@@ -245,8 +245,8 @@ Finally, the reference genome contigs used in variant calling are also listed in
 >> ## Solution
 >> 
 >> ```R
->> # pdf('~/workspace/output/vaf_histogram.pdf') # use lines like these to save to a file when needed)
->> f = '~/workspace/output/COLO-829_2B--COLO-829BL_1B.vafs.tsv'
+>> # pdf('~/workshop/output/vaf_histogram.pdf') # use lines like these to save to a file when needed)
+>> f = '~/workshop/output/COLO-829_2B--COLO-829BL_1B.vafs.tsv'
 >> x = read.table(f, h=F, stringsAsFactors=F,
 >>                sep='\t', col.names=c('chr', 'pos', 'vaf')) 
 >>
@@ -300,10 +300,10 @@ Resources:
 OR
 
 >```bash
-> mkdir ~/workspace/input_vcfs
+> mkdir ~/workshop/input_vcfs
 >
 > cp /data/cancer_genomics/COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf \
-> ~/workspace/input_vcfs/input_vcfs/
+> ~/workshop/input_vcfs/input_vcfs/
 > ```
 
 2. Install genome
@@ -322,7 +322,7 @@ OR
 > matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "input_vcfs", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
 > ```
 
-Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS7a (UV exposure) (~/workspace/input_vcfs/output/plots/SBS_96_plots_SIW_2025.pdf)
+Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS7a (UV exposure) (~/workshop/input_vcfs/output/plots/SBS_96_plots_SIW_2025.pdf)
 <img width="736" alt="Screenshot 2025-05-30 at 4 06 22 PM" src="https://github.com/user-attachments/assets/d1bf02c2-5877-434c-9f99-5de24fd92444" />
 
 
