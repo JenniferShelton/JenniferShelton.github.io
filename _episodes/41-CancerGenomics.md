@@ -197,14 +197,14 @@ Finally, the reference genome contigs used in variant calling are also listed in
 > {: .solution}
 {: .challenge}
 
-> ## Print the variants overlapping the interval “chr1:1-1000000” in the uncompressed VCF with **bcftools view**. Try the same thing with the bgzipped+indexed VCF
+> ## Print the variants overlapping the interval “chr22” in the uncompressed VCF with **bcftools view**. Try the same thing with the bgzipped+indexed VCF
 >
 >> ## Solution
 >>
 >> ```
 >> bcftools view \
 >> ~/workshop/output/COLO-829_2B--COLO-829_829BL_1B.mutect2.pass.sorted.vcf.gz \
->> 'chr1:1-1000000'
+>> 'chr22'
 >> ```
 > {: .solution}
 {: .challenge}
