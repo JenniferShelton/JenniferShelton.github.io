@@ -300,7 +300,7 @@ Resources:
 OR
 
 >```bash
-> mkdir ~/workshop/input_vcfs
+> mkdir -p ~/workshop/input_vcfs
 >
 > cp /data/cancer_genomics/COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf \
 > ~/workshop/input_vcfs/
@@ -321,10 +321,10 @@ OR
 > ```R
 > from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as matGen
 > 
-> matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "input_vcfs", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
+> matrices = matGen.SigProfilerMatrixGeneratorFunc("SIW_2025", "GRCh38", "/home/student/workshop/input_vcfs/", plot=True, exome=False, bed_file=None, chrom_based=False, tsb_stat=False, seqInfo=False, cushion=100)
 > ```
 
-Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS7a (UV exposure) (~/workshop/input_vcfs/output/plots/SBS_96_plots_SIW_2025.pdf)
+Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS7a (UV exposure) (/home/student/workshop/input_vcfs/output/plots/SBS_96_plots_SIW_2025.pdf)
 <img width="736" alt="Screenshot 2025-05-30 at 4 06 22 PM" src="https://github.com/user-attachments/assets/d1bf02c2-5877-434c-9f99-5de24fd92444" />
 
 
@@ -333,11 +333,11 @@ Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS
 > ```R
 > from SigProfilerAssignment import Analyzer as Analyze
 >
-> Analyze.cosmic_fit(samples="input_vcfs/output/SBS/SIW_2025.SBS96.all", output="output", input_type="matrix", context_type="96", genome_build="GRCh38")
+> Analyze.cosmic_fit(samples="/home/student/workshop/input_vcfs/output/SBS/SIW_2025.SBS96.all", output="output", input_type="matrix", context_type="96", genome_build="GRCh38")
 > ```
 
 5. Look at plots of mutational signatures
-(output/Assignment_Solution/Activities/Assignment_Solution_Activity_Plots.pdf)
+(/home/student/workshop/input_vcfs/output/Assignment_Solution/Activities/Assignment_Solution_Activity_Plots.pdf)
 >> ## Solution
 >> SBS5: Unknown clock-like signature
 >> SBS7a: UV-light exposure
