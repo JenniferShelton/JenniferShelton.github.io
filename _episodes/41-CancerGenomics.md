@@ -242,7 +242,7 @@ Finally, the reference genome contigs used in variant calling are also listed in
 
 > ## Plot VAF plot for chr21 and chr22. Identify something different on chr22. (for loop)
 > 
->> ## Solution
+>> ## Solution (run in R terminal)
 >> 
 >> ```R
 >> # pdf('~/workshop/output/vaf_histogram.pdf') # use lines like these to save to a file when needed)
