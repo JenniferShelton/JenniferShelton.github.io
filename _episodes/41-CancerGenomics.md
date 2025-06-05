@@ -300,7 +300,8 @@ Resources:
 OR
 
 >```bash
-> mkdir -p ~/workshop/input_vcfs
+> mkdir -p /home/student/workshop/input_vcfs
+> mkdir -p /home/student/workshop/output
 >
 > cp /data/cancer_genomics/COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf \
 > ~/workshop/input_vcfs/
@@ -333,11 +334,11 @@ Compare the SBS96 count matrix to the COSMIC database here. Looks closest to SBS
 > ```R
 > from SigProfilerAssignment import Analyzer as Analyze
 >
-> Analyze.cosmic_fit(samples="/home/student/workshop/input_vcfs/output/SBS/SIW_2025.SBS96.all", output="output", input_type="matrix", context_type="96", genome_build="GRCh38")
+> Analyze.cosmic_fit(samples="/home/student/workshop/input_vcfs/output/SBS/SIW_2025.SBS96.all", output="/home/student/workshop/output", input_type="matrix", context_type="96", genome_build="GRCh38")
 > ```
 
 5. Look at plots of mutational signatures
-(/home/student/workshop/input_vcfs/output/Assignment_Solution/Activities/Assignment_Solution_Activity_Plots.pdf)
+(/home/student/workshop/output/Assignment_Solution/Activities/Assignment_Solution_Activity_Plots.pdf)
 >> ## Solution
 >> SBS5: Unknown clock-like signature
 >> SBS7a: UV-light exposure
