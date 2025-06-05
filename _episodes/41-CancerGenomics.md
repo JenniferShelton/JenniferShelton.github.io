@@ -303,7 +303,9 @@ OR
 > mkdir ~/workshop/input_vcfs
 >
 > cp /data/cancer_genomics/COLO-829_2B--COLO-829BL_1B.snv.indel.high_confidence.v7.annotated.vcf \
-> ~/workshop/input_vcfs/input_vcfs/
+> ~/workshop/input_vcfs/
+>
+> cd ~/workshop/
 > ```
 
 2. Install genome
