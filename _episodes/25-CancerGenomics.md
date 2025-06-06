@@ -1,7 +1,7 @@
 ---
 title: "Cancer Genomics"
-teaching: 60
-exercises: 0
+teaching: 2h
+exercises: 3h
 ---
 
 ## Open your terminal
