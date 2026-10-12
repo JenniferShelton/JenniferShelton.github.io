@@ -35,6 +35,13 @@ You could do something like
 mkdir /workshop/output/alignment
 ```
 
+Note that this will not work. It's an example of variation between Unix shells. Some will allow you to make nested directories in one command, but ours will complain that you cannot make /workshop/output/alignment because /workshop/output does not exist. The error is a little confusing, however, because it says "No such file or directory." but of course there's not because you're trying to create it. Instead you have to do this in two steps:
+
+```bash
+mkdir /workshop/output
+mkdir /workshop/output/alignment
+```
+
 However, if you think you will find it confusing to have "alignment" in both in the input and output directory paths, 
 you could try something different like align_out or alnout or whatever you want. It's only important that you remember it.
 
