@@ -24,7 +24,7 @@ keypoints:
 
 The workshop will include a lecture component of around one hour before the practical session later on.
 
-Slides for this available [here](https://docs.google.com/presentation/d/1l7KFwbmfXWKC4U60wNnTvuolWGq-nIgA8FfZJc2q0AY/edit?slide=id.g360c1a61099_0_13#slide=id.g360c1a61099_0_13).
+Slides for this available [here](https://docs.google.com/presentation/d/1i2vy-xv4m3AkkxmxtennE2d2I1bwJPR89QMuaBb9tHg).
 
 # About this tutorial
 
