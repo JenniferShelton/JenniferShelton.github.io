@@ -117,7 +117,7 @@ automatically.
 Normally we do not want to make copies of files to do work, but in this case you had to because indexing
 requires creating new files and you do not have write permission to /data/alignment/references, so you cannot make the index files (try it if you want).
 
-We will not actually use this index, so feel from to delete these index files or move them out of the way. This was just so you can see how that step works.
+We will not actually use this index, so feel free to delete these index files or move them out of the way. This was just so you can see how that step works.
 
 Now we will actually run bwa on the chr20 data, but against the whole reference genome, which is in
 
@@ -130,6 +130,8 @@ The reads from chromosome 20 are in
 ```bash
 /data/alignment/chr20/NA12878.fq.dir/
 ```
+
+We will pause a moment to look at what is in these files.
 
 ```bash
 less /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa
@@ -188,11 +190,7 @@ with a _different output file_. You will need at least 2 aligned sam files for t
 but will vary slightly by read group). If it is much smaller than this or the program ran for much less time, you have done something wrong.
 
 
-We will stop here and take a look at each of these file formats (fasta, fastq, sam, bam, cram).
-
-## Intro to Variant Calling
-
-https://drive.google.com/file/d/1hVpzIwBL1HeLyupUwIhtHxn349veBWoX/view?usp=sharing
+We will stop here and take a look at the sam file format (and bam and cram).
 
 ## Merging and Sorting
 As you noticed, you now have multiple sam files. This is typical that we do one alignment for each lane of sequencing we do,
@@ -259,6 +257,8 @@ use the extension .bam.bai instead of just .bai. Both are valid.
 
 The whole samtools thing takes about the same time as GATK's one action. In my test it also made a sorted bam that was about 80%
 the size of GATK's, although both programs offer different levels of compression and the defaults may be different.
+
+If you want to try using AI (I did it on Google's free AI prompt on the web and it worked on the first try except that _**I**_ typoed the directory name), you can ask your favorite AI to structure the command line for you. A helpful tip might be that ls -1 lists a directory one file to a line (which makes it easier to cut and paste). This was a faster way to get a command line with all the -I gatk arguments without writing code myself.
 
 We will stop here and take a look at each of the file formats we have used so far (fasta, fastq, sam, bam, cram).
 
