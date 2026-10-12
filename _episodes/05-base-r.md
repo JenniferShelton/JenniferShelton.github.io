@@ -9,6 +9,11 @@ objectives:
 - Install and load packages.
 - Describe what a data frame (tibble) is.
 - Summarize the contents of a data frame.
+- Describe the purpose of the **`dplyr`** package.
+- Select certain columns in a data frame with the **`dplyr`** function `select`.
+- Extract certain rows in a data frame according to logical (boolean) conditions with the **`dplyr`** function `filter` .
+- Link the output of one **`dplyr`** function to the input of another function with the 'pipe' operator `%>%`.
+- Add new columns to a data frame that are functions of existing columns with `mutate`.
 
 keypoints:
 - The **`dplyr`** package provides functions for manipulating data frames, such as `select`, `filter`, `mutate`, `summarize`, `group_by`, and `count`.
