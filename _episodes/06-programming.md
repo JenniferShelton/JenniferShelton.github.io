@@ -203,7 +203,6 @@ hotspots <- hotspots %>%
     filter(Mutation_Count >= 50)
 ```
 
-```{r, eval=FALSE, purl=TRUE, echo=FALSE}
 
 Now that our data set is ready, we can save it as a CSV file in our `data`
 folder.
