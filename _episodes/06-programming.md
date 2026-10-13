@@ -84,19 +84,19 @@ this fashion allows for extensive flexibility and customization of plots.
 ggplot(data = hotspots)
 ```
 
-# Here we called ggplot and told it what data we want to show on our figure. This is not enough information for ggplot to actually draw anything. 
+### Here we called ggplot and told it what data we want to show on our figure. This is not enough information for ggplot to actually draw anything. 
 It only creates a blank slate for other elements to be added to.
 
 ```r
 ggplot(data = hotspots,  mapping = aes(x = Mutability, y = log10_pvalue))
 ```
 
-# Here we told ggplot we want to plot the “Mutability” column of the hotspots data frame on the x-axis, 
+### Here we told ggplot we want to plot the “Mutability” column of the hotspots data frame on the x-axis, 
 and the “log10_pvalue” column on the y-axis. Notice that we didn’t need to explicitly pass `aes` 
 these columns (e.g. x = hotspots[, "Mutability"]), this is because ggplot is smart enough to 
 know to look in the data for that column!
 
-# The final part of making our plot is to tell ggplot how we want to visually represent the data. 
+### The final part of making our plot is to tell ggplot how we want to visually represent the data. 
 We do this by adding a new layer to the plot using one of the geom functions.
 
 ```r
@@ -149,13 +149,72 @@ ggplot(data = hotspots,  mapping = aes(x = Mutability, y = log10_pvalue, size = 
   and further confusion.
 
 
-You can save a figure created with ggplot and pass it to ggplotly to add hover text (to see exact values for a point)
+You can save a figure created with ggplot and pass it to ggplotly to add/customize hover text (to see exact values for a point)
 ```r
 p <- ggplot(data = hotspots,  mapping = aes(x = Mutability, y = log10_pvalue, size = Mutation_Count, color=inOncokb)) +
-    geom_point() +
-    theme_bw()
+  geom_point(aes(text = paste0("Hugo_Symbol: ", Hugo_Symbol, "<br>",
+                               "Mutability: ", Mutability, "<br>",
+                               "log10 p-value: ", log10_pvalue, "<br>",
+                               "Mutation Count: ", Mutation_Count, "<br>"
+  )))  +
+  theme_bw()
 
-ggplotly(p)
+ggplotly(p, tooltip = "text")
+```
+
+## Exporting data
+
+Now that you have learned how to use **`dplyr`** to extract information from
+or summarize your raw data, you may want to export these new data sets to share
+them with your collaborators or for archival.
+
+Similar to the `read_csv()` function used for reading CSV files into R, there is
+a `write_csv()` function that generates CSV files from data frames.
+
+Before using `write_csv()`, we are going to create a new folder, `output`,
+in our working directory (if it does not already exist) that will store this generated dataset. We don't want
+to write generated datasets in the same directory as our raw data. It's good
+practice to keep them separate. The `data` folder should only contain the raw,
+unaltered data, and should be left alone to make sure we don't delete or modify
+it. In contrast, our script will generate the contents of the `output`
+directory, so even if the files it contains are deleted, we can always
+re-generate them.
+
+In preparation for our next lesson on plotting, we are going to prepare a
+cleaned up version of the data set that doesn't include any missing data.
+
+Let's start by removing observations of animals for which `Hugo_Symbol` is missing:
+
+```{r, purl=FALSE}
+
+hotspots <- hotspots %>%
+  mutate(Variant_Amino_Acid = sub(":.*", "", Variant_Amino_Acid)) %>%
+  mutate(Reference_Amino_Acid = sub(":.*", "", Reference_Amino_Acid)) %>%
+  filter(!is.na(Hugo_Symbol))
+
+```
+
+Because we are interested in plotting recurrent mutations we may want to set a minimum  
+`Mutation_Count`:
+
+```{r, purl=FALSE}
+## Only keep the most common mutations
+hotspots <- hotspots %>%
+    filter(Mutation_Count >= 50)
+```
+
+```{r, eval=FALSE, purl=TRUE, echo=FALSE}
+
+Now that our data set is ready, we can save it as a CSV file in our `data`
+folder.
+
+```{r, purl=FALSE, eval=FALSE}
+write_csv(hotspots, file = "~/workshop/output/hotspot_results.csv")
+```
+
+```{r, purl=FALSE, eval=TRUE, echo=FALSE}
+if (!dir.exists("~/workshop/output/")) dir.create("~/workshop/output/")
+write_csv(hotspots, file = "~workshop/output/hotspot_results.csv")
 ```
 
 
