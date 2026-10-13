@@ -340,7 +340,6 @@ You can type the \ characters to spread this across several lines so it is easie
 
 Now we can look at the filtered VCF. If you did not get a filtered vcf, you can use one from /data/alignment/vcfs/NA12878.chr20.61.final.vcf
 
-There is one last thing we will do if we have time, which is make a gvcf.
 When we do large projects, we typically do not call the samples one at a time. We preprocess each sample with 
 haplotype caller than jointly call them using GenotypeGVCFs. We will not do that since we are only looking at one
 sample, but we will make the GVCF.
@@ -349,6 +348,33 @@ sample, but we will make the GVCF.
 gatk HaplotypeCaller -O _GVCF_ -L chr20:61723571-62723570 -I _BAM_ -R /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa -ERC GVCF
 ```
 
-We can take a look at the GVCF and then end here.
+We can take a look at the GVCF.
+
+In order to jointly genotype multiple samples, we have to merge the GVCFs. There are GVCF files for NA12878, NA12891, and NA12892. Construct a command line to merge those into one GVCF in your output directory.
+
+```bash
+gatk CombineGVCFs \
+-R /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+-O _OUTPUTGVCF_ \
+-V INPUTGVCF ...
+```
+
+The -V option is repeated each time for all the GVCFs. Again, you could use ls -1 with a * character to get all the GVCFs in that directory. You can also probably try using AI to structure a command line for you.
+
+After this is done, we can genotype that combined GVCF and then run variant filtration on it.
+
+```bash
+gatk GenotypeGVCFs \
+-R /data/alignment/references/GRCh38_1000genomes/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+-O _OUTPUTVCF_ -V _COMBINEDGVCF_
+```
+
+If you want to try filtering the joint vcf, you can use the same filter command as before but replace the single vcf with the joint vcf and rename the output file (this is a key point when reusing commands to make sure you edit both the input and the output).
+
+Lastly, if we still have time, we can look at these data in IGV. To launch IGV, start a new tab in Jupyter and choose Desktop. On the desktop, open a terminal (under Applications in the upper left), and type Desktop/IGV_2.19.4/igv.sh. This will launch a new window with IGV.
+
+To load some data, go under the File menu and select "Load from File...". Note that for some reason on the Jupyter desktop, the mouse and the highlighting in the menus are offset. The highlighted selection is real. The mouse will appear slightly above this.
+
+You can load bam files for NA12878, NA12891, and NA12892 from /data/alignment/region (you will probably have to select "+ other locations" to get back to root. If you navigate to chromosome 20 between 61.7 and 62.7 Mb and Zoom in enough you will see reads displayed.
 
 Feel free to go back and run any of these steps again with different programs or different inputs.
