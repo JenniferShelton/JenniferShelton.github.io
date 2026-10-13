@@ -125,7 +125,7 @@ Save a new dataframe with your customized (mutated) column.
 
 ```r
 hotspots <- hotspots %>%
-  mutate(Variant_Amino_Acid = sub(":.*", "", Variant_Amino_Acid))
+  mutate(Variant_Amino_Acid = sub(":.*", "", Variant_Amino_Acid)) %>%
   mutate(Reference_Amino_Acid = sub(":.*", "", Reference_Amino_Acid))
 ```
 
